@@ -11,13 +11,15 @@ import java.util.HashSet;
 
 public class Database {
     private final Connection connection;
+    private String path1 = "codiceCatastale.db";
+    private String path2 = "hospital.db";
 
-    public Database(String path) throws SQLException, ClassNotFoundException {
+    public Database(int nPath) throws SQLException, ClassNotFoundException {
         // load the JDBC driver for SQLite
         Class.forName("org.sqlite.JDBC");
 
         // establish a connection to the database
-        connection = DriverManager.getConnection("jdbc:sqlite:"+path);
+        connection = DriverManager.getConnection("jdbc:sqlite:" + ((nPath == 1)? path1 : path2) );
     }
 
     public ArrayList<String> getQuery(String query, String[] columns) throws SQLException {
@@ -41,6 +43,36 @@ public class Database {
         statement.close();
 
         return returnList;
+    }
+
+    public void insertQuery(String nameTable, String[] fieldName, String[] Values) throws SQLException{
+        StringBuilder query = new StringBuilder("INSERT INTO");
+        Statement statement;
+        ResultSet resultSet;
+
+        // add nametable + (
+        query.append(nameTable).append(" (" );
+        // add field
+        for(String s : fieldName){
+            query.append(s).append(",");
+        }
+        //remove for the last field ',' and add ') VALUES'
+        query.deleteCharAt(query.length()-1).append(") VALUES(");
+
+        for(String s : Values){
+            query.append("'").append(s).append("'").append(",");
+        }
+
+        query.deleteCharAt(query.length()-1).append(");");
+
+        System.out.println(query);
+
+        // create a statement object
+
+        //statement = connection.createStatement();
+
+        //INSERT INTO name Table (Nomi Campi) Values(valori);
+
     }
 
 

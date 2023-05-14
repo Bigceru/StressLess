@@ -29,7 +29,7 @@ public class LoginPaziente {
         String passName = txtPassName.getText();
 
         try {
-            Database database = new Database("/home/davide/Scrivania/Uni/Secondo_anno/Ingegneria_Software/TeleMedicina/hospital.db");
+            Database database = new Database(2);
             database.getQuery("SELECT * FROM Pazienti WHERE NomeUtente = ?".replaceAll("\\?", userName), new String[]{"NomeUtente"});
             database.closeAll();
         } catch (SQLException e) {
