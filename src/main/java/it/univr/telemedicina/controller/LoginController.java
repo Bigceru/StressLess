@@ -9,7 +9,7 @@ public class LoginController {
     private final HelloApplication newScene = new HelloApplication();
 
     public void loginMedicoButton(ActionEvent actionEvent) throws IOException{
-        newScene.changeScene("loginMedico.fxml", "Medico", actionEvent);
+        newScene.changeScene("loginDoc.fxml", "Doctor", actionEvent);
     }
 
     public void loginPazienteButton(ActionEvent actionEvent) throws IOException {

@@ -40,7 +40,7 @@ public class LoginPaziente {
 
 
         if(userName.isEmpty() || passName.isEmpty() ){
-            showAlert("Campi non pieni","Compila tutti i campi");
+            newScene.showAlert("Campi non pieni","Compila tutti i campi");
         }
         else {
             try (Connection conn = db.getConnection();
@@ -55,11 +55,11 @@ public class LoginPaziente {
                     if (rs.next()) {
                         newScene.changeScene("paginaUtente.fxml", "Pagina utente", actionEvent);
                     } else
-                        showAlert("Errore password", "Password non corretta");
+                        newScene.showAlert("Errore password", "Password non corretta");
                 } else
-                    showAlert("Errore", "Credenziali errate");
+                    newScene.showAlert("Errore", "Credenziali errate");
             } catch (SQLException e) {
-                showAlert("Database", "Database non trovato");
+                newScene.showAlert("Database", "Database non trovato");
                 throw new RuntimeException(e);
             }
         }
@@ -73,12 +73,5 @@ public class LoginPaziente {
         newScene.changeScene("login.fxml", "Identificazione utente", actionEvent);
     }
 
-    //Metodo per il pop-up di errore
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }

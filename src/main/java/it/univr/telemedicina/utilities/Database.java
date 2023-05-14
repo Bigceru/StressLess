@@ -1,10 +1,6 @@
 package it.univr.telemedicina.utilities;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -45,37 +41,38 @@ public class Database {
         return returnList;
     }
 
-    public void insertQuery(String nameTable, String[] fieldName, String[] Values) throws SQLException{
+    public void insertQuery(String nameTable, String[] fieldName, Object[] Values) throws SQLException{
         StringBuilder query = new StringBuilder("INSERT INTO");
-        Statement statement;
+        PreparedStatement statement;
         ResultSet resultSet;
 
         // add nametable + (
         query.append(nameTable).append(" (" );
+
         // add field
         for(String s : fieldName){
             query.append(s).append(",");
         }
+
         //remove for the last field ',' and add ') VALUES'
         query.deleteCharAt(query.length()-1).append(") VALUES(");
 
-        for(String s : Values){
-            query.append("'").append(s).append("'").append(",");
+        for(Object s : Values){
+            query.append("?").append(",");
         }
 
         query.deleteCharAt(query.length()-1).append(");");
-
         System.out.println(query);
 
-        // create a statement object
+        // change "?" with my values
+        statement = connection.prepareStatement(query.toString());
+        for(int i = 0; i< Values.length;i++){
+            statement.setObject(i+1, Values[i]);
+        }
 
-        //statement = connection.createStatement();
-
-        //INSERT INTO name Table (Nomi Campi) Values(valori);
-
+        // Add Line in Database
+         statement.executeUpdate();
     }
-
-
 
     public void closeAll() throws SQLException{
         // close the result set, statement, and connection
