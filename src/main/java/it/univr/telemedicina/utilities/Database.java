@@ -42,9 +42,9 @@ public class Database {
     }
 
     public void insertQuery(String nameTable, String[] fieldName, Object[] Values) throws SQLException{
-        StringBuilder query = new StringBuilder("INSERT INTO");
+
+        StringBuilder query = new StringBuilder("INSERT INTO ");
         PreparedStatement statement;
-        ResultSet resultSet;
 
         // add nametable + (
         query.append(nameTable).append(" (" );
@@ -62,7 +62,6 @@ public class Database {
         }
 
         query.deleteCharAt(query.length()-1).append(");");
-        System.out.println(query);
 
         // change "?" with my values
         statement = connection.prepareStatement(query.toString());
