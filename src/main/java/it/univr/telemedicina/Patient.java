@@ -1,41 +1,43 @@
 package it.univr.telemedicina;
-import it.univr.telemedicina.utilities.Database;
-import javafx.scene.chart.PieChart;
 
+import it.univr.telemedicina.controller.Registration;
+import it.univr.telemedicina.utilities.Database;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Patient extends User {
 
-    private final static String[] stringFields = {"Nome", "Cognome", "LuogoDiNascita", "Provincia", "DataDiNascita", "NumeroDiTelefono", "Domicilio", "Sesso", "CodiceFiscale", "Email", "NomeUtente", "Password", "MedicoReferente"};
+    private final static String[] stringFields = {"name", "surname", "birthPlace", "province", "birthDate", "phoneNumber", "domicile", "sex", "taxIDCode", "email", "username", "password", "refDoc"};
 
     private String birthPlace;
     private String province;
     LocalDate birthDate;
     private String domicile;
     private char sex;
-    private String codiceFiscale;
+    private String taxIDCode;
     private int refDoc;
 
     //Constructor
-    public Patient(String name, String surname, String email, String numTelephone, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String codiceFiscale, int refDoc){
-        super(name, surname, email, numTelephone, username, password);
+    public Patient(Registration reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
+        super(reg, name, surname, email, phoneNumber, username, password);
 
-        // If the previous field were correct
         if(getCheck()) {
+            // If the previous field were correct
+            System.out.println("Check superato!!!");
+
             this.birthPlace = birthPlace;
             this.province = province;
             this.birthDate = birthDate;
             this.domicile = domicile;
             this.sex = sex;
-            this.codiceFiscale = codiceFiscale;
+            this.taxIDCode = taxIDCode;
             this.refDoc = refDoc;
 
             // INSERT into database
             try {
+                System.out.println("Provo ad entrare nel Database");
                 Database database = new Database(2);
-                database.insertQuery("Pazienti", stringFields, new Object[]{name, surname, birthPlace, province, birthDate, numTelephone, domicile, sex, codiceFiscale, email, username, password, refDoc});
+                database.insertQuery("Patients", stringFields, new Object[]{name,surname, birthPlace, province, birthDate, phoneNumber, domicile, sex, taxIDCode, email, username, password, refDoc});
             } catch (SQLException e){
                 System.out.println("Error SQL query!");
             } catch (ClassNotFoundException e) {
@@ -45,62 +47,39 @@ public class Patient extends User {
         }
     }
 
+    //Check TaxIdCode
+    private boolean checkTaxIdCode() {
+        boolean tempCheck = true;
+
+        return tempCheck;
+    }
+
     // Get and set methods
     public String getBirthPlace() {
         return birthPlace;
-    }
-
-    public void setBirthPlace(String birthPlace) {
-        this.birthPlace = birthPlace;
     }
 
     public String getProvince() {
         return province;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
     public LocalDate getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getDomicile() {
         return domicile;
     }
 
-    public void setDomicile(String domicile) {
-        this.domicile = domicile;
-    }
-
     public char getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
-        this.sex = sex;
-    }
-
-    public String getCodiceFiscale() {
-        return codiceFiscale;
-    }
-
-    public void setCodiceFiscale(String codiceFiscale) {
-        this.codiceFiscale = codiceFiscale;
+    public String getTaxIDCode() {
+        return taxIDCode;
     }
 
     public int getRefDoc() {
         return refDoc;
     }
-
-    public void setRefDoc(int refDoc) {
-        this.refDoc = refDoc;
-    }
-
-
 }
