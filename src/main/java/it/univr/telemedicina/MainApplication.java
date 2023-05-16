@@ -8,16 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class MainApplication extends Application {
-    private Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Identificazione utente");
         stage.setScene(scene);
         stage.show();
@@ -29,12 +27,14 @@ public class MainApplication extends Application {
 
     public void changeScene(String source,String title, ActionEvent actionEvent) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(source));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setTitle(title);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
+
     public void addScene(String pathFXML) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(pathFXML));
         Parent root = loader.load();
@@ -43,6 +43,7 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     //Metodo per il pop-up di errore
     public void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

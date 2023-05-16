@@ -15,7 +15,7 @@ public class Database {
         Class.forName("org.sqlite.JDBC");
 
         // establish a connection to the database
-        connection = DriverManager.getConnection("jdbc:sqlite:" + ((nPath == 1)? path1 : path2) );
+        connection = DriverManager.getConnection("jdbc:sqlite:" + ((nPath == 1)? path1 : path2));
     }
 
     public ArrayList<String> getQuery(String query, String[] columns) throws SQLException {
@@ -31,8 +31,9 @@ public class Database {
         ArrayList<String> returnList = new ArrayList<>();
         // process the results
         while (resultSet.next()) {
-            for(String s : columns)
+            for(String s : columns) {
                 returnList.add(resultSet.getString(s));
+            }
         }
 
         resultSet.close();

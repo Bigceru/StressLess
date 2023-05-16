@@ -28,7 +28,7 @@ public class DatabaseManager {
     public static Connection getConnection2() throws SQLException {
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:/home/davide/Scrivania/Uni/Secondo_anno/Ingegneria_Software/TeleMedicina/codiceCatastale.db");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:codiceCatastale.db");
             return conn;
         } catch (ClassNotFoundException e) {
             throw new SQLException("Driver JDBC non trovato.");

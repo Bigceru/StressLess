@@ -19,13 +19,17 @@ public abstract class User {
     public User(Registration reg, String name, String surname, String email, String phoneNumber, String username, String password){
         this.reg = reg;
 
-        // Check if email, password and phone number are correct
-        check = checkEmail(email) && checkPassword(password) && checkPhoneNumber(phoneNumber) && checkUsername(username);
+        // Check if name, surname, email, password and phone number are correct
+        check = checkName(name) & checkSurname(surname) & checkEmail(email) & checkPassword(password) & checkPhoneNumber(phoneNumber) & checkUsername(username);
 
+        /*
+        System.out.println("Name: " + checkName(name));
+        System.out.println("Surname: " + checkSurname(surname));
         System.out.println("Email: " + checkEmail(email));
         System.out.println("Pass: " + checkPassword(password));
         System.out.println("Telefono: " + checkPhoneNumber(phoneNumber));
         System.out.println("Username:  "+ checkUsername(username));
+         */
 
         // If they are correct
         if(check) {
@@ -38,15 +42,17 @@ public abstract class User {
         }
     }
 
+    //True if exists
+    //False if not exists
     protected boolean alreadyExist(String fieldToCheck, String inputField){
-        boolean tempCheck = true;
+        boolean tempCheck = false;
 
         try {
             Database db = new Database(2);
             ArrayList<String> test = db.getQuery("SELECT * FROM Patients WHERE " + fieldToCheck +" = " + "\"" + inputField + "\"", new String[]{fieldToCheck});
 
             if (!test.isEmpty())
-                tempCheck = false;
+                tempCheck = true;
 
         } catch (SQLException e) {
             System.out.println("SQL Access error");
@@ -57,8 +63,26 @@ public abstract class User {
         return tempCheck;
     }
 
+    protected boolean checkName(String name){
+        boolean tempCheck = !name.isEmpty();
+
+        if(!tempCheck)
+            reg.setInvalidField("name");
+
+        return tempCheck;
+    }
+
+    protected boolean checkSurname(String surname){
+        boolean tempCheck = !surname.isEmpty();
+
+        if(!tempCheck)
+            reg.setInvalidField("surname");
+
+        return tempCheck;
+    }
+
     protected boolean checkPhoneNumber(String phoneNumber){
-        boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && alreadyExist("phoneNumber", phoneNumber);
+        boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("phoneNumber", phoneNumber);
 
         if (!tempCheck)
             reg.setInvalidField("phoneNumber");
@@ -67,7 +91,7 @@ public abstract class User {
     }
 
     protected boolean checkEmail(String email) {
-        boolean tempCheck = email.contains("@") && email.contains(".") && alreadyExist("email", email);
+        boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("email", email);
         if (!tempCheck)
             reg.setInvalidField("email");
 
@@ -75,8 +99,8 @@ public abstract class User {
     }
 
     protected boolean checkUsername(String username) {
-        // looking for Username already exist
-        boolean tempCheck = alreadyExist("username",username);
+        // looking for Username already exist or is empty
+        boolean tempCheck = !username.isEmpty() && !alreadyExist("username",username);
 
         if(!tempCheck){
             reg.setInvalidField("username");

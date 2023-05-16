@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.LabeledSkinBase;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -18,17 +20,29 @@ public class Registration implements Initializable {
     @FXML
     private ComboBox<String> comboBoxRefDoc;
     @FXML
+    private Label lblRefDoc;
+    @FXML
     private ComboBox<String> comboBoxProvince;
+    @FXML
+    private Label lblProvince;
     @FXML
     private RadioButton maleButton;
     @FXML
     private RadioButton femaleButton;
     @FXML
+    private Label lblSex;
+    @FXML
     private TextField txtName;
+    @FXML
+    private Label lblName;
     @FXML
     private TextField txtSurname;
     @FXML
+    private Label lblSurname;
+    @FXML
     private TextField txtBirthPlace;
+    @FXML
+    private Label lblBirthPlace;
     @FXML
     private TextField txtPhoneNumber;
     @FXML
@@ -36,7 +50,11 @@ public class Registration implements Initializable {
     @FXML
     private TextField txtDomicile;
     @FXML
+    private Label lblDomicile;
+    @FXML
     private TextField txtTaxIDCode;
+    @FXML
+    private Label lblTaxIDCode;
     @FXML
     private PasswordField txtPassword;
     @FXML
@@ -47,6 +65,8 @@ public class Registration implements Initializable {
     private Label wrongRegistration;
     @FXML
     private DatePicker txtBirthDate;
+    @FXML
+    private Label lblBirthDate;
     @FXML
     private Label lblEmail;
     @FXML
@@ -90,6 +110,7 @@ public class Registration implements Initializable {
         femaleButton.setToggleGroup(sexChooserGroup);
 
 
+
     }
 
     /**
@@ -97,6 +118,8 @@ public class Registration implements Initializable {
      * @param errorField    field to change
      */
     public void setInvalidField(String errorField) {
+
+
         switch (errorField) {
             case "password" -> {
                 lblPassword.setStyle("-fx-text-fill: red;");
@@ -114,6 +137,38 @@ public class Registration implements Initializable {
                 lblPhoneNumber.setStyle("-fx-text-fill: red;");
                 txtPhoneNumber.setStyle("-fx-text-fill: red;");
             }
+            case "surname" -> {
+                lblSurname.setStyle("-fx-text-fill: red;");
+                txtSurname.setStyle("-fx-text-fill: red;");
+            }
+            case "name" -> {
+                lblName.setStyle("-fx-text-fill: red;");
+                txtName.setStyle("-fx-text-fill: red;");
+            }
+            case "province" -> {
+                lblProvince.setStyle("-fx-text-fill: red;");
+            }
+            case "birthPlace" -> {
+                lblBirthPlace.setStyle("-fx-text-fill: red;");
+                txtBirthPlace.setStyle("-fx-text-fill: red;");
+            }
+            case "birthDate" -> {
+                lblBirthDate.setStyle("-fx-text-fill: red;");
+            }
+            case "domicile" -> {
+                lblDomicile.setStyle("-fx-text-fill: red;");
+                txtDomicile.setStyle("-fx-text-fill: red;");
+            }
+            case "sex" -> {
+                lblSex.setStyle("-fx-text-fill: red;");
+            }
+            case "taxIDCode" -> {
+                lblTaxIDCode.setStyle("-fx-text-fill: red;");
+                txtTaxIDCode.setStyle("-fx-text-fill: red;");
+            }
+            case "refDoc" -> {
+                lblRefDoc.setStyle("-fx-text-fill: red;");
+            }
             default -> {    // Set all fields color's black
                 lblPassword.setStyle("-fx-text-fill: black;");
                 txtPassword.setStyle("-fx-text-fill: black;");
@@ -123,23 +178,55 @@ public class Registration implements Initializable {
                 txtUsername.setStyle("-fx-text-fill: black;");
                 lblPhoneNumber.setStyle("-fx-text-fill: black;");
                 txtPhoneNumber.setStyle("-fx-text-fill: black;");
+                lblName.setStyle("-fx-text-fill: black;");
+                txtName.setStyle("-fx-text-fill: black;");
+                lblSurname.setStyle("-fx-text-fill: black;");
+                txtSurname.setStyle("-fx-text-fill: black;");
+                lblProvince.setStyle("-fx-text-fill: black;");
+                lblBirthPlace.setStyle("-fx-text-fill: black;");
+                txtBirthPlace.setStyle("-fx-text-fill: black;");
+                lblBirthDate.setStyle("-fx-text-fill: black;");
+                lblDomicile.setStyle("-fx-text-fill: black;");
+                txtDomicile.setStyle("-fx-text-fill: black;");
+                lblSex.setStyle("-fx-text-fill: black;");
+                lblTaxIDCode.setStyle("-fx-text-fill: black;");
+                txtTaxIDCode.setStyle("-fx-text-fill: black;");
+                lblRefDoc.setStyle("-fx-text-fill: black;");
+                wrongRegistration.setText("");      // Hide error message
             }
+        }
+
+        // Set error message
+        if(!errorField.contains("resetAll")) {
+            wrongRegistration.setText("Registrazione fallita");
         }
     }
 
     public void handleRegistration(ActionEvent actionEvent) throws IOException {
         setInvalidField("resetAll");    // Set all fields colors black
 
-        int docID = doctorID.get(comboBoxRefDoc.getItems().indexOf(comboBoxRefDoc.getValue()));
-        int index1 = comboBoxRefDoc.getItems().indexOf(comboBoxRefDoc.getValue());
-        int index2 = comboBoxRefDoc.getSelectionModel().getSelectedIndex();
-        System.out.println("Index1 --> " + index1 + "\nIndex2 --> " + index2 +"\nDoctor ID --> " + docID);
+        int index = comboBoxRefDoc.getItems().indexOf(comboBoxRefDoc.getValue());
+        int docID = -1;
+        char sex = 'Z';
 
-        Patient patient = new Patient(this, txtName.getText(), txtSurname.getText(), txtEmail.getText(), txtPhoneNumber.getText(), txtUsername.getText(), txtPassword.getText(), txtBirthPlace.getText(), comboBoxProvince.getValue(), txtBirthDate.getValue(), txtDomicile.getText(), ((RadioButton) sexChooserGroup.getSelectedToggle()).getText().charAt(0), txtTaxIDCode.getText(), docID);
+        // Check if a doctor has been selected
+        if(index != -1)
+            docID = doctorID.get(comboBoxRefDoc.getItems().indexOf(comboBoxRefDoc.getValue()));
+
+        System.out.println("Index1 --> " + index + "\nDoctorID --> " + docID);
+
+        // If a sex has been chosen
+        if(sexChooserGroup.getSelectedToggle() != null)
+            sex = ((RadioButton) sexChooserGroup.getSelectedToggle()).getText().charAt(0);
+
+        Patient patient = new Patient(this, txtName.getText(), txtSurname.getText(), txtEmail.getText(), txtPhoneNumber.getText(), txtUsername.getText(), txtPassword.getText(), txtBirthPlace.getText(), comboBoxProvince.getValue(), txtBirthDate.getValue(), txtDomicile.getText(), sex, txtTaxIDCode.getText(), docID);
 
         // If all the fields are correct
-        if(patient.getCheck())
+        if(patient.getCheck()) {
+            // Allert for registration success and change scene to Login
+            newScene.showAlert("Registration success", "La registrazione è avvenuta con successo");
             newScene.changeScene("PatientLogin.fxml", "Paziente", actionEvent);
+        }
     }
 
     public void handleAnnulla(ActionEvent actionEvent) throws IOException {
