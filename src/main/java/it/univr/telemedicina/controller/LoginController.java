@@ -1,18 +1,20 @@
 package it.univr.telemedicina.controller;
 
-import it.univr.telemedicina.HelloApplication;
+import it.univr.telemedicina.MainApplication;
 import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class LoginController {
-    private final HelloApplication newScene = new HelloApplication();
-
-    public void loginMedicoButton(ActionEvent actionEvent) throws IOException{
-        newScene.changeScene("loginMedico.fxml", "Medico", actionEvent);
+    private final MainApplication newScene = new MainApplication();
+    public void loginDoctorButton(ActionEvent actionEvent) throws IOException {
+        newScene.changeScene("DoctorLogin.fxml", "Doctor", actionEvent);
     }
 
-    public void loginPazienteButton(ActionEvent actionEvent) throws IOException {
-        newScene.changeScene("loginPaziente.fxml", "Paziente", actionEvent);
+    public void loginPatientButton(ActionEvent actionEvent) throws IOException {
+        newScene.changeScene("PatientLogin.fxml", "Paziente", actionEvent);
     }
+
+
 }

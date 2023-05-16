@@ -38,6 +38,12 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.swinglabs.swingx/swingx-autocomplete -->
+        <dependency>
+            <groupId>org.swinglabs.swingx</groupId>
+            <artifactId>swingx-autocomplete</artifactId>
+            <version>1.6.5-1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -60,7 +66,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.telemedicina/it.univr.telemedicina.HelloApplication</mainClass>
+                            <mainClass>com.example.telemedicina/it.univr.telemedicina.MainApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
