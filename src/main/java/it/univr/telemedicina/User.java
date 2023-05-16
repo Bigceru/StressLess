@@ -18,6 +18,15 @@ public abstract class User {
     // Constructor
     public User(Registration reg, String name, String surname, String email, String phoneNumber, String username, String password){
         this.reg = reg;
+<<<<<<< HEAD
+=======
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.password = password;
+>>>>>>> e54b129 (Upload 1.2 - Better GUI)
 
         // Check if name, surname, email, password and phone number are correct
         check = checkName(name) & checkSurname(surname) & checkEmail(email) & checkPassword(password) & checkPhoneNumber(phoneNumber) & checkUsername(username);
@@ -31,6 +40,7 @@ public abstract class User {
         System.out.println("Username:  "+ checkUsername(username));
          */
 
+<<<<<<< HEAD
         // If they are correct
         if(check) {
             this.name = name;
@@ -40,6 +50,8 @@ public abstract class User {
             this.username = username;
             this.password = password;
         }
+=======
+>>>>>>> e54b129 (Upload 1.2 - Better GUI)
     }
 
     //True if exists
@@ -68,6 +80,11 @@ public abstract class User {
 
         if(!tempCheck)
             reg.setInvalidField("name");
+<<<<<<< HEAD
+=======
+        else
+            this.name = name;
+>>>>>>> e54b129 (Upload 1.2 - Better GUI)
 
         return tempCheck;
     }
@@ -81,6 +98,7 @@ public abstract class User {
         return tempCheck;
     }
 
+<<<<<<< HEAD
     protected boolean checkPhoneNumber(String phoneNumber){
         boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("phoneNumber", phoneNumber);
 
@@ -97,6 +115,11 @@ public abstract class User {
 
         return tempCheck;
     }
+=======
+    abstract boolean checkPhoneNumber(String phoneNumber);
+    abstract boolean checkEmail(String email);
+
+>>>>>>> e54b129 (Upload 1.2 - Better GUI)
 
     protected boolean checkUsername(String username) {
         // looking for Username already exist or is empty

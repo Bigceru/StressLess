@@ -31,7 +31,11 @@ public class MainApplication extends Application {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setTitle(title);
         stage.setScene(scene);
+<<<<<<< HEAD
         stage.setResizable(false);
+=======
+        stage.setResizable(true);
+>>>>>>> e54b129 (Upload 1.2 - Better GUI)
         stage.show();
     }
 
