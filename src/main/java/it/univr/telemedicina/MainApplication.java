@@ -18,6 +18,7 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Identificazione utente");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -32,7 +33,7 @@ public class MainApplication extends Application {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setResizable(true);
+        //stage.setResizable(true);
         stage.show();
     }
 

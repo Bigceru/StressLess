@@ -26,12 +26,12 @@ public abstract class User {
 
     //True if exists
     //False if not exists
-    protected boolean alreadyExist(String fieldToCheck, String inputField){
+    protected boolean alreadyExist(String table, String fieldToCheck, String inputField){
         boolean tempCheck = false;
 
         try {
             Database db = new Database(2);
-            ArrayList<String> test = db.getQuery("SELECT * FROM Patients WHERE " + fieldToCheck +" = " + "\"" + inputField + "\"", new String[]{fieldToCheck});
+            ArrayList<String> test = db.getQuery("SELECT * FROM" + table + "WHERE " + fieldToCheck +" = " + "\"" + inputField + "\"", new String[]{fieldToCheck});
 
             if (!test.isEmpty())
                 tempCheck = true;

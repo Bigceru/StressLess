@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 public class Database {
     private final Connection connection;
@@ -72,6 +73,44 @@ public class Database {
 
         // Add Line in Database
          statement.executeUpdate();
+    }
+
+        /*UPDATE Customers
+    SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+    WHERE CustomerID = 1;
+    */
+
+    /**
+     *
+     * @param nameTable Nome Tabella
+     * @param fieldName Nomi campi da settare, Ultimo PARAMETRO da quale entry prenderlo
+     * @param Values Nomi Valori da inserire, Ultimo PARAMETRO da quale entry prenderlo
+     * @throws SQLException
+     */
+    public void updateQuery(String nameTable, List<String> fieldName, Object[] Values) throws SQLException{
+
+
+        StringBuilder query = new StringBuilder("UPDATE ");
+        PreparedStatement statement;
+
+        // add nametable + SET
+        query.append(nameTable).append(" SET " );
+
+        // add field with ?
+        for(int i = 0; i< fieldName.size()-1; i++){
+            query.append(fieldName.indexOf(i)).append(" = ? ,");
+        }
+
+        query.deleteCharAt(query.length()-1).append("WHERE ").append(fieldName.indexOf(fieldName.size())).append("= ?;");
+
+
+        // change "?" with my values
+        statement = connection.prepareStatement(query.toString());
+        for(int i = 0; i< Values.length;i++){
+            statement.setObject(i+1, Values[i]);
+        }
+        // Update line in Database
+        statement.executeUpdate();
     }
 
     public void closeAll() throws SQLException{

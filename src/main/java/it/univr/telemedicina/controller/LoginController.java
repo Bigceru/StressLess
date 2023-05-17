@@ -31,8 +31,8 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        choiceUserBox.getItems().add("Patient");
-        choiceUserBox.getItems().add("Doctor");
+        comboUserBox.getItems().add("Patient");
+        comboUserBox.getItems().add("Doctor");
     }
 
     public void handleLoginButton(ActionEvent actionEvent) throws IOException {
@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
         else {
             try {
                 String tableName;
-                if(choiceUserBox.getValue().equals("Doctor"))   // Check if I want to login as doctor or patient
+                if(comboUserBox.getValue().equals("Doctor"))   // Check if I want to login as doctor or patient
                     tableName = "Doctors";
                 else
                     tableName = "Patients";
@@ -87,7 +87,7 @@ public class LoginController implements Initializable {
     }
 
     public void handleRegisterButton(ActionEvent actionEvent) throws IOException {
-        if(choiceUserBox.getValue().equals("Patient"))
+        if(comboUserBox.getValue().equals("Patient"))
             newScene.changeScene("Registration.fxml", "Registrazione utente", actionEvent);
         else
             System.out.println("Non sei un paziente");
