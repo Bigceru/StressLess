@@ -10,28 +10,18 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.UserPage">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="1080.0">
-=======
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="450.0" minWidth="620.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.UserPage">
-   <children>
-      <BorderPane prefHeight="430.0" prefWidth="538.0" style="-fx-background-color: #272932;">
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
+      <BorderPane prefHeight="200.0" prefWidth="1080.0" style="-fx-background-color: #272932;">
          <top>
             <AnchorPane prefHeight="35.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label layoutX="37.0" layoutY="10.0" text="Scheda utente" />
+                  <Label layoutX="37.0" layoutY="10.0" text="Scheda utente" textFill="WHITE" />
                </children>
             </AnchorPane>
          </top>
          <left>
-<<<<<<< HEAD
-            <AnchorPane fx:id="leftAnchor" prefWidth="250.0" style="-fx-background-color: linear-gradient(to bottom right, #2d658c, #51E5FF);" BorderPane.alignment="CENTER">
-=======
             <AnchorPane fx:id="leftAnchor" prefWidth="250.0" style="-fx-background-color: #0083F5; -fx-border-radius: 10; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
                <children>
                   <Label alignment="CENTER" layoutX="51.0" layoutY="134.0" prefHeight="20.0" prefWidth="152.0" text="Benvenuto" textAlignment="JUSTIFY" textFill="WHITE">
                      <font>
@@ -47,12 +37,7 @@
                      </font>
                      <padding>
                         <Insets bottom="10.0" right="10.0" />
-<<<<<<< HEAD
                      </padding></Label>
-=======
-                     </padding>
-                  </Label>
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
                   <Line endX="100.0" layoutX="-87.0" layoutY="199.0" startX="323.76800537109375" startY="1.52587890625E-5" stroke="WHITE" strokeWidth="2.0" AnchorPane.leftAnchor="11.585784912109375" />
                   <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="85.0" layoutY="122.0" size="8em" text="" wrappingWidth="85.84328842163086" />
                   <Button layoutX="30.0" layoutY="256.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #fff; -fx-cursor: hand; -fx-font-size: 14; -fx-font-family: Arial; -fx-alignment: CENTER-LEFT;" text="Home" textFill="WHITE">
@@ -60,14 +45,7 @@
                         <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="2em" />
                      </graphic>
                   </Button>
-                  <Button layoutX="85.0" layoutY="343.0" mnemonicParsing="false" text="Button" />
                </children>
-<<<<<<< HEAD
-=======
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
             </AnchorPane>
          </left>
       </BorderPane>

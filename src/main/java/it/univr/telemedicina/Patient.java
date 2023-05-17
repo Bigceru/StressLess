@@ -4,12 +4,9 @@ import it.univr.telemedicina.controller.Registration;
 import it.univr.telemedicina.utilities.Database;
 import java.sql.SQLException;
 import java.time.LocalDate;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
 
 public class Patient extends User {
 
@@ -28,10 +25,8 @@ public class Patient extends User {
     //Constructor
     public Patient(Registration reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
         super(reg, name, surname, email, phoneNumber, username, password);
-<<<<<<< HEAD
-        this.reg = reg;
 
-=======
+        this.reg = reg;
         this.birthPlace = birthPlace;
         this.province = province;
         this.birthDate = birthDate;
@@ -39,17 +34,14 @@ public class Patient extends User {
         this.sex = sex;
         this.taxIDCode = taxIDCode;
         this.refDoc = refDoc;
-        this.reg = reg;
 
         System.out.println("nome nel costruttore: " + name);
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
         check = checkProvince(province) & checkDomicile(domicile) & checkSex(sex) & checkBirthDate(birthDate) & checkBirthPlace(birthPlace) & checkRefDoc(refDoc) & checkTaxIdCode(taxIDCode);
 
         if(this.getCheck()) {
             // If the previous field were correct
             System.out.println("Check superato!!!");
 
-<<<<<<< HEAD
             this.birthPlace = birthPlace;
             this.province = province;
             this.birthDate = birthDate;
@@ -58,8 +50,6 @@ public class Patient extends User {
             this.taxIDCode = taxIDCode;
             this.refDoc = refDoc;
 
-=======
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
             // INSERT into database
             try {
                 System.out.println("Provo ad entrare nel Database");
@@ -70,8 +60,6 @@ public class Patient extends User {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-<<<<<<< HEAD
-
         }
     }
 
@@ -87,13 +75,6 @@ public class Patient extends User {
      */
     //Check TaxIdCode
     private boolean checkTaxIdCode(String taxIDCode) {
-        if(getSurname() == null || getName() == null || birthDate == null || birthPlace == null || sex == 'Z') {
-=======
-        }
-    }
-
-    //Check TaxIdCode
-    private boolean checkTaxIdCode(String taxIDCode) {
         //Check empty fields
         if (getName() == null || getSurname() == null || getBirthDate() == null || getBirthPlace() == null || getSex() == 'Z') {
             reg.setInvalidField("taxIDCode");
@@ -102,7 +83,6 @@ public class Patient extends User {
 
         //Check if the tax code exists
         if (super.alreadyExist("taxIDCode", taxIDCode)){
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
             reg.setInvalidField("taxIDCode");
             return false;
         }
@@ -111,30 +91,9 @@ public class Patient extends User {
         StringBuilder codiceFiscale = new StringBuilder();
         String consonants = "bcdfghjklmnpqrstvwxyz";
         String vocals = "aeiou";
-<<<<<<< HEAD
-        String surname = getSurname().toLowerCase().replace(" ", ""); //remove space
-        String name = getName().toLowerCase().replace(" ","");
-        LocalDate date = birthDate;
-        System.out.println("Ecco il cognome" + surname+ "\nEcco il nome" + name + "\n");
-        int count = 0;
-
-        //Check surname
-        if(surname.length() == 2) //surname with only 2 characters
-            //if the vowel is before the consonant
-            if((vocals.contains(String.valueOf(surname.charAt(0)))) && consonants.contains(String.valueOf(surname.charAt(1)))) {
-                codiceFiscale.append(new StringBuilder(surname).reverse());
-            }
-            else
-                codiceFiscale.append(surname).append('x');
-        else{
-            //check if there are at least 3 consonants
-            for(int i = 0; i < surname.length() && count != 3; i++){
-                if(consonants.contains(String.valueOf(surname.charAt(i)))){
-=======
         String monthOrder = "ABCDEHLMPRST";
-        String surname = getSurname().toLowerCase().replace(" ", "");
+        String surname = getSurname().toLowerCase().replace(" ", "");   //remove space
         String name = getName().toLowerCase().replace(" ", "");
-        LocalDate date = getBirthDate();
         System.out.println("Ecco il cognome" + surname + "\nEcco il nome" + name + "\n");
         int count = 0;
 
@@ -149,20 +108,14 @@ public class Patient extends User {
             //check if there are at least 3 consonants
             for (int i = 0; i < surname.length() && count != 3; i++) {
                 if (consonants.contains(String.valueOf(surname.charAt(i)))) {
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
                     codiceFiscale.append(surname.charAt(i)); // Prendo il carattere
                     count++;
                 }
             }
 
             //There aren't 3 characters
-<<<<<<< HEAD
-            for(int i = 0; i < surname.length() && count != 3; i++){
-                if(vocals.contains(String.valueOf(surname.charAt(i)))){
-=======
             for (int i = 0; i < surname.length() && count != 3; i++) {
                 if (vocals.contains(String.valueOf(surname.charAt(i)))) {
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
                     codiceFiscale.append(surname.charAt(i)); // Prendo la vocale
                     count++;
                 }
@@ -172,19 +125,6 @@ public class Patient extends User {
 
         count = 0;
         //Check name
-<<<<<<< HEAD
-        if(name.length() == 2)  //name with only 2 characters
-            //if the vowel is before the consonant
-            if((vocals.contains(String.valueOf(name.charAt(0)))) && consonants.contains(String.valueOf(name.charAt(1)))) {
-                codiceFiscale.append(new StringBuilder(name).reverse()).append("x");
-            }
-            else {
-                codiceFiscale.append(name).append('x');
-            }
-        else{
-            for(int i = 0; i < name.length() && count != 4; i++){
-                if(consonants.contains(String.valueOf(name.charAt(i)))){
-=======
         if (name.length() == 2)  //name with only 2 characters
             //if the vowel is before the consonant
             if ((vocals.contains(String.valueOf(name.charAt(0)))) && consonants.contains(String.valueOf(name.charAt(1)))) {
@@ -195,23 +135,15 @@ public class Patient extends User {
         else {
             for (int i = 0; i < name.length() && count != 4; i++) {
                 if (consonants.contains(String.valueOf(name.charAt(i)))) {
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
                     codiceFiscale.append(name.charAt(i)); // Prendo la consonante
                     count++;
                 }
             }
 
             // If the name has n° consonant >= 4 remove the second one
-<<<<<<< HEAD
-            if(count == 4){
-                codiceFiscale.deleteCharAt(4);
-            }
-            else if(count < 3) {    // If I have less than 3 consonant
-=======
             if (count == 4) {
                 codiceFiscale.deleteCharAt(4);
             } else if (count < 3) {    // If I have less than 3 consonant
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
                 //There aren't 3 characters
                 for (int i = 0; i < name.length() && count < 3; i++) {
                     if (vocals.contains(String.valueOf(name.charAt(i)))) {
@@ -221,26 +153,18 @@ public class Patient extends User {
                 }
             }
         }
-<<<<<<< HEAD
-        System.out.println("Codice nome: " + codiceFiscale);
-
-        //Check date and sex
-        codiceFiscale.append(String.valueOf(date.getYear()), 2, 4); //year
-
-        boolean tempCheck = true;
-=======
 
         // Add year value
-        codiceFiscale.append(String.valueOf(date.getYear()), 2, 4); //year
+        codiceFiscale.append(String.valueOf(birthDate.getYear()), 2, 4); //year
 
         // Add month code
-        codiceFiscale.append(monthOrder.charAt(date.getMonthValue() - 1));
+        codiceFiscale.append(monthOrder.charAt(birthDate.getMonthValue() - 1));
 
         // Add days and sex
         if (sex == 'F')
-            codiceFiscale.append(date.getDayOfMonth() + 40);
+            codiceFiscale.append(birthDate.getDayOfMonth() + 40);
         else
-            codiceFiscale.append(date.getDayOfMonth());
+            codiceFiscale.append(birthDate.getDayOfMonth());
 
         // Add birthPlace
         try {
@@ -296,29 +220,10 @@ public class Patient extends User {
         System.out.println("Codice fiscale: " + codiceFiscale.toString().toUpperCase());
 
         boolean tempCheck = codiceFiscale.toString().equals(taxIDCode);
-        System.out.println(codiceFiscale);
 
         if(!tempCheck)
             reg.setInvalidField("taxIDCode");
 
-
-        return tempCheck;
-    }
-
-    protected boolean checkEmail(String email) {
-        boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("email", email);
-        if (!tempCheck)
-            reg.setInvalidField("email");
-
-        return tempCheck;
-    }
-
-    protected boolean checkPhoneNumber(String phoneNumber){
-        boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("phoneNumber", phoneNumber);
-
-        if (!tempCheck)
-            reg.setInvalidField("phoneNumber");
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
 
         return tempCheck;
     }
@@ -331,7 +236,6 @@ public class Patient extends User {
             reg.setInvalidField("province");
         }
 
-
         return tempCheck;
     }
 
@@ -340,7 +244,6 @@ public class Patient extends User {
 
         if(!tempCheck)
             reg.setInvalidField("birthPlace");
-
 
         return tempCheck;
     }
@@ -351,7 +254,6 @@ public class Patient extends User {
         if(!tempCheck)
             reg.setInvalidField("birthDate");
 
-
         return tempCheck;
     }
 
@@ -361,20 +263,14 @@ public class Patient extends User {
         if(!tempCheck)
             reg.setInvalidField("domicile");
 
-
         return tempCheck;
     }
 
     private boolean checkSex(char sex) {
-<<<<<<< HEAD
-=======
-
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
         boolean tempCheck = sex != 'Z';     // If no sex has been selected
 
         if(!tempCheck)
             reg.setInvalidField("sex");
-
 
         return tempCheck;
     }
@@ -384,7 +280,6 @@ public class Patient extends User {
 
         if(!tempCheck)
             reg.setInvalidField("refDoc");
-
 
         return tempCheck;
     }

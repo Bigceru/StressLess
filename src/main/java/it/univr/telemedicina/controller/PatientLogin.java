@@ -6,7 +6,6 @@ import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,25 +34,14 @@ public class PatientLogin {
                 // connect to the database
                 Database database = new Database(2);
                 credentials = database.getQuery("SELECT * FROM Patients WHERE username = " + "\"" + txtUsername.getText() + "\" AND password = " + "\"" + txtPassword.getText() + "\"", new String[]{"username", "password"});
-<<<<<<< HEAD
-=======
                 database.closeAll();
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
 
                 // if is empty run error
                 if (credentials.isEmpty())
                     newScene.showAlert("Error with credentials","Error with credentials");
-<<<<<<< HEAD
-
-                database.closeAll();
-
-                // change scene
-                newScene.changeScene("UserPage.fxml", "Profilo Utente", actionEvent);
-=======
                 else
                     // change scene
                     newScene.changeScene("UserPage.fxml", "Profilo Utente", actionEvent);
->>>>>>> e54b129 (Upload 1.2 - Better GUI)
 
             } catch (SQLException e) {
                 System.out.println("Error with login");
