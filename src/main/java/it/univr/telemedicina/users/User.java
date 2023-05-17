@@ -13,26 +13,16 @@ public abstract class User {
     private String username;
     private String password;
     private boolean check;
-    private final RegistrationController reg;
 
     // Constructor
-    public User(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password) {
-        this.reg = reg;
+    public User(String name, String surname, String email, String phoneNumber, String username, String password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
         this.password = password;
-
-        if(reg != null) {
-            // Check if name, surname, email, password and phone number are correct
-            check = checkName(name) & checkSurname(surname) & checkEmail(email) & checkPassword(password) & checkPhoneNumber(phoneNumber) & checkUsername(username);
-
-        }
-        else
-            check = true;
-        }
+    }
 
     //True if exists
     //False if not exists
@@ -55,74 +45,14 @@ public abstract class User {
         return tempCheck;
     }
 
-    protected boolean checkName(String name){
-        boolean tempCheck = !name.isEmpty();
+    protected abstract boolean checkName(String name);
+    protected abstract boolean checkSurname(String surname);
+    protected abstract boolean checkPhoneNumber(String phoneNumber);
+    protected abstract boolean checkEmail(String email);
+    protected abstract boolean checkUsername(String username);
+    protected abstract boolean checkPassword(String password);
 
-        if(!tempCheck)
-            reg.setInvalidField("name");
-
-        return tempCheck;
-    }
-
-    protected boolean checkSurname(String surname){
-        boolean tempCheck = !surname.isEmpty();
-
-        if(!tempCheck)
-            reg.setInvalidField("surname");
-
-        return tempCheck;
-    }
-
-    protected boolean checkPhoneNumber(String phoneNumber){
-        boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("phoneNumber", phoneNumber);
-
-        if (!tempCheck)
-            reg.setInvalidField("phoneNumber");
-
-        return tempCheck;
-    }
-
-    protected boolean checkEmail(String email) {
-        boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("email", email);
-
-        if (!tempCheck)
-            reg.setInvalidField("email");
-
-        return tempCheck;
-    }
-
-    protected boolean checkUsername(String username) {
-        // looking for Username already exist or is empty
-        boolean tempCheck = !username.isEmpty() && !alreadyExist("username",username);
-
-        if(!tempCheck){
-            reg.setInvalidField("username");
-        }
-        return tempCheck;
-    }
-
-    protected boolean checkPassword(String password) {
-        boolean tempCheck = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?.\\-_:,;])(?=\\S+$).{8,}$");
-
-        if (!tempCheck)
-            reg.setInvalidField("password");
-
-        return tempCheck;
-        /*
-        ^                 # start-of-string
-        (?=.*[0-9])       # a digit must occur at least once
-        (?=.*[a-z])       # a lower case letter must occur at least once
-        (?=.*[A-Z])       # an upper case letter must occur at least once
-        (?=.*[@#$%^&+=])  # a special character must occur at least once
-        (?=\S+$)          # no whitespace allowed in the entire string
-        .{8,}             # anything, at least eight places though
-        $                 # end-of-string
-         */
-    }
-
-    public boolean getCheck() {
-        return check;
-    }
+    public abstract boolean getCheck();
 
     // Get and set methods
     public String getName() {

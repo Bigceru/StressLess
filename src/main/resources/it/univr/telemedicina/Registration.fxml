@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -10,270 +10,118 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.RegistrationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.RegistrationController">
    <children>
-      <Label layoutX="232.0" layoutY="14.0" text="Registrazione Utente" />
-      <HBox layoutY="35.0" prefHeight="263.0" prefWidth="600.0">
+      <AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #3CA6A6;">
          <children>
-            <VBox prefHeight="406.0" prefWidth="300.0">
-               <children>
-                  <Label fx:id="lblName" text="Nome">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></Label>
-                  <TextField fx:id="txtName">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></TextField>
-                  <Label fx:id="lblBirthDate" text="Data di nascita">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></Label>
-                  <DatePicker fx:id="txtBirthDate" prefHeight="24.0" prefWidth="206.0">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                  </DatePicker>
-                  <Label fx:id="lblDomicile" text="Domicilio">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></Label>
-                  <TextField fx:id="txtDomicile">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></TextField>
-                   <Label fx:id="lblPhoneNumber" text="Numero di Telefono">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></Label>
-                   <TextField fx:id="txtPhoneNumber">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></TextField>
-                   <Label fx:id="lblTaxIDCode" text="Codice fiscale">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></Label>
-                  <TextField fx:id="txtTaxIDCode" prefHeight="24.0" prefWidth="304.0">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                  </TextField>
-                  <Label fx:id="lblUsername" text="Nome utente">
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                  </Label>
-                  <TextField fx:id="txtUsername" prefHeight="24.0" prefWidth="304.0">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                  </TextField>
-               </children>
-            </VBox>
-            <VBox prefHeight="339.0" prefWidth="300.0">
-               <children>
-                  <Label fx:id="lblSurname" text="Cognome">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding></Label>
-                  <TextField fx:id="txtSurname">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                  </TextField>
-                  <HBox prefHeight="39.0" prefWidth="323.0">
-                     <children>
-                        <VBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label fx:id="lblBirthPlace" text="Luogo di nascita">
-                                 <VBox.margin>
-                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                                 </padding>
-                                 <opaqueInsets>
-                                    <Insets bottom="3.0" top="3.0" />
-                                 </opaqueInsets>
-                              </Label>
-                              <TextField fx:id="txtBirthPlace" prefHeight="24.0" prefWidth="190.0">
-                                 <VBox.margin>
-                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                                 </padding>
-                                 <opaqueInsets>
-                                    <Insets bottom="3.0" top="3.0" />
-                                 </opaqueInsets>
-                              </TextField>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="100.0" prefWidth="113.0">
-                           <children>
-                              <Label fx:id="lblProvince" text="Provincia">
-                                 <padding>
-                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                                 </VBox.margin>
-                                 <opaqueInsets>
-                                    <Insets bottom="3.0" top="3.0" />
-                                 </opaqueInsets>
-                              </Label>
-                              <ComboBox fx:id="comboBoxProvince" prefHeight="26.0" prefWidth="83.0" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Label fx:id="lblEmail" text="Email">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets bottom="3.0" top="3.0" />
-                     </opaqueInsets>
-                  </Label>
-                  <TextField fx:id="txtEmail">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets bottom="3.0" top="3.0" />
-                     </opaqueInsets>
-                  </TextField>
-                  <Label fx:id="lblRefDoc" text="Medico referente">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets bottom="3.0" top="3.0" />
-                     </opaqueInsets>
-                  </Label>
-                  <ComboBox fx:id="comboBoxRefDoc" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <Label fx:id="lblSex" text="Sesso">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets bottom="3.0" top="3.0" />
-                     </opaqueInsets>
-                  </Label>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <RadioButton fx:id="maleButton" mnemonicParsing="false" text="M">
-                           <padding>
-                              <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                           </HBox.margin>
-                           <opaqueInsets>
-                              <Insets bottom="3.0" top="3.0" />
-                           </opaqueInsets>
-                        </RadioButton>
-                        <RadioButton fx:id="femaleButton" mnemonicParsing="false" text="F">
-                           <padding>
-                              <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                           </HBox.margin>
-                           <opaqueInsets>
-                              <Insets bottom="3.0" top="3.0" />
-                           </opaqueInsets>
-                        </RadioButton>
-                     </children>
-                  </HBox>
-                  <Label fx:id="lblPassword" text="Password">
-                     <VBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets bottom="3.0" top="3.0" />
-                     </opaqueInsets>
-                  </Label>
-                  <PasswordField fx:id="txtPassword">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </PasswordField>
-               </children>
-            </VBox>
+            <Label layoutX="349.0" layoutY="8.0" style="-fx-font-family: Montserrat;" text="REGISTRAZIONE UTENTE" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
-      </HBox>
-      <Button layoutX="430.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleRegistration" text="Registrati">
-         <padding>
-            <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-         </padding></Button>
-      <Button layoutX="88.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleAnnulla" text="Annulla">
-         <padding>
-            <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
-         </padding></Button>
-      <Label fx:id="wrongRegistration" layoutX="230.0" layoutY="394.0" prefHeight="17.0" prefWidth="137.0" textFill="RED" />
-      <TextArea fx:id="errorCodeLabel" editable="false" layoutX="6.0" layoutY="426.0" prefHeight="92.0" prefWidth="584.0" />
+      </AnchorPane>
+      <AnchorPane layoutY="36.0" prefHeight="679.0" prefWidth="900.0" style="-fx-background-color: #272932; -fx-background-radius: 20;" AnchorPane.bottomAnchor="-15.0" AnchorPane.topAnchor="36.0">
+         <children>
+            <Label fx:id="lblName" layoutX="20.0" layoutY="30.0" style="-fx-font-family: Montserrat;" text="NOME" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtName" layoutX="20.0" layoutY="55.0" prefHeight="26.0" prefWidth="241.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <Label fx:id="lblBirthDate" layoutX="550.0" layoutY="30.0" style="-fx-font-family: Montserrat;" text="DATA DI NASCITA" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblSurname" layoutX="282.0" layoutY="30.0" style="-fx-font-family: Montserrat;" text="COGNOME" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtSurname" layoutX="280.0" layoutY="55.0" prefHeight="26.0" prefWidth="241.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+            <DatePicker fx:id="txtBirthDate" layoutX="550.0" layoutY="55.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+            <RadioButton fx:id="maleButton" layoutX="775.0" layoutY="55.0" mnemonicParsing="false" text="M" textFill="WHITE" />
+            <RadioButton fx:id="femaleButton" layoutX="820.0" layoutY="55.0" mnemonicParsing="false" text="F" textFill="WHITE" />
+            <Label fx:id="lblSex" layoutX="775.0" layoutY="30.0" style="-fx-font-family: Montserrat;" text="SESSO" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblBirthPlace" layoutX="550.0" layoutY="112.0" style="-fx-font-family: Montserrat;" text="LUOGO DI NASCITA" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtBirthPlace" layoutX="550.0" layoutY="137.0" prefHeight="26.0" prefWidth="241.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <Label fx:id="lblDomicile" layoutX="20.0" layoutY="112.0" style="-fx-font-family: Montserrat;" text="DOMICILIO" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtDomicile" layoutX="20.0" layoutY="137.0" prefHeight="26.0" prefWidth="503.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <ComboBox fx:id="comboBoxProvince" layoutX="800.0" layoutY="137.0" prefHeight="26.0" prefWidth="80.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+            <Label fx:id="lblProvince" layoutX="800.0" layoutY="112.0" style="-fx-font-family: Montserrat;" text="PROVINCIA" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPhoneNumber" layoutX="20.0" layoutY="194.0" style="-fx-font-family: Montserrat;" text="NUMERO DI TELEFONO" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtPhoneNumber" layoutX="20.0" layoutY="219.0" prefHeight="26.0" prefWidth="241.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <Label fx:id="lblEmail" layoutX="280.0" layoutY="194.0" style="-fx-font-family: Montserrat;" text="E-MAIL" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtEmail" layoutX="280.0" layoutY="219.0" prefHeight="26.0" prefWidth="241.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <Label fx:id="lblTaxIDCode" layoutX="550.0" layoutY="194.0" style="-fx-font-family: Montserrat;" text="CODICE FISCALE" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtTaxIDCode" layoutX="550.0" layoutY="219.0" prefHeight="26.0" prefWidth="330.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <Label fx:id="lblUsername" layoutX="20.0" layoutY="276.0" style="-fx-font-family: Montserrat;" text="NOME UTENTE" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUsername" layoutX="20.0" layoutY="301.0" prefHeight="26.0" prefWidth="241.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <Label fx:id="lblPassword" layoutX="282.0" layoutY="276.0" style="-fx-font-family: Montserrat;" text="PASSWORD" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="txtPassword" layoutX="282.0" layoutY="301.0" prefHeight="26.0" prefWidth="241.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+            <ComboBox fx:id="comboBoxRefDoc" layoutX="550.0" layoutY="301.0" prefHeight="26.0" prefWidth="330.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+            <Label fx:id="lblRefDoc" layoutX="550.0" layoutY="273.0" style="-fx-font-family: Montserrat;" text="MEDICO REFERENTE" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="41.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleAnnulla" style="-fx-background-color: #272932; -fx-cursor: hand; -fx-font-family: Montserrat;" text="INDIETRO" textFill="WHITE">
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="2em" />
+               </graphic>
+            </Button>
+            <Label layoutX="91.0" layoutY="374.0" prefHeight="17.0" prefWidth="0.0" textFill="WHITE" />
+            <Button layoutX="736.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleRegistration" style="-fx-background-color: #0083F5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand; -fx-font-family: Montserrat;" text="REGISTRATI" textFill="WHITE">
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" glyphName="PLUS" size="2em" />
+               </graphic>
+            </Button>
+            <TextArea fx:id="errorCodeLabel" layoutX="17.0" layoutY="413.0" prefHeight="200.0" prefWidth="866.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+            <Label fx:id="wrongRegistration" layoutX="516.0" layoutY="363.0" prefHeight="23.0" prefWidth="208.0" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

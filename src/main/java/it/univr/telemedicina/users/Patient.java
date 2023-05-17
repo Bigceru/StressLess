@@ -24,7 +24,7 @@ public class Patient extends User {
 
     //Constructor
     public Patient(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
-        super(reg, name, surname, email, phoneNumber, username, password);
+        super(name, surname, email, phoneNumber, username, password);
 
         this.reg = reg;
         this.birthPlace = birthPlace;
@@ -36,7 +36,7 @@ public class Patient extends User {
         this.refDoc = refDoc;
 
         if(reg != null) {
-            check = checkProvince(province) & checkDomicile(domicile) & checkSex(sex) & checkBirthDate(birthDate) & checkBirthPlace(birthPlace) & checkRefDoc(refDoc) & checkTaxIdCode(taxIDCode);
+            check = checkName(name) & checkSurname(surname) & checkEmail(email) & checkPassword(password) & checkPhoneNumber(phoneNumber) & checkUsername(username) & checkProvince(province) & checkDomicile(domicile) & checkSex(sex) & checkBirthDate(birthDate) & checkBirthPlace(birthPlace) & checkRefDoc(refDoc) & checkTaxIdCode(taxIDCode);
 
             if (this.getCheck()) {
                 // INSERT into database
@@ -54,7 +54,6 @@ public class Patient extends User {
         else
             check = true;
     }
-
 
     /*
     - le prime tre lettere del codice fiscale sono prese dal cognome (solitamente prima, seconda e terza consonante)
@@ -167,7 +166,6 @@ public class Patient extends User {
             throw new RuntimeException(e);
         }
 
-
         // Compute the last character
         // 1. Get the special values first 15 characters and sum them
         int sum = 0;
@@ -183,7 +181,6 @@ public class Patient extends User {
                 Map.entry('S', 18), Map.entry('T', 19), Map.entry('U', 20), Map.entry('V', 21),
                 Map.entry('W', 22), Map.entry('X', 23), Map.entry('Y', 24), Map.entry('Z', 25)
         );
-
         Map<Character, Integer> oddTable = new HashMap<>(Map.ofEntries(
                 Map.entry('0', 1), Map.entry('1', 0), Map.entry('2', 5), Map.entry('3', 7),
                 Map.entry('4', 9),Map.entry('5', 13), Map.entry('6', 15), Map.entry('7', 17),

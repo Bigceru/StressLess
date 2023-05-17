@@ -71,7 +71,6 @@ public class RegistrationController implements Initializable {
     private Label lblUsername;
     @FXML
     private Label lblPhoneNumber;
-
     private static ArrayList<Integer> doctorID = new ArrayList<>();
     @FXML
     private TextArea errorCodeLabel;
@@ -236,7 +235,7 @@ public class RegistrationController implements Initializable {
         // If all the fields are correct
         if(patient.getCheck()) {
             // Allert for registration success and change scene to Login
-            newScene.showAlert("Registration success", "La registrazione è avvenuta con successo", Alert.AlertType.CONFIRMATION);
+            newScene.showAlert("Registration success", "La registrazione è avvenuta con successo", Alert.AlertType.INFORMATION);
             newScene.changeScene("Login.fxml", "Paziente", actionEvent);
         }
     }

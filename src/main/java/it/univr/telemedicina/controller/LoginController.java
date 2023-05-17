@@ -6,9 +6,9 @@ import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,7 +23,11 @@ public class LoginController implements Initializable {
     @FXML
     private TextField txtPassword;
     @FXML
-    private ChoiceBox choiceUserBox;
+    private ComboBox comboUserBox;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button registerButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -31,14 +35,14 @@ public class LoginController implements Initializable {
         choiceUserBox.getItems().add("Doctor");
     }
 
-    public void handleLogin(ActionEvent actionEvent) throws IOException {
+    public void handleLoginButton(ActionEvent actionEvent) throws IOException {
         ArrayList<String> credentials;
 
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
         // Change page if login has success
-        if(username.isEmpty() || password.isEmpty() ){
+        if(username.isEmpty() || password.isEmpty()){
             newScene.showAlert("Campi non pieni","Compila tutti i campi", Alert.AlertType.ERROR);
         }
         else {
@@ -87,5 +91,20 @@ public class LoginController implements Initializable {
             newScene.changeScene("Registration.fxml", "Registrazione utente", actionEvent);
         else
             System.out.println("Non sei un paziente");
+    }
+
+    public void handleComboBoxChoose(ActionEvent actionEvent) {
+        if(comboUserBox.getValue() == "Patient") {
+            loginButton.setVisible(true);
+            registerButton.setVisible(true);
+        }
+        else if(comboUserBox.getValue() == "Doctor") {
+            loginButton.setVisible(true);
+            registerButton.setVisible(false);
+        }
+        else {
+            loginButton.setVisible(false);
+            registerButton.setVisible(false);
+        }
     }
 }
