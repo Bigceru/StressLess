@@ -1,6 +1,6 @@
-package it.univr.telemedicina;
+package it.univr.telemedicina.users;
 
-import it.univr.telemedicina.controller.Registration;
+import it.univr.telemedicina.controller.RegistrationController;
 import it.univr.telemedicina.utilities.Database;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,10 +13,10 @@ public abstract class User {
     private String username;
     private String password;
     private boolean check;
-    private final Registration reg;
+    private final RegistrationController reg;
 
     // Constructor
-    public User(Registration reg, String name, String surname, String email, String phoneNumber, String username, String password){
+    public User(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password) {
         this.reg = reg;
         this.name = name;
         this.surname = surname;
@@ -25,28 +25,14 @@ public abstract class User {
         this.username = username;
         this.password = password;
 
-        // Check if name, surname, email, password and phone number are correct
-        check = checkName(name) & checkSurname(surname) & checkEmail(email) & checkPassword(password) & checkPhoneNumber(phoneNumber) & checkUsername(username);
+        if(reg != null) {
+            // Check if name, surname, email, password and phone number are correct
+            check = checkName(name) & checkSurname(surname) & checkEmail(email) & checkPassword(password) & checkPhoneNumber(phoneNumber) & checkUsername(username);
 
-        /*
-        System.out.println("Name: " + checkName(name));
-        System.out.println("Surname: " + checkSurname(surname));
-        System.out.println("Email: " + checkEmail(email));
-        System.out.println("Pass: " + checkPassword(password));
-        System.out.println("Telefono: " + checkPhoneNumber(phoneNumber));
-        System.out.println("Username:  "+ checkUsername(username));
-         */
-
-        // If they are correct
-        if(check) {
-            this.name = name;
-            this.surname = surname;
-            this.email = email;
-            this.phoneNumber = phoneNumber;
-            this.username = username;
-            this.password = password;
         }
-    }
+        else
+            check = true;
+        }
 
     //True if exists
     //False if not exists
@@ -74,8 +60,6 @@ public abstract class User {
 
         if(!tempCheck)
             reg.setInvalidField("name");
-        else
-            this.name = name;
 
         return tempCheck;
     }
@@ -100,6 +84,7 @@ public abstract class User {
 
     protected boolean checkEmail(String email) {
         boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("email", email);
+
         if (!tempCheck)
             reg.setInvalidField("email");
 
@@ -174,5 +159,11 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "\nName: " + getName() + "\nSurname: " + getSurname() + "\nEmail: " + getEmail() + "\nPhone: " + getPhoneNumber() + "\nPassword: " + getPassword() + "\nUsername" + getUsername() + "\n";
+
     }
 }

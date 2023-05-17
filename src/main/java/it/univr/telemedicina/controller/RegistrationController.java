@@ -1,20 +1,18 @@
 package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.Patient;
+import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.LabeledSkinBase;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Registration implements Initializable {
+public class RegistrationController implements Initializable {
     private final MainApplication newScene = new MainApplication();
     private ToggleGroup sexChooserGroup;
     @FXML
@@ -73,7 +71,11 @@ public class Registration implements Initializable {
     private Label lblUsername;
     @FXML
     private Label lblPhoneNumber;
+
     private static ArrayList<Integer> doctorID = new ArrayList<>();
+    @FXML
+    private TextArea errorCodeLabel;
+    private StringBuilder errorString = new StringBuilder();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -108,9 +110,6 @@ public class Registration implements Initializable {
         sexChooserGroup = new ToggleGroup();
         maleButton.setToggleGroup(sexChooserGroup);
         femaleButton.setToggleGroup(sexChooserGroup);
-
-
-
     }
 
     /**
@@ -118,55 +117,66 @@ public class Registration implements Initializable {
      * @param errorField    field to change
      */
     public void setInvalidField(String errorField) {
-
-
         switch (errorField) {
             case "password" -> {
+                errorString.append("- Invalid Password: must be 8 characters long and contain at least one special character, one lowercase, one uppercase and a number \n");
                 lblPassword.setStyle("-fx-text-fill: red;");
                 txtPassword.setStyle("-fx-text-fill: red;");
             }
             case "email" -> {
+                errorString.append("- Email already used or invalid email format \n");
                 lblEmail.setStyle("-fx-text-fill: red;");
                 txtEmail.setStyle("-fx-text-fill: red;");
             }
             case "username" -> {
+                errorString.append("- Username already used or invalid username format \n");
                 lblUsername.setStyle("-fx-text-fill: red;");
                 txtUsername.setStyle("-fx-text-fill: red;");
             }
             case "phoneNumber" -> {
+                errorString.append("- Invalid phoneNumber");
                 lblPhoneNumber.setStyle("-fx-text-fill: red;");
                 txtPhoneNumber.setStyle("-fx-text-fill: red;");
             }
             case "surname" -> {
+                errorString.append("- Invalid surname format \n");
                 lblSurname.setStyle("-fx-text-fill: red;");
                 txtSurname.setStyle("-fx-text-fill: red;");
             }
             case "name" -> {
+                errorString.append("- Invalid name format \n");
                 lblName.setStyle("-fx-text-fill: red;");
                 txtName.setStyle("-fx-text-fill: red;");
             }
             case "province" -> {
+                errorString.append("- Invalid province format \n");
                 lblProvince.setStyle("-fx-text-fill: red;");
             }
             case "birthPlace" -> {
+                errorString.append("- Invalid birthplace format \n");
                 lblBirthPlace.setStyle("-fx-text-fill: red;");
                 txtBirthPlace.setStyle("-fx-text-fill: red;");
             }
             case "birthDate" -> {
+                errorString.append("- Invalid birthDate: date impossible or empty");
                 lblBirthDate.setStyle("-fx-text-fill: red;");
             }
             case "domicile" -> {
+                errorString.append("- Invalid domicile format \n");
                 lblDomicile.setStyle("-fx-text-fill: red;");
                 txtDomicile.setStyle("-fx-text-fill: red;");
             }
             case "sex" -> {
+                errorString.append("- Invalid sex input \n");
                 lblSex.setStyle("-fx-text-fill: red;");
             }
             case "taxIDCode" -> {
+                errorString.append("- Invalid taxIDCode: inconsistent with other data \n");
                 lblTaxIDCode.setStyle("-fx-text-fill: red;");
                 txtTaxIDCode.setStyle("-fx-text-fill: red;");
             }
             case "refDoc" -> {
+                errorString.append("- Invalid medico referente choose \n");
                 lblRefDoc.setStyle("-fx-text-fill: red;");
             }
             default -> {    // Set all fields color's black
@@ -193,13 +203,15 @@ public class Registration implements Initializable {
                 txtTaxIDCode.setStyle("-fx-text-fill: black;");
                 lblRefDoc.setStyle("-fx-text-fill: black;");
                 wrongRegistration.setText("");      // Hide error message
+                errorString = new StringBuilder();
             }
         }
 
         // Set error message
-        if(!errorField.contains("resetAll")) {
+        if(!errorField.contains("resetAll"))
             wrongRegistration.setText("Registrazione fallita");
-        }
+
+        errorCodeLabel.setText(errorString.toString());     // Set label with error code description
     }
 
     public void handleRegistration(ActionEvent actionEvent) throws IOException {
@@ -224,12 +236,12 @@ public class Registration implements Initializable {
         // If all the fields are correct
         if(patient.getCheck()) {
             // Allert for registration success and change scene to Login
-            newScene.showAlert("Registration success", "La registrazione è avvenuta con successo");
-            newScene.changeScene("PatientLogin.fxml", "Paziente", actionEvent);
+            newScene.showAlert("Registration success", "La registrazione è avvenuta con successo", Alert.AlertType.CONFIRMATION);
+            newScene.changeScene("Login.fxml", "Paziente", actionEvent);
         }
     }
 
     public void handleAnnulla(ActionEvent actionEvent) throws IOException {
-        newScene.changeScene("PatientLogin.fxml", "Paziente", actionEvent);
+        newScene.changeScene("Login.fxml", "Paziente", actionEvent);
     }
 }

@@ -1,6 +1,6 @@
-package it.univr.telemedicina;
+package it.univr.telemedicina.users;
 
-import it.univr.telemedicina.controller.Registration;
+import it.univr.telemedicina.controller.RegistrationController;
 import it.univr.telemedicina.utilities.Database;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -19,11 +19,11 @@ public class Patient extends User {
     private char sex;
     private String taxIDCode;
     private int refDoc;
-    private final Registration reg;
+    private final RegistrationController reg;
     private boolean check;
 
     //Constructor
-    public Patient(Registration reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
+    public Patient(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
         super(reg, name, surname, email, phoneNumber, username, password);
 
         this.reg = reg;
@@ -35,32 +35,24 @@ public class Patient extends User {
         this.taxIDCode = taxIDCode;
         this.refDoc = refDoc;
 
-        System.out.println("nome nel costruttore: " + name);
-        check = checkProvince(province) & checkDomicile(domicile) & checkSex(sex) & checkBirthDate(birthDate) & checkBirthPlace(birthPlace) & checkRefDoc(refDoc) & checkTaxIdCode(taxIDCode);
+        if(reg != null) {
+            check = checkProvince(province) & checkDomicile(domicile) & checkSex(sex) & checkBirthDate(birthDate) & checkBirthPlace(birthPlace) & checkRefDoc(refDoc) & checkTaxIdCode(taxIDCode);
 
-        if(this.getCheck()) {
-            // If the previous field were correct
-            System.out.println("Check superato!!!");
-
-            this.birthPlace = birthPlace;
-            this.province = province;
-            this.birthDate = birthDate;
-            this.domicile = domicile;
-            this.sex = sex;
-            this.taxIDCode = taxIDCode;
-            this.refDoc = refDoc;
-
-            // INSERT into database
-            try {
-                System.out.println("Provo ad entrare nel Database");
-                Database database = new Database(2);
-                database.insertQuery("Patients", stringFields, new Object[]{name,surname, birthPlace, province, birthDate, phoneNumber, domicile, sex, taxIDCode, email, username, password, refDoc});
-            } catch (SQLException e){
-                System.out.println("Error SQL query!");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+            if (this.getCheck()) {
+                // INSERT into database
+                try {
+                    System.out.println("Provo ad entrare nel Database");
+                    Database database = new Database(2);
+                    database.insertQuery("Patients", stringFields, new Object[]{name, surname, birthPlace, province, birthDate, phoneNumber, domicile, sex, taxIDCode, email, username, password, refDoc});
+                } catch (SQLException e) {
+                    System.out.println("Error SQL query!");
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
+        else
+            check = true;
     }
 
 
@@ -87,14 +79,12 @@ public class Patient extends User {
             return false;
         }
 
-        System.out.println("Sto controllando codice fiscale\n");
         StringBuilder codiceFiscale = new StringBuilder();
         String consonants = "bcdfghjklmnpqrstvwxyz";
         String vocals = "aeiou";
         String monthOrder = "ABCDEHLMPRST";
         String surname = getSurname().toLowerCase().replace(" ", "");   //remove space
         String name = getName().toLowerCase().replace(" ", "");
-        System.out.println("Ecco il cognome" + surname + "\nEcco il nome" + name + "\n");
         int count = 0;
 
         //Check surname
@@ -316,4 +306,10 @@ public class Patient extends User {
     public int getRefDoc() {
         return refDoc;
     }
+
+    @Override
+    public String toString() {
+        return "Patient:" + super.toString() + "BirthDate --> " + birthDate + "\nProvince --> " + province + "\nBithPlace --> " + birthPlace + "\nDomicile --> " + domicile + "\nSex --> " + sex + "\nTaxIDCode --> " + taxIDCode + "\nMeidoc referente --> " + refDoc + "\n";
+    }
+
 }

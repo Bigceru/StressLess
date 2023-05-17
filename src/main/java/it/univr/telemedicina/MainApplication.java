@@ -46,8 +46,8 @@ public class MainApplication extends Application {
     }
 
     //Metodo per il pop-up di errore
-    public void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    public void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

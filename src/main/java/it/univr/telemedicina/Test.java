@@ -1,6 +1,8 @@
 package it.univr.telemedicina;
 
 import it.univr.telemedicina.utilities.Database;
+import javafx.util.converter.LocalDateStringConverter;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
