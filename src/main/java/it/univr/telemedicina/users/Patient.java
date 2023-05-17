@@ -11,7 +11,6 @@ import java.util.Map;
 public class Patient extends User {
 
     private final static String[] stringFields = {"name", "surname", "birthPlace", "province", "birthDate", "phoneNumber", "domicile", "sex", "taxIDCode", "email", "username", "password", "refDoc"};
-
     private String birthPlace;
     private String province;
     LocalDate birthDate;
@@ -369,6 +368,17 @@ public class Patient extends User {
 
     public int getRefDoc() {
         return refDoc;
+    }
+
+    public int getPatientID() {
+        try {
+            Database db = new Database(2);
+            int id = Integer.parseInt(db.getQuery("SELECT ID FROM Patients WHERE username = \"" + getUsername() + "\"", new String[]{"ID"}).get(0));
+            db.closeAll();
+            return id;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

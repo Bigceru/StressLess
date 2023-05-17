@@ -243,6 +243,6 @@ public class RegistrationController implements Initializable {
     }
 
     public void handleAnnulla(ActionEvent actionEvent) throws IOException {
-        newScene.changeScene("Login.fxml", "Paziente", actionEvent);
+        newScene.changeScene("Login.fxml", "Login Page", actionEvent);
     }
 }
