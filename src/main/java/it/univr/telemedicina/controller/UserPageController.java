@@ -2,10 +2,13 @@ package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.utilities.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class UserPageController implements Initializable{

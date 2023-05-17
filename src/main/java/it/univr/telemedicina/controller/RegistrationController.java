@@ -179,28 +179,28 @@ public class RegistrationController implements Initializable {
                 lblRefDoc.setStyle("-fx-text-fill: red;");
             }
             default -> {    // Set all fields color's black
-                lblPassword.setStyle("-fx-text-fill: black;");
+                lblPassword.setStyle("-fx-text-fill: white;");
                 txtPassword.setStyle("-fx-text-fill: black;");
-                lblEmail.setStyle("-fx-text-fill: black;");
+                lblEmail.setStyle("-fx-text-fill: white;");
                 txtEmail.setStyle("-fx-text-fill: black;");
-                lblUsername.setStyle("-fx-text-fill: black;");
+                lblUsername.setStyle("-fx-text-fill: white;");
                 txtUsername.setStyle("-fx-text-fill: black;");
-                lblPhoneNumber.setStyle("-fx-text-fill: black;");
+                lblPhoneNumber.setStyle("-fx-text-fill: white;");
                 txtPhoneNumber.setStyle("-fx-text-fill: black;");
-                lblName.setStyle("-fx-text-fill: black;");
+                lblName.setStyle("-fx-text-fill: white;");
                 txtName.setStyle("-fx-text-fill: black;");
-                lblSurname.setStyle("-fx-text-fill: black;");
+                lblSurname.setStyle("-fx-text-fill: white;");
                 txtSurname.setStyle("-fx-text-fill: black;");
-                lblProvince.setStyle("-fx-text-fill: black;");
-                lblBirthPlace.setStyle("-fx-text-fill: black;");
+                lblProvince.setStyle("-fx-text-fill: white;");
+                lblBirthPlace.setStyle("-fx-text-fill: white;");
                 txtBirthPlace.setStyle("-fx-text-fill: black;");
-                lblBirthDate.setStyle("-fx-text-fill: black;");
-                lblDomicile.setStyle("-fx-text-fill: black;");
+                lblBirthDate.setStyle("-fx-text-fill: white;");
+                lblDomicile.setStyle("-fx-text-fill: white;");
                 txtDomicile.setStyle("-fx-text-fill: black;");
-                lblSex.setStyle("-fx-text-fill: black;");
-                lblTaxIDCode.setStyle("-fx-text-fill: black;");
+                lblSex.setStyle("-fx-text-fill: white;");
+                lblTaxIDCode.setStyle("-fx-text-fill: white;");
                 txtTaxIDCode.setStyle("-fx-text-fill: black;");
-                lblRefDoc.setStyle("-fx-text-fill: black;");
+                lblRefDoc.setStyle("-fx-text-fill: white;");
                 wrongRegistration.setText("");      // Hide error message
                 errorString = new StringBuilder();
             }
@@ -210,6 +210,8 @@ public class RegistrationController implements Initializable {
         if(!errorField.contains("resetAll"))
             wrongRegistration.setText("Registrazione fallita");
 
+        errorCodeLabel.setOpacity(1);
+        errorCodeLabel.setVisible(true);
         errorCodeLabel.setText(errorString.toString());     // Set label with error code description
     }
 

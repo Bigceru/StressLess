@@ -73,7 +73,7 @@ public class Patient extends User {
         }
 
         //Check if the tax code exists
-        if (super.alreadyExist("taxIDCode", taxIDCode)){
+        if (alreadyExist("Patients","taxIDCode", taxIDCode)){
             reg.setInvalidField("taxIDCode");
             return false;
         }
@@ -215,6 +215,72 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    protected boolean checkPhoneNumber(String phoneNumber)
+    {
+        boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("Patients","phoneNumber", phoneNumber);
+
+        if (!tempCheck)
+            reg.setInvalidField("phoneNumber");
+
+        return tempCheck;
+    }
+
+    protected boolean checkEmail(String email) {
+        boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("Patients","email", email);
+
+        if (!tempCheck)
+            reg.setInvalidField("email");
+
+        return tempCheck;
+    }
+
+    protected boolean checkName(String name){
+        boolean tempCheck = !name.isEmpty();
+
+        if(!tempCheck)
+            reg.setInvalidField("name");
+
+        return tempCheck;
+    }
+
+    protected boolean checkSurname(String surname){
+        boolean tempCheck = !surname.isEmpty();
+
+        if(!tempCheck)
+            reg.setInvalidField("surname");
+
+        return tempCheck;
+    }
+
+    protected boolean checkUsername(String username) {
+        // looking for Username already exist or is empty
+        boolean tempCheck = !username.isEmpty() && !alreadyExist("Patients","username",username);
+
+        if(!tempCheck){
+            reg.setInvalidField("username");
+        }
+        return tempCheck;
+    }
+
+    protected boolean checkPassword(String password) {
+        boolean tempCheck = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?.\\-_:,;])(?=\\S+$).{8,}$");
+
+        if (!tempCheck)
+            reg.setInvalidField("password");
+
+        return tempCheck;
+        /*
+        ^                 # start-of-string
+        (?=.*[0-9])       # a digit must occur at least once
+        (?=.*[a-z])       # a lower case letter must occur at least once
+        (?=.*[A-Z])       # an upper case letter must occur at least once
+        (?=.*[@#$%^&+=])  # a special character must occur at least once
+        (?=\S+$)          # no whitespace allowed in the entire string
+        .{8,}             # anything, at least eight places though
+        $                 # end-of-string
+         */
+    }
+
     // Check province
     private boolean checkProvince(String province){
         boolean tempCheck = province != null && !province.isEmpty();
@@ -271,8 +337,9 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    //Check all
     public boolean getCheck() {
-        return super.getCheck() && check;
+        return check;
     }
 
     // Get and set methods
