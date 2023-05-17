@@ -226,17 +226,15 @@ public class Patient extends User {
 
     protected boolean checkEmail(String email) {
         boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("Patients","email", email);
-
         if (!tempCheck)
             reg.setInvalidField("email");
-
         return tempCheck;
     }
 
-    protected boolean checkName(String name){
+    protected boolean checkName(String name) {
         boolean tempCheck = !name.isEmpty();
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("name");
 
         return tempCheck;

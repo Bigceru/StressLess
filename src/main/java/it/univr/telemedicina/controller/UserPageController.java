@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class UserPageController implements Initializable{
@@ -70,6 +71,12 @@ public class UserPageController implements Initializable{
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        setTable();
+
+    }
+
+    private void setTable() {
+        //tableTherapies.getColumns().addAll(columnName,columnDoses,columnAmounth,columnInstruction);
     }
 
     public void setPatient(Patient patient){
