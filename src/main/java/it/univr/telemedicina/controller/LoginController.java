@@ -6,6 +6,11 @@ import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
@@ -28,11 +33,15 @@ public class LoginController implements Initializable {
     private Button loginButton;
     @FXML
     private Button registerButton;
+    @FXML
+    public LineChart<?,?> graphicPatient;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         comboUserBox.getItems().add("Patient");
         comboUserBox.getItems().add("Doctor");
+
+        updateGraph();
     }
 
     public void handleLoginButton(ActionEvent actionEvent) throws IOException {
@@ -106,5 +115,22 @@ public class LoginController implements Initializable {
             loginButton.setVisible(false);
             registerButton.setVisible(false);
         }
+    }
+
+    /**
+     * Method to do the fucking graph.
+     */
+    private void updateGraph() {
+        graphicPatient.setTitle("Line Chart");
+
+        XYChart.Series series = new XYChart.Series<>();
+        series.setName("My Data");
+        // populating the series with data
+        series.getData().add(new XYChart.Data<>("1.0", 23.0));
+        series.getData().add(new XYChart.Data<>("2.0", 114.0));
+        series.getData().add(new XYChart.Data<>("3.0", 15.0));
+        series.getData().add(new XYChart.Data<>("4.0", 124.0));
+
+        graphicPatient.getData().add(series);
     }
 }
