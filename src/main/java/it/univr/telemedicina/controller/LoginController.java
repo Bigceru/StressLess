@@ -3,9 +3,11 @@ package it.univr.telemedicina.controller;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
+import javafx.beans.binding.MapExpression;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -18,8 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class LoginController implements Initializable {
     private final MainApplication newScene = new MainApplication();
@@ -121,16 +122,56 @@ public class LoginController implements Initializable {
      * Method to do the fucking graph.
      */
     private void updateGraph() {
-        graphicPatient.setTitle("Line Chart");
+
+        // Graphic can change for a week/month view
+
+        // DA FARE UN BOTTONE
+
+        ArrayList<String> list;
+        // take pressure from database
+        try {
+            Database db = new Database(2);
+            list = db.getQuery("SELECT SystolicPressure, DiastolicPressure, Date FROM BloodPressures WHERE IDPatient = 6" /*+ patient.getPatientID()*/ + " ORDER BY ID ASC", new String[]{"SystolicPressure", "DiastolicPressure", "Date"});
+            db.closeAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        graphicPatient.setTitle("Grafico Pressione");
 
         XYChart.Series series = new XYChart.Series<>();
-        series.setName("My Data");
-        // populating the series with data
-        series.getData().add(new XYChart.Data<>("1.0", 23.0));
-        series.getData().add(new XYChart.Data<>("2.0", 114.0));
-        series.getData().add(new XYChart.Data<>("3.0", 15.0));
-        series.getData().add(new XYChart.Data<>("4.0", 124.0));
+        series.setName("Pressione Sistolica");
+        XYChart.Series series2 = new XYChart.Series<>();
+        series2.setName("Pressione Diastolica");
 
+        // create the list with 5/30 values
+        ArrayList<String> dataTaken = new ArrayList<>();
+
+
+        // populating the series with data
+        for (int i = 0; i < list.size() && dataTaken.size() < 7; i += 3) {
+            if(!dataTaken.contains(list.get(i+2)))
+                dataTaken.add(list.get(i+2));
+            series.getData().add(new XYChart.Data<>(list.get(i + 2), Integer.parseInt(list.get(i))));
+            series2.getData().add(new XYChart.Data<>(list.get(i + 2), Integer.parseInt(list.get(i + 1))));
+        }
+
+        // Add data to graphic
         graphicPatient.getData().add(series);
+        graphicPatient.getData().add(series2);
+
+        // Set line and label colors
+        series.getNode().setStyle("-fx-stroke: red;");
+        series2.getNode().setStyle("-fx-stroke: blue;");
+        graphicPatient.setStyle("-fx-background-color: white;CHART_COLOR_1: #ff0000; CHART_COLOR_2: #0000FF;");
+        graphicPatient.setCreateSymbols(false);
+
+        try {
+            Database database = new Database(2);
+            database.updateQuery("BloodPressures", Map.of("SystolicPressure", 175, "DiastolicPressure", 90), Map.of("IDPatient", 6, "Date", LocalDate.of(2022, 5, 21)));
+            database.closeAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

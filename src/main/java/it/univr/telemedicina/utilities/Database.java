@@ -71,6 +71,7 @@ public class Database {
 
         // Add Line in Database
          statement.executeUpdate();
+        statement.close();
     }
 
         /*UPDATE Customers
