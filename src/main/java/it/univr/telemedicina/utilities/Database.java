@@ -1,10 +1,8 @@
 package it.univr.telemedicina.utilities;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Database {
     private final Connection connection;
@@ -80,37 +78,43 @@ public class Database {
     WHERE CustomerID = 1;
     */
 
-    /**
-     *
-     * @param nameTable Nome Tabella
-     * @param fieldName Nomi campi da settare, Ultimo PARAMETRO da quale entry prenderlo
-     * @param Values Nomi Valori da inserire, Ultimo PARAMETRO da quale entry prenderlo
-     * @throws SQLException
-     */
-    public void updateQuery(String nameTable, List<String> fieldName, Object[] Values) throws SQLException{
 
-
-        StringBuilder query = new StringBuilder("UPDATE ");
-        PreparedStatement statement;
-
+    public void updateQuery(String nameTable, Map<String, Object> setValues, Map<String, Object> whereValues) throws SQLException{
         // add nametable + SET
-        query.append(nameTable).append(" SET " );
+        StringBuilder query = new StringBuilder("UPDATE ").append(nameTable).append(" SET " );
+        Statement statement;
 
-        // add field with ?
-        for(int i = 0; i< fieldName.size()-1; i++){
-            query.append(fieldName.indexOf(i)).append(" = ? ,");
+        for(String key : setValues.keySet()) {
+            query.append(key).append(" = ");
+            if(setValues.get(key) instanceof String || setValues.get(key) instanceof LocalDate)
+                query.append("\"").append(setValues.get(key)).append("\"");
+             else
+                query.append(setValues.get(key).toString());
+             query.append(",");
+        }
+        query.deleteCharAt(query.length()-1).append(" WHERE ");
+
+        for(String key : whereValues.keySet()) {
+            query.append(key).append(" = ");
+            if(whereValues.get(key) instanceof String || whereValues.get(key) instanceof LocalDate)
+                query.append("\"").append(whereValues.get(key)).append("\"");
+            else
+                query.append(whereValues.get(key).toString());
+            query.append(" AND ");
         }
 
-        query.deleteCharAt(query.length()-1).append("WHERE ").append(fieldName.indexOf(fieldName.size())).append("= ?;");
+        query.delete(query.length()-5, query.length()-1);
+        query.append(";");
 
+        System.out.println(query.toString());
 
-        // change "?" with my values
-        statement = connection.prepareStatement(query.toString());
-        for(int i = 0; i< Values.length;i++){
-            statement.setObject(i+1, Values[i]);
-        }
-        // Update line in Database
-        statement.executeUpdate();
+        // create a statement object
+        statement = connection.createStatement();
+
+        // execute a SELECT statement and retrieve results
+        statement.executeUpdate(query.toString());
+
+        statement.close();
     }
 
     public void closeAll() throws SQLException{

@@ -12,31 +12,31 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.LoginController">
-   <children>
-      <AnchorPane prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #272932;">
-         <children>
-            <LineChart fx:id="graphicPatient" layoutX="22.0" layoutY="147.0" prefHeight="269.0" prefWidth="288.0">
-              <xAxis>
-                <CategoryAxis label="Giorni" side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis label="Pressioni" side="LEFT" />
-              </yAxis>
-            </LineChart>
-         </children></AnchorPane>
-      <AnchorPane layoutX="379.0" prefHeight="600.0" prefWidth="321.0" style="-fx-background-color: #3CA6A6; -fx-border-radius: 10; -fx-background-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <Label layoutX="45.0" layoutY="89.0" prefHeight="44.0" prefWidth="266.0" style="-fx-font-family: Monserrat;" text="BENTORNATO" textFill="WHITE" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="10.0">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtUsername" layoutX="51.0" layoutY="224.0" prefHeight="30.0" prefWidth="220.0" promptText="Nome Utente" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
-            <PasswordField fx:id="txtPassword" layoutX="51.0" layoutY="270.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
-            <Button fx:id="loginButton" layoutX="51.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="30.0" prefWidth="220.0" style="-fx-background-color: #272932; -fx-font-family: MONSERRAT; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand;" text="Accedi" textFill="WHITE" visible="false" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
-            <ComboBox fx:id="comboUserBox" layoutX="51.0" layoutY="177.0" onAction="#handleComboBoxChoose" prefHeight="30.0" prefWidth="220.0" promptText="Identificati" style="-fx-background-radius: 10;" />
-            <Button fx:id="registerButton" layoutX="51.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="30.0" prefWidth="220.0" style="-fx-background-color: #272932; -fx-font-family: MONSERRAT; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand;" text="Registrati" textFill="WHITE" visible="false" />
-         </children>
-      </AnchorPane>
-   </children>
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #272932;">
+            <children>
+                <LineChart fx:id="graphicPatient" layoutX="22.0" layoutY="147.0" prefHeight="269.0" prefWidth="288.0">
+                    <xAxis>
+                        <CategoryAxis label="Giorni" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Pressioni" side="LEFT" />
+                    </yAxis>
+                </LineChart>
+            </children></AnchorPane>
+        <AnchorPane layoutX="379.0" prefHeight="600.0" prefWidth="321.0" style="-fx-background-color: #3CA6A6; -fx-border-radius: 10; -fx-background-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <Label layoutX="45.0" layoutY="89.0" prefHeight="44.0" prefWidth="266.0" style="-fx-font-family: Monserrat;" text="BENTORNATO" textFill="WHITE" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="10.0">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtUsername" layoutX="51.0" layoutY="224.0" prefHeight="30.0" prefWidth="220.0" promptText="Nome Utente" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+                <PasswordField fx:id="txtPassword" layoutX="51.0" layoutY="270.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+                <Button fx:id="loginButton" layoutX="51.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="30.0" prefWidth="220.0" style="-fx-background-color: #272932; -fx-font-family: MONSERRAT; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand;" text="Accedi" textFill="WHITE" visible="false" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+                <ComboBox fx:id="comboUserBox" layoutX="51.0" layoutY="177.0" onAction="#handleComboBoxChoose" prefHeight="30.0" prefWidth="220.0" promptText="Identificati" style="-fx-background-radius: 10;" />
+                <Button fx:id="registerButton" layoutX="51.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="30.0" prefWidth="220.0" style="-fx-background-color: #272932; -fx-font-family: MONSERRAT; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand;" text="Registrati" textFill="WHITE" visible="false" />
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>
