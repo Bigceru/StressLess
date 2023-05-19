@@ -66,10 +66,11 @@ public class Patient extends User {
     //Check TaxIdCode
     private boolean checkTaxIdCode(String taxIDCode) {
         //Check empty fields
-        if (getName() == null || getSurname() == null || getBirthDate() == null || getBirthPlace() == null || getSex() == 'Z') {
+        if (getName().isEmpty() || getSurname().isEmpty() || getBirthDate() == null || getBirthPlace().isEmpty() || getSex() == 'Z') {
             reg.setInvalidField("taxIDCode");
             return false;
         }
+
 
         //Check if the tax code exists
         if (alreadyExist("Patients","taxIDCode", taxIDCode)){
@@ -159,7 +160,12 @@ public class Patient extends User {
             Database codiceCatastale = new Database(1);
             ArrayList<String> codPlace = codiceCatastale.getQuery("SELECT Codice FROM CC WHERE Comune = \"" + birthPlace.toUpperCase() + "\"", new String[]{"Codice"});
             //System.out.println(codiceCatastale.getQuery("SELECT * FROM CC", new String[]{"Codice", "Comune"}));
-            codiceFiscale.append(codPlace.get(0));
+            if(codPlace.size() > 0)
+                codiceFiscale.append(codPlace.get(0));
+            else {
+                reg.setInvalidField("taxIDCode");
+                return false;
+            }
             codiceCatastale.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

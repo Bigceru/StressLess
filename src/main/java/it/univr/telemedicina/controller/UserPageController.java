@@ -206,34 +206,5 @@ public class UserPageController implements Initializable{
 
 
 
-    private String checkPressure(int syntolic, int diastolic){
-        ArrayList<String> category = new ArrayList<>(Arrays.asList("Ottimale","Normale","Normale - alta","Ipertensione di Grado 1 borderline","Ipertensione di Grado 1 lieve","Ipertensione di Grado 2 moderata", "Ipertensione di Grado 3 grave", "Ipertensione sistolica isolata borderline", "Ipertensione sistolica isolata"));
-        ArrayList<Integer> valuesSyntolic = new ArrayList<>(Arrays.asList(120,130,139,149,159,179,180));//140-149,>=150
-        ArrayList<Integer> valuesDiastolic = new ArrayList<>(Arrays.asList(80,85,89,94,99,109,110)); //<90
-        int index = -1;
 
-        //Check syntolic
-        for(Integer value : valuesSyntolic){
-            if(value >= syntolic){
-                index = valuesSyntolic.indexOf(value);
-                //Special case
-                if(index == 3 && diastolic < 90)
-                    return category.get(7);
-                if(index > 3 && diastolic < 90)
-                    return category.get(8);
-                break;
-            }
-        }
-        //Parto direttamente dall'index
-        //check diastolic
-        for(int i = index; i < valuesDiastolic.size(); i++)
-        {
-            if(valuesDiastolic.get(i) >= diastolic){
-                return  category.get(i);
-            }
-        }
-
-        //Example syntolic = 300
-        return "Valori fuori norma";
-    }
 }
