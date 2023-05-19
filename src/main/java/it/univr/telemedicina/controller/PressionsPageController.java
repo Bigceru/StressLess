@@ -66,6 +66,32 @@ public class PressionsPageController implements Initializable {
         });
     }
 
+    private void displayDrugs() {
+        ArrayList<String> info = new ArrayList<>(); //List of all drugs
+        try {
+            Database db = new Database(2);
+            info = db.getQuery("SELECT DrugName FROM Drugs", new String[]{"DrugName"}); //Take all drugs
+            boxDrugs.getItems().addAll(info);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        drugsList = boxDrugs.getCheckModel().getCheckedItems();
+        timeDrugs.getItems().addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+    }
+
+    private void displaySymptoms() {
+        // symptomps list
+        boxSymptoms.getItems().addAll("Mal di testa", "Stordimento vertigini", "Ronzii nelle orecchie", "Perdite di sangue dal naso", "Dispnea", "Cardiopalmo", "Ansia", "Angoscia", "Arrossamento cutaneo", "Oliguria ", "Altro");
+        //listening if "Altro" else is entered
+        boxSymptoms.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) change -> {
+            if (boxSymptoms.getCheckModel().isChecked("Altro")) {
+                txtOtherSymptoms.setVisible(true);
+            } else {
+                txtOtherSymptoms.setVisible(false);
+                txtOtherSymptoms.setText(null);
+            }
+        });
+    }
 
 
     //send pression and symptoms
@@ -75,15 +101,16 @@ public class PressionsPageController implements Initializable {
         String otherSymptoms = null;
         LocalDate pressureDate;
 
-        try{
-            syntolic = Integer.parseInt(txtPresSystolic.getText());
+        try {
+            Database db = new Database(2);
+            systolic = Integer.parseInt(txtPresSystolic.getText());
             diastolic = Integer.parseInt(txtPresDiastolic.getText());
 
             //Check othrSymptoms
-            if(txtOtherSymptoms.isVisible() && !txtOtherSymptoms.getText().isEmpty()) {
+            if (txtOtherSymptoms.isVisible() && !txtOtherSymptoms.getText().isEmpty()) {
                 otherSymptoms = txtOtherSymptoms.getText();
 
-            }else if(txtOtherSymptoms.isVisible() && txtOtherSymptoms.getText().isEmpty())
+            } else if (txtOtherSymptoms.isVisible() && txtOtherSymptoms.getText().isEmpty())
                 throw new ParameterException();
 
             System.out.println(otherSymptoms);
@@ -92,7 +119,9 @@ public class PressionsPageController implements Initializable {
             checkParameters(syntolic,diastolic, pressureDate);
         }catch (ParameterException | NumberFormatException | NullPointerException e){
             System.out.println("Error");
-            newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova",Alert.AlertType.ERROR);
+            newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         //boxDrugs.onMouseDragExitedProperty().addListener();
@@ -103,18 +132,18 @@ public class PressionsPageController implements Initializable {
     //Check parameters
     public void checkParameters(int syntolic, int diastolic,LocalDate datePress){
         // check diastolic
-        if(diastolic <= 0 || diastolic >= 150)
+        if (diastolic <= 0 || diastolic >= 150)
             throw new ParameterException();
 
         // check systolic
-        if(syntolic <= 0 || syntolic >= 250 )
+        if (systolic <= 0 || systolic >= 250)
             throw new ParameterException();
 
-        if(syntolic <= diastolic)
+        if (systolic <= diastolic)
             throw new ParameterException();
 
         // check if the mensuration date is right
-        if(datePress.isAfter(LocalDate.now()))
+        if (datePress.isAfter(LocalDate.now()))
             throw new ParameterException();
 
 
@@ -129,3 +158,13 @@ public class PressionsPageController implements Initializable {
     }
 
 }
+
+
+/*
+
+    1   X   X   X   V -->LOGIN --> NON HAI SEGNALATO I FARMACI --> V V V
+
+    V   X   X   X                                               --> LOGIN -->
+
+
+ */
