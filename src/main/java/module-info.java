@@ -3,6 +3,7 @@ module com.example.telemedicina {
     requires javafx.fxml;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires org.controlsfx.controls;
 
 
     opens it.univr.telemedicina to javafx.fxml;

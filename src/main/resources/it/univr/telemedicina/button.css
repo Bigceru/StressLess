@@ -1,0 +1,8 @@
+.button-view {
+    -fx-text-fill: #FFF;
+    -fx-background-color: #0000;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-family: "Montserrat";
+    -fx-alignment: CENTER-LEFT;
+}

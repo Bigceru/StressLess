@@ -166,6 +166,7 @@ public class LoginController implements Initializable {
         graphicPatient.setStyle("-fx-background-color: white;CHART_COLOR_1: #ff0000; CHART_COLOR_2: #0000FF;");
         graphicPatient.setCreateSymbols(false);
 
+        /*
         try {
             Database database = new Database(2);
             database.updateQuery("BloodPressures", Map.of("SystolicPressure", 175, "DiastolicPressure", 90), Map.of("IDPatient", 6, "Date", LocalDate.of(2022, 5, 21)));
@@ -173,5 +174,6 @@ public class LoginController implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+         */
     }
 }

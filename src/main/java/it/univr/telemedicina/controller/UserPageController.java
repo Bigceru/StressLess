@@ -10,11 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,6 +46,18 @@ public class UserPageController implements Initializable{
     public TableColumn<InfoTablePat, Integer> columnDoses;
     @FXML
     public Label lblTherapyState;
+    @FXML
+    public Button buttonHome;
+    @FXML
+    public Button buttonEditPressure;
+    @FXML
+    public Button buttonEditProfile;
+    @FXML
+    public AnchorPane homeScene;
+    @FXML
+    public AnchorPane pressureScene;
+    @FXML
+    public AnchorPane editProfileScene;
 
     private MainApplication newScene = new MainApplication();
     private static Patient patient;
@@ -54,10 +69,14 @@ public class UserPageController implements Initializable{
     public Button logoutButton;
 
 
-
     //TABLE VIEW HOME
     private void setTable() {
         ObservableList<InfoTablePat> therapy = FXCollections.observableArrayList();
+        columnName.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/4
+        columnDoses.prefWidthProperty().bind(tableTherapies.widthProperty().divide(6)); // w * 1/5
+        columnAmount.prefWidthProperty().bind(tableTherapies.widthProperty().divide(6)); // w * 1/5
+        columnInstruction.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/3
+
         try{
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT * FROM Therapies WHERE IDPatient = " + patient.getPatientID(),new String[]{"DrugName","DailyDoses","AmountTaken","Instructions"});
@@ -84,15 +103,65 @@ public class UserPageController implements Initializable{
             columnInstruction.setCellValueFactory(new PropertyValueFactory<>("instruction"));
             //Set items in table
             tableTherapies.setItems(therapy);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        }
+
+        // tableTherapies.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+    }
+
+    /**
+     * Method that handle button click and use the type of the button chosen to change scene
+     * @param event
+     * @throws IOException
+     */
+    public void handleChangeScene(ActionEvent event) throws IOException {
+        if (event.getSource() == buttonHome) {  // Home button click
+            homeScene.setVisible(true);
+            pressureScene.setVisible(false);
+            editProfileScene.setVisible(false);
+
+            // Edit button style to show the clicked one
+            buttonHome.setStyle("-fx-background-color: #2A7878");
+            buttonEditPressure.setStyle("-fx-background-color: #0000");
+            buttonEditProfile.setStyle("-fx-background-color: #0000");
+
+        }
+        else if(event.getSource() == buttonEditPressure){   // Pressure button click
+            homeScene.setVisible(false);
+            pressureScene.setVisible(true);
+            editProfileScene.setVisible(false);
+
+            // Edit button style to show the clicked one
+            buttonHome.setStyle("-fx-background-color: #0000");
+            buttonEditPressure.setStyle("-fx-background-color: #2A7878");
+            buttonEditProfile.setStyle("-fx-background-color: #0000");
+        }
+        else if(event.getSource() == logoutButton){     // LogOut button click
+            newScene.start((Stage) ((Node) event.getSource()).getScene().getWindow());
+        }
+        else {      // Edit profile button click
+            homeScene.setVisible(false);
+            pressureScene.setVisible(false);
+            editProfileScene.setVisible(true);
+
+            // Edit button style to show the clicked one
+            buttonHome.setStyle("-fx-background-color: #0000");
+            buttonEditPressure.setStyle("-fx-background-color: #0000");
+            buttonEditProfile.setStyle("-fx-background-color: #2A7878");
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Set scene to be visible
+        homeScene.setVisible(true);
+        pressureScene.setVisible(false);
+        editProfileScene.setVisible(false);
+
+        // Edit button style to show the clicked one
+        buttonHome.setStyle("-fx-background-color: #2A7878");
+
         lblName.setText(patient.getName());
 
         AnimationTimer timer = new AnimationTimer() {
@@ -125,21 +194,17 @@ public class UserPageController implements Initializable{
             throw new RuntimeException(e);
         }
         setTable();
-
     }
+
+
+
+
 
     public void setPatient(Patient patient){
         UserPageController.patient = patient;
     }
 
-    /**
-     * Method to handle patient logOut
-     * @param actionEvent
-     * @throws IOException
-     */
-    public void handleLogOutButton(ActionEvent actionEvent) throws IOException {
-        newScene.changeScene("Login.fxml", "Login Page", actionEvent);
-    }
+
 
     private String checkPressure(int syntolic, int diastolic){
         ArrayList<String> category = new ArrayList<>(Arrays.asList("Ottimale","Normale","Normale - alta","Ipertensione di Grado 1 borderline","Ipertensione di Grado 1 lieve","Ipertensione di Grado 2 moderata", "Ipertensione di Grado 3 grave", "Ipertensione sistolica isolata borderline", "Ipertensione sistolica isolata"));
