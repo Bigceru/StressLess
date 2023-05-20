@@ -71,8 +71,7 @@ public class Patient extends User {
             return false;
         }
 
-
-        //Check if the tax code exists
+        // Check if the tax code exists
         if (alreadyExist("Patients","taxIDCode", taxIDCode)){
             reg.setInvalidField("taxIDCode");
             return false;
