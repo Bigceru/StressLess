@@ -151,8 +151,11 @@ public class Patient extends User {
         // Add days and sex
         if (sex == 'F')
             codiceFiscale.append(birthDate.getDayOfMonth() + 40);
-        else
+        else {
+            if(birthDate.getDayOfMonth() < 10)
+                codiceFiscale.append("0");
             codiceFiscale.append(birthDate.getDayOfMonth());
+        }
 
         // Add birthPlace
         try {
@@ -388,5 +391,6 @@ public class Patient extends User {
     public String toString() {
         return "Patient:" + super.toString() + "BirthDate --> " + birthDate + "\nProvince --> " + province + "\nBithPlace --> " + birthPlace + "\nDomicile --> " + domicile + "\nSex --> " + sex + "\nTaxIDCode --> " + taxIDCode + "\nMeidoc referente --> " + refDoc + "\n";
     }
+    public void setDomicile(String domicile){this.domicile = domicile;}
 
 }

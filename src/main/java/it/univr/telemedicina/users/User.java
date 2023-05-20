@@ -26,9 +26,9 @@ public abstract class User {
 
     //True if exists
     //False if not exists
-    protected boolean alreadyExist(String table, String fieldToCheck, String inputField){
+    //Is public for ChangeDataController
+    public boolean alreadyExist(String table, String fieldToCheck, String inputField){
         boolean tempCheck = false;
-
         try {
             Database db = new Database(2);
             ArrayList<String> test = db.getQuery("SELECT * FROM" + table + "WHERE " + fieldToCheck +" = " + "\"" + inputField + "\"", new String[]{fieldToCheck});
@@ -89,6 +89,9 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
