@@ -188,9 +188,6 @@ public class PressionsPageController implements Initializable {
         // check if the mensuration date is right
         if (date.isAfter(LocalDate.now()))
             throw new ParameterException();
-
-
-
     }
 
 }

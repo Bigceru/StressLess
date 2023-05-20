@@ -2,10 +2,12 @@ package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.InfoTablePat;
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.exceptions.ParameterException;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import org.controlsfx.control.CheckComboBox;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -219,50 +222,6 @@ public class UserPageController implements Initializable{
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Set scene to be visible
-        homeScene.setVisible(true);
-        pressureScene.setVisible(false);
-        editProfileScene.setVisible(false);
-
-        // Edit button style to show the clicked one
-        buttonHome.setStyle("-fx-background-color: #2A7878");
-
-        lblName.setText(patient.getName());
-
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                lblTime.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            }
-        };
-        timer.start();
-
-        // Set doctor's name/surname label, pressure label
-        try {
-            Database db = new Database(2);
-            ArrayList<String> info = db.getQuery("SELECT * FROM Doctors WHERE ID = " + patient.getRefDoc(), new String[]{"Name","Surname"});    // Query to get doctor name
-            lblRefDoc.setText("Dr. " + info.get(0) + " " + info.get(1));
-
-            // Add last pressure value to the label
-            info = db.getQuery("SELECT SystolicPressure, DiastolicPressure, Date FROM BloodPressures WHERE IDPatient = " + patient.getPatientID() + " ORDER BY ID DESC", new String[]{"SystolicPressure", "DiastolicPressure", "Date"});
-            if(info.isEmpty()) {
-                lblPressure.setText("--/--");
-                lblLastPressure.setText("--/--");
-                //lblPressureStatus.setText("Nessuna rilevazione");
-            }
-            else {
-                lblPressure.setText(info.get(0) + "/" + info.get(1));
-                lblLastPressure.setText(info.get(2));
-                //lblPressureStatus.setText(checkPressure(Integer.parseInt(info.get(0)),Integer.parseInt(info.get(1))));
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        setTable();
-    }
-
     public void setPatient(Patient patient){
         UserPageController.patient = patient;
     }
@@ -420,3 +379,5 @@ public class UserPageController implements Initializable{
     }
 
 }
+
+
