@@ -228,7 +228,6 @@ public class UserPageController implements Initializable{
         UserPageController.patient = patient;
     }
 
-
     // ##### Methods for Pressure page #####
 
     public void sendPressuresButton(ActionEvent actionEvent) {
@@ -296,7 +295,7 @@ public class UserPageController implements Initializable{
     public void checkPressuresParameters(int systolic, int diastolic, LocalDate datePress) {
         // check diastolic
         if (diastolic <= 0 || diastolic >= 150)
-            throw new ParameterException();
+            throw new ParameterException("Pressione diastolica error");
 
         // check systolic
         if (systolic <= 0 || systolic >= 250)
@@ -311,10 +310,10 @@ public class UserPageController implements Initializable{
 
     }
 
-    private String checkPressure(int syntolic, int diastolic){
+    private String checkPressure(int systolic, int diastolic){
         ArrayList<String> category = new ArrayList<>(Arrays.asList("Ottimale","Normale","Normale - alta","Ipertensione di Grado 1 borderline","Ipertensione di Grado 1 lieve","Ipertensione di Grado 2 moderata", "Ipertensione di Grado 3 grave", "Ipertensione sistolica isolata borderline", "Ipertensione sistolica isolata"));
-        ArrayList<Integer> valuesSyntolic = new ArrayList<>(Arrays.asList(120,130,139,149,159,179,180));//140-149,>=150
-        ArrayList<Integer> valuesDiastolic = new ArrayList<>(Arrays.asList(80,85,89,94,99,109,110)); //<90
+        ArrayList<Integer> valuesSystolic = new ArrayList<>(Arrays.asList(120, 130, 139, 149, 159, 179, 180, 250));    //140-149,>=150
+        ArrayList<Integer> valuesDiastolic = new ArrayList<>(Arrays.asList(0, 80, 85, 89, 94, 99, 109, 110));    //<90
         int index = -1;
 
         //Check systolic
@@ -329,16 +328,17 @@ public class UserPageController implements Initializable{
                 break;
             }
         }
+
         //Parto direttamente dall'index
         //check diastolic
         for(int i = index; i < valuesDiastolic.size(); i++)
         {
             if(valuesDiastolic.get(i) >= diastolic){
-                return  category.get(i);
+                return category.get(i);
             }
         }
 
-        //Example syntolic = 300
+        // Example systolic = 300
         return "Valori fuori norma";
     }
     private void displayDrugs() {
