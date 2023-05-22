@@ -1,5 +1,6 @@
 package it.univr.telemedicina.utilities;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -34,10 +35,8 @@ public class Database {
                 returnList.add(resultSet.getString(s));
             }
         }
-
         resultSet.close();
         statement.close();
-
         return returnList;
     }
 
@@ -116,6 +115,32 @@ public class Database {
         statement.executeUpdate(query.toString());
 
         statement.close();
+    }
+
+    public void deleteQuery (String nameTable, Map<String,Object> conditionValue) throws SQLException {
+        StringBuilder query = new StringBuilder("DELETE FROM ").append(nameTable).append(" WHERE ( " );
+        Statement statement;
+        int flag = 0;
+        for(String s : conditionValue.keySet()){
+            //Condition for insert AND (Skip the first time)
+            if(flag != 0){
+                query.append(" AND ");
+            }
+            else
+                flag++;
+            query.append(s + " = '" + conditionValue.get(s) + "'");
+
+        }
+        query.append(")");
+        System.out.println(query.toString());
+        // create a statement object
+        statement = connection.createStatement();
+
+        // execute a SELECT statement and retrieve results
+        statement.executeUpdate(query.toString());
+
+        statement.close();
+
     }
 
     public void closeAll() throws SQLException{
