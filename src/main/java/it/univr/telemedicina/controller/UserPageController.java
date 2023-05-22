@@ -2,6 +2,7 @@ package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.InfoTablePat;
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.TablePat;
 import it.univr.telemedicina.exceptions.ParameterException;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
@@ -138,14 +139,11 @@ public class UserPageController implements Initializable{
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        setTable();
 
-        // Initialize Pressure Page
         displayDrugs();
-        displaySymptoms();
+        setTable();
     }
 
-    //TABLE VIEW HOME
     private void setTable() {
         ObservableList<InfoTablePat> therapy = FXCollections.observableArrayList();
         columnName.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/4
@@ -177,15 +175,12 @@ public class UserPageController implements Initializable{
             columnDoses.setCellValueFactory(new PropertyValueFactory<>("dose"));
             columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
             columnInstruction.setCellValueFactory(new PropertyValueFactory<>("instruction"));
+
             //Set items in table
             tableTherapies.setItems(therapy);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        updateGraph(7);
-
-        // tableTherapies.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     /**
