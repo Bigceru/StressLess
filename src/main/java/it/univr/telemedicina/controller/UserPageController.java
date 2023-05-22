@@ -94,7 +94,15 @@ public class UserPageController implements Initializable{
     @FXML
     public Button logoutButton;
     @FXML
-    public LineChart<?,?> chartPatientPres;
+    public TableView<InfoTablePat> tableTherapies;
+    @FXML
+    public TableColumn<InfoTablePat, String> columnName;
+    @FXML
+    public TableColumn<InfoTablePat, String> columnInstruction;
+    @FXML
+    public TableColumn<InfoTablePat, Integer> columnAmount;
+    @FXML
+    public TableColumn<InfoTablePat, Integer> columnDoses;
 
     private final MainApplication newScene = new MainApplication();
     private static Patient patient;
@@ -236,247 +244,6 @@ public class UserPageController implements Initializable{
         UserPageController.patient = patient;
     }
 
-    // ##### Methods for Pressure page #####
-
-    public void sendPressuresButton(ActionEvent actionEvent) {
-        int systolic;
-        int diastolic;
-        String otherSymptoms = null;
-        LocalDate pressureDate;
-
-        try {
-            Database db = new Database(2);
-            Map<String, Object> dati = new TreeMap<>();
-            dati = initPressures();
-            dati.put("IDPatient",patient.getPatientID());
-            systolic = (int) dati.get("SystolicPressure");
-            diastolic = (int) dati.get("DiastolicPressure");
-            dati.put("ConditionPressure", checkPressure(systolic,diastolic));
-            //Convert keySet in keyArrayString
-            Set<String> key = dati.keySet();
-            key = dati.keySet();
-            String[] keyString = new String[key.size()];
-            key.toArray(keyString);
-            Collection<Object> values = dati.values();
-            Object[] valuesString = new Object[values.size()];
-            values.toArray(valuesString);
-            System.out.println("Dati values; " + dati.values());
-            System.out.println("Key: " + keyString);
-
-            //Query for insert data in BloodPressures **Need to remove Hour, change in ConditionPressure type of data TEXT-->VARCHAR and control the +otherSymptoms**
-            db.insertQuery("BloodPressures", keyString, new Object[]{dati.values()});
-
-            // Add pressure success
-            newScene.showAlert("Invio","Valori inviati correttamente", Alert.AlertType.INFORMATION);
-        } catch (ParameterException | NumberFormatException | NullPointerException e) {
-            System.out.println("Error");
-            newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        //boxDrugs.onMouseDragExitedProperty().addListener();
-        // add value in Db
-    }
-
-    public void removePressuresButton(ActionEvent actionEvent) {
-        try {
-            Database db = new Database(2);
-            Map<String, Object> dati = new TreeMap<>();
-            dati = initPressures();
-            db.deleteQuery("BloodPressures",dati);
-
-        } catch (ParameterException | NumberFormatException | NullPointerException e) {
-            System.out.println("Error");
-            newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    public Map<String,Object> initPressures(){
-        int systolic;
-        int diastolic;
-        LocalDate pressureDate;
-        String otherSymptoms = null;
-
-        Map<String, Object> dati = new TreeMap<>();
-        systolic = Integer.parseInt(txtPresSystolic.getText());
-        diastolic = Integer.parseInt(txtPresDiastolic.getText());
-        //Check otherSymptoms
-        if (txtOtherSymptoms.isVisible() && !txtOtherSymptoms.getText().isEmpty()) {
-            otherSymptoms = txtOtherSymptoms.getText();
-
-        } else if (txtOtherSymptoms.isVisible() && txtOtherSymptoms.getText().isEmpty())
-            throw new ParameterException("Campo di testo altri sintomi error");
-        pressureDate = datePres.getValue();
-        // check correction of values
-        checkPressuresParameters(systolic, diastolic, pressureDate);
-        ObservableList<String> symptomsList = boxSymptoms.getCheckModel().getCheckedItems();  //take the symptoms
-        StringBuilder symptomString;
-        if (symptomsList.isEmpty())
-            symptomString = new StringBuilder();
-        else {
-            symptomString = new StringBuilder();
-            symptomsList.forEach(s -> symptomString.append(s).append(", "));
-            symptomString.delete(symptomString.length() - 2, symptomString.length());
-            symptomString.append(", ").append(otherSymptoms);
-        }
-        dati.put("SystolicPressure",systolic);
-        dati.put("DiastolicPressure",diastolic);
-        dati.put("Date",pressureDate);
-        dati.put("Symptoms",symptomString.toString().replace(", Altro", ""));
-        dati.put("Hour","12:30:00");
-
-        return dati;
-
-    }
-
-    public void checkSymptomsParameters(LocalDate date){
-        // check if the mensuration date is right
-        if (date.isAfter(LocalDate.now()))
-            throw new ParameterException("Data non valida");
-    }
-
-    public void checkPressuresParameters(int systolic, int diastolic, LocalDate datePress) {
-        // check diastolic
-        if (diastolic <= 0 || diastolic >= 150)
-            throw new ParameterException("Pressione diastolica error");
-
-        // check systolic
-        if (systolic <= 0 || systolic >= 250)
-            throw new ParameterException("Sistolica errore");
-
-        if (systolic <= diastolic)
-            throw new ParameterException("Confronto errore");
-
-        // check if the mensuration date is right
-        if (datePress.isAfter(LocalDate.now()))
-            throw new ParameterException("Data errore");
-    }
-
-    private String checkPressure(int systolic, int diastolic){
-        ArrayList<String> category = new ArrayList<>(Arrays.asList("Ottimale","Normale","Normale - alta","Ipertensione di Grado 1 borderline","Ipertensione di Grado 1 lieve","Ipertensione di Grado 2 moderata", "Ipertensione di Grado 3 grave", "Ipertensione sistolica isolata borderline", "Ipertensione sistolica isolata"));
-        ArrayList<Integer> valuesSystolic = new ArrayList<>(Arrays.asList(120, 130, 139, 149, 159, 179, 180, 250));    //140-149,>=150
-        ArrayList<Integer> valuesDiastolic = new ArrayList<>(Arrays.asList(0, 80, 85, 89, 94, 99, 109, 110));    //<90
-        int index = -1;
-
-        //Check systolic
-        for(Integer value : valuesSystolic){
-            if(value >= systolic) {
-                index = valuesSystolic.indexOf(value);
-                //Special case
-                if(index == 3 && diastolic < 90)
-                    return category.get(7);
-                if(index > 3 && diastolic < 90)
-                    return category.get(8);
-                break;
-            }
-        }
-
-        //Parto direttamente dall'index
-        //check diastolic
-        for(int i = index; i < valuesDiastolic.size(); i++)
-        {
-            if(valuesDiastolic.get(i) >= diastolic){
-                return category.get(i);
-            }
-        }
-
-        // Example systolic = 300
-        return "Valori fuori norma";
-    }
-
-    private void updateGraph(int dayToTake) {
-        ArrayList<String> list;
-        // take pressure from database
-        try {
-            Database db = new Database(2);
-            list = db.getQuery("SELECT SystolicPressure, DiastolicPressure, Date FROM BloodPressures WHERE IDPatient = " + patient.getPatientID() + " ORDER BY ID DESC", new String[]{"SystolicPressure", "DiastolicPressure", "Date"});
-            db.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        chartPatientPres.setTitle("Grafico Pressione");
-
-        XYChart.Series series = new XYChart.Series<>();
-        series.setName("Pressione Sistolica");
-        XYChart.Series series2 = new XYChart.Series<>();
-        series2.setName("Pressione Diastolica");
-
-        // create the list with 7/30 values
-        ArrayList<String> dataTaken = new ArrayList<>();
-        ArrayList<XYChart.Data> dataSeries = new ArrayList<>();
-        ArrayList<XYChart.Data> dataSeries2 = new ArrayList<>();
-
-        if(!list.isEmpty()) {
-            LocalDate lastPressureTaken = LocalDate.parse(list.get(2));
-            LocalDate lastPressureToTake = lastPressureTaken.minusDays(dayToTake);
-            boolean takePressure = true;
-
-            // populating the series with data
-            for (int i = 0; i < list.size() && takePressure; i += 3) {
-                // Check if the date is in the right range of time (specified by the user with toggleButton)
-                if(LocalDate.parse(list.get(i + 2)).isBefore(lastPressureTaken))
-                    takePressure = false;
-                else {
-                    // If the pressure measure isn't already present in the graph
-                    if(!dataTaken.contains(list.get(i + 2)))
-                        dataTaken.add(list.get(i + 2));
-                    else {
-
-
-                        // TO COMPLETE
-
-
-                        System.out.println("CIAO" );
-                    }
-                    dataSeries.add(new XYChart.Data<>(list.get(i + 2), Integer.parseInt(list.get(i))));
-                    dataSeries2.add(new XYChart.Data<>(list.get(i + 2), Integer.parseInt(list.get(i + 1))));
-                }
-            }
-        }
-
-        series.getData().addAll(dataSeries);
-        series2.getData().addAll(dataSeries2);
-
-        // Add data to graphic
-        chartPatientPres.getData().setAll(series, series2);
-
-        // Set line and label colors
-        series.getNode().setStyle("-fx-stroke: red;");
-        series2.getNode().setStyle("-fx-stroke: blue;");
-        chartPatientPres.setStyle("-fx-background-color: white; CHART_COLOR_1: #ff0000; CHART_COLOR_2: #0000FF;");
-        chartPatientPres.setCreateSymbols(false);
-
-        /*
-        try {
-            Database database = new Database(2);
-            database.updateQuery("BloodPressures", Map.of("SystolicPressure", 175, "DiastolicPressure", 90), Map.of("IDPatient", 6, "Date", LocalDate.of(2022, 5, 21)));
-            database.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-         */
-    }
-
-
-    private void displaySymptoms() {
-        // symptomps list
-        boxSymptoms.getItems().addAll("Mal di testa", "Stordimento vertigini", "Ronzii nelle orecchie", "Perdite di sangue dal naso", "Dispnea", "Cardiopalmo", "Ansia", "Angoscia", "Arrossamento cutaneo", "Oliguria", "Altro");
-        boxTimePres.getItems().addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
-        //listening if "Altro" else is entered
-        boxSymptoms.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) change -> {
-            if (boxSymptoms.getCheckModel().isChecked("Altro")) {
-                txtOtherSymptoms.setVisible(true);
-            } else {
-                txtOtherSymptoms.setVisible(false);
-                txtOtherSymptoms.setText(null);
-            }
-        });
-    }
-
     //DRUGS*********************************************************************************************************
 
     public void sendDrugsButton(ActionEvent actionEvent) {
@@ -498,6 +265,12 @@ public class UserPageController implements Initializable{
             System.out.println("Error");
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
         }
+    }
+
+    public void checkSymptomsParameters(LocalDate date){
+        // check if the mensuration date is right
+        if (date.isAfter(LocalDate.now()))
+            throw new ParameterException("Data non valida");
     }
 
     private void displayDrugs() {

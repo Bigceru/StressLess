@@ -129,7 +129,6 @@ public class Database {
             else
                 flag++;
             query.append(s + " = '" + conditionValue.get(s) + "'");
-
         }
         query.append(")");
         System.out.println(query.toString());
@@ -140,7 +139,6 @@ public class Database {
         statement.executeUpdate(query.toString());
 
         statement.close();
-
     }
 
     public void closeAll() throws SQLException{
