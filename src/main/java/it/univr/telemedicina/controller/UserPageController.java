@@ -36,16 +36,6 @@ public class UserPageController implements Initializable{
     @FXML
     public Label lblLastPressure;
     @FXML
-    public TableView<InfoTablePat> tableTherapies;
-    @FXML
-    public TableColumn<InfoTablePat, String> columnName;
-    @FXML
-    public TableColumn<InfoTablePat, String> columnInstruction;
-    @FXML
-    public TableColumn<InfoTablePat, Integer> columnAmount;
-    @FXML
-    public TableColumn<InfoTablePat, Integer> columnDoses;
-    @FXML
     public Label lblTherapyState;
     @FXML
     public Button buttonHome;
@@ -220,6 +210,8 @@ public class UserPageController implements Initializable{
             pressureScene.setVisible(true);
             editProfileScene.setVisible(false);
 
+
+
             // Edit button style to show the clicked one
             buttonHome.setStyle("-fx-background-color: #0000");
             buttonEditPressure.setStyle("-fx-background-color: #2A7878");
@@ -287,12 +279,7 @@ public class UserPageController implements Initializable{
         boxTimeDrugs.getItems().addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
     }
 
-    public void handleTimePresChoose(ActionEvent actionEvent) {
-        if(weekPresToggle.isSelected())
-            updateGraph(7);
-        else if(monthPresToggle.isSelected())
-            updateGraph(30);
-    }
+
 }
 
 

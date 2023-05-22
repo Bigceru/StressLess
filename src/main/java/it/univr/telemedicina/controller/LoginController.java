@@ -75,6 +75,9 @@ public class LoginController implements Initializable {
                         // Attach the new patient to the controller
                         UserPageController controller = new UserPageController();
                         controller.setPatient(patient);
+                        // Passing patient
+                        PressureSceneController pressureController = new PressureSceneController();
+                        pressureController.setPatient(patient);
 
                         // change scene
                         newScene.changeScene("UserPage.fxml","title", actionEvent);

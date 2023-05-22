@@ -118,7 +118,7 @@ public class Database {
     }
 
     public void deleteQuery (String nameTable, Map<String,Object> conditionValue) throws SQLException {
-        StringBuilder query = new StringBuilder("DELETE FROM ").append(nameTable).append(" WHERE ( " );
+        StringBuilder query = new StringBuilder("DELETE FROM ").append(nameTable).append(" WHERE ");
         Statement statement;
         int flag = 0;
         for(String s : conditionValue.keySet()){
@@ -130,7 +130,6 @@ public class Database {
                 flag++;
             query.append(s + " = '" + conditionValue.get(s) + "'");
         }
-        query.append(")");
         System.out.println(query.toString());
         // create a statement object
         statement = connection.createStatement();
