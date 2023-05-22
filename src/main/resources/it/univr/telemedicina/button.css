@@ -6,3 +6,8 @@
     -fx-font-family: "Montserrat";
     -fx-alignment: CENTER-LEFT;
 }
+
+.textField-view{
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}

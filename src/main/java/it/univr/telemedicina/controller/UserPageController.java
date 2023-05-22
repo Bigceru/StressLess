@@ -78,12 +78,12 @@ public class UserPageController implements Initializable{
     public DatePicker dateDrugs;
     @FXML
     public ComboBox boxTimeDrugs;
-
-    private ObservableList<String> drugsList = FXCollections.observableArrayList(); //Drugs selected by Patient
-    private ObservableList<String> sympotomsList = FXCollections.observableArrayList();
-
-    private MainApplication newScene = new MainApplication();
-    private static Patient patient;
+    @FXML
+    public TextField txtTakenAmount;
+    @FXML
+    public ToggleButton weekPresToggle;
+    @FXML
+    public ToggleButton monthPresToggle;
     @FXML
     private Label lblName;
     @FXML
@@ -177,6 +177,8 @@ public class UserPageController implements Initializable{
             throw new RuntimeException(e);
         }
 
+        updateGraph(7);
+
         // tableTherapies.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
@@ -237,26 +239,22 @@ public class UserPageController implements Initializable{
 
         try {
             Database db = new Database(2);
-            systolic = Integer.parseInt(txtPresSystolic.getText());
-            diastolic = Integer.parseInt(txtPresDiastolic.getText());
-            //Check othrSymptoms
-            if (txtOtherSymptoms.isVisible() && !txtOtherSymptoms.getText().isEmpty()) {
-                otherSymptoms = txtOtherSymptoms.getText();
-
-            } else if (txtOtherSymptoms.isVisible() && txtOtherSymptoms.getText().isEmpty())
-                throw new ParameterException();
-
-            pressureDate = datePres.getValue();
-
-            // check correction of values
-            checkPressuresParameters(systolic, diastolic, pressureDate);
-            sympotomsList = boxSymptoms.getCheckModel().getCheckedItems();  //take the symptoms
-
-            // Convert symptomsList to String
-            StringBuilder symptomString = new StringBuilder();
-            sympotomsList.forEach(s -> symptomString.append(s).append(", "));
-            symptomString.delete(symptomString.length()-2, symptomString.length());
-            symptomString.append(", ").append(otherSymptoms);
+            Map<String, Object> dati = new TreeMap<>();
+            dati = initPressures();
+            dati.put("IDPatient",patient.getPatientID());
+            systolic = (int) dati.get("SystolicPressure");
+            diastolic = (int) dati.get("DiastolicPressure");
+            dati.put("ConditionPressure", checkPressure(systolic,diastolic));
+            //Convert keySet in keyArrayString
+            Set<String> key = dati.keySet();
+            key = dati.keySet();
+            String[] keyString = new String[key.size()];
+            key.toArray(keyString);
+            Collection<Object> values = dati.values();
+            Object[] valuesString = new Object[values.size()];
+            values.toArray(valuesString);
+            System.out.println("Dati values; " + dati.values());
+            System.out.println("Key: " + keyString);
 
             //Query for insert data in BloodPressures **Need to remove Hour, change in ConditionPressure type of data TEXT-->VARCHAR and control the +otherSymptoms**
             db.insertQuery("BloodPressures", new String[]{"IDPatient","Date","Hour","SystolicPressure","DiastolicPressure","Symptoms","ConditionPressure"}, new Object[]{patient.getPatientID(), pressureDate, "12:30:00", systolic, diastolic, symptomString.toString().replace(", Altro", ""), checkPressure(systolic, diastolic)});
@@ -274,25 +272,18 @@ public class UserPageController implements Initializable{
         // add value in Db
     }
 
-    public void sendDrugsButton(ActionEvent actionEvent) {
+    public void removePressuresButton(ActionEvent actionEvent) {
         try {
             Database db = new Database(2);
-            LocalDate date = dateDrugs.getValue();
-            String hours =  String.valueOf(boxTimeDrugs.getValue());
-            checkSymptomsParameters(date);
-            String drug = boxDrugs.getValue().toString();
-            
+            Map<String, Object> dati = new TreeMap<>();
+            dati = initPressures();
+            db.deleteQuery("BloodPressures",dati);
 
-            db.insertQuery("TakenDrugs", new String[]{"IDPatient", "Date", "Hour", "DrugName", "Quantity"}, new Object[]{patient.getPatientID(), date, hours, drug, Integer.parseInt((String) boxDrugsAmount.getValue())});
-
-            // Add pressure success
-            newScene.showAlert("Invio","Valori inviati correttamente", Alert.AlertType.INFORMATION);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (ParameterException | NumberFormatException | NullPointerException e){
+        } catch (ParameterException | NumberFormatException | NullPointerException e) {
             System.out.println("Error");
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -309,10 +300,10 @@ public class UserPageController implements Initializable{
 
         // check systolic
         if (systolic <= 0 || systolic >= 250)
-            throw new ParameterException();
+            throw new ParameterException("Sistolica errore");
 
         if (systolic <= diastolic)
-            throw new ParameterException();
+            throw new ParameterException("Confronto errore");
 
         // check if the mensuration date is right
         if (datePress.isAfter(LocalDate.now()))
@@ -326,10 +317,10 @@ public class UserPageController implements Initializable{
         ArrayList<Integer> valuesDiastolic = new ArrayList<>(Arrays.asList(80,85,89,94,99,109,110)); //<90
         int index = -1;
 
-        //Check syntolic
-        for(Integer value : valuesSyntolic){
-            if(value >= syntolic){
-                index = valuesSyntolic.indexOf(value);
+        //Check systolic
+        for(Integer value : valuesSystolic){
+            if(value >= systolic) {
+                index = valuesSystolic.indexOf(value);
                 //Special case
                 if(index == 3 && diastolic < 90)
                     return category.get(7);
