@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<AnchorPane fx:id="pressureScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.univr.telemedicina.controller.PressureSceneController">
+    <padding>
+        <Insets bottom="5.0" top="5.0" />
+    </padding>
+    <children>
+        <AnchorPane layoutX="8.0" layoutY="5.0" prefHeight="304.0" prefWidth="800.0" styleClass="anchor-style" stylesheets="@anchor.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <AnchorPane prefHeight="43.0" prefWidth="810.0" style="-fx-background-color: #3CA6A6;" styleClass="anchor-style" stylesheets="@anchor.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <children>
+                        <Label layoutX="288.0" layoutY="9.0" prefHeight="26.0" prefWidth="233.0" style="-fx-font-family: Montserrat;" text="PRESSIONE GIORNALIERA" textFill="WHITE" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="289.0" AnchorPane.topAnchor="9.0">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                    </children></AnchorPane>
+                <Label layoutX="40.0" layoutY="60.0" style="-fx-font-family: Montserrat;" text="Pressione sistolica" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtPresSystolic" layoutX="40.0" layoutY="85.0" prefWidth="160.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white;" />
+
+                <Label layoutX="40.0" layoutY="120.0" style="-fx-font-family: Montserrat;" text="Pressione diastolica" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtPresDiastolic" layoutX="40.0" layoutY="145.0" prefWidth="160.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white;" />
+                <DatePicker fx:id="datePres" layoutX="40.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                <Label layoutX="40.0" layoutY="180.0" style="-fx-font-family: Montserrat;" text="Data registrazione" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="300.0" layoutY="60.0" style="-fx-font-family: Montserrat;" text="Sintomi nel giorno di registrazione:" textFill="WHITE" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="253.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <CheckComboBox fx:id="boxSymptoms" layoutX="300.0" layoutY="85.0" prefHeight="26.0" prefWidth="483.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="27.0" />
+                <Button layoutX="677.0" layoutY="245.0" mnemonicParsing="false" onAction="#sendPressuresButton" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: #54bc56; -fx-alignment: CENTER; -fx-background-radius: 10; -fx-border-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="AGGIUNGI" textFill="WHITE" AnchorPane.rightAnchor="24.0">
+                    <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
+                    </graphic>
+                </Button>
+                <Button layoutX="544.0" layoutY="245.0" mnemonicParsing="false" onAction="#removePressuresButton" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: #ff5d5d; -fx-alignment: CENTER; -fx-background-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="RIMUOVI" textFill="WHITE" AnchorPane.rightAnchor="157.0">
+                    <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="MINUS" />
+                    </graphic>
+                </Button>
+                <TextField fx:id="txtOtherSymptoms" layoutX="300.0" layoutY="123.0" prefHeight="26.0" prefWidth="484.0" promptText="Inserisci altri sintomi" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="27.0">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </TextField>
+                <ComboBox fx:id="boxTimePres" layoutX="300.0" layoutY="205.0" prefHeight="26.0" prefWidth="160.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                <Label layoutX="300.0" layoutY="180.0" style="-fx-font-family: Montserrat;" text="Ora" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="41.0" layoutY="256.0" prefHeight="20.0" prefWidth="461.0" text="Nota: una misurazione coerente è data dalla media di tre registrazioni" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <SplitPane dividerPositions="0.5" layoutX="195.0" layoutY="332.0" prefHeight="334.0" prefWidth="810.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="328.0">
+            <items>
+                <AnchorPane prefHeight="332.0" prefWidth="258.0" styleClass="anchor-style" stylesheets="@anchor.css">
+                    <children>
+                        <TableView fx:id="tablePatientPres" prefHeight="339.0" prefWidth="402.0" stylesheets="@table.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0">
+                            <columns>
+                                <TableColumn fx:id="columnDataPresTable" prefWidth="99.5" text="Data " />
+                                <TableColumn fx:id="columnHourPresTable" prefWidth="75.0" text="Ora" />
+                                <TableColumn fx:id="columnPressurePresTable" prefWidth="71.0" text="Rilevazione S/D" />
+                                <TableColumn fx:id="columnStatePresTable" prefWidth="124.5" text="Stato" />
+                            </columns>
+                            <styleClass>
+                                <String fx:value="table-view" />
+                                <String fx:value="column-header-background" />
+                            </styleClass>
+                        </TableView>
+                        <Label layoutX="10.0" layoutY="15.0" style="-fx-font-family: Montserrat;" text="RACCOLTA" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="347.0" prefWidth="357.0" styleClass="anchor-style" stylesheets="@anchor.css">
+                    <children>
+                        <Label layoutX="10.0" layoutY="15.0" prefHeight="23.0" prefWidth="143.0" style="-fx-font-family: Montserrat;" text="ANDAMENTO" textFill="WHITE" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="245.0">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <ToggleButtonGroup layoutX="286.0" layoutY="15.0" prefHeight="17.0" prefWidth="88.0" selectionType="SINGLE" AnchorPane.rightAnchor="27.0">
+                            <toggles>
+                                <ToggleButton fx:id="weekPresToggle" minHeight="21.0" minWidth="45.0" onAction="#handleTimePresChoose" prefHeight="21.0" prefWidth="45.0">
+                                    <graphic>
+                                        <Label text="Sett.">
+                                            <font>
+                                                <Font size="10.0" />
+                                            </font>
+                                        </Label>
+                                    </graphic>
+                                </ToggleButton>
+                                <ToggleButton fx:id="monthPresToggle" minHeight="21.0" onAction="#handleTimePresChoose" prefHeight="21.0" prefWidth="48.0" selected="true">
+                                    <graphic>
+                                        <Label text="Mese">
+                                            <font>
+                                                <Font size="10.0" />
+                                            </font>
+                                        </Label>
+                                    </graphic>
+                                </ToggleButton>
+                            </toggles>
+                        </ToggleButtonGroup>
+                        <LineChart fx:id="chartPatientPres" layoutX="7.0" layoutY="38.0" prefHeight="273.0" prefWidth="372.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT" />
+                            </yAxis>
+                        </LineChart>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>
