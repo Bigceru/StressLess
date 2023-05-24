@@ -245,6 +245,7 @@ public class Patient extends User {
 
         if (!tempCheck && reg != null)
             reg.setInvalidField("email");
+
         return tempCheck;
     }
 

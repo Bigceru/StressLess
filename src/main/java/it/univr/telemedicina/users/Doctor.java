@@ -1,5 +1,9 @@
 package it.univr.telemedicina.users;
 
+import it.univr.telemedicina.utilities.Database;
+
+import java.sql.SQLException;
+
 public class Doctor extends User{
     private boolean check;
 
@@ -43,7 +47,16 @@ public class Doctor extends User{
         return check;
     }
 
-
+    public int getID(){
+        try {
+            Database db = new Database(2);
+            int id = Integer.parseInt(db.getQuery("SELECT ID FROM Doctors WHERE username = \"" + getUsername() + "\"", new String[]{"ID"}).get(0));
+            db.closeAll();
+            return id;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void update(){
 

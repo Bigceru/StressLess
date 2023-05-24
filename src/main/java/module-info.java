@@ -11,4 +11,6 @@ module com.example.telemedicina {
     opens it.univr.telemedicina.controller to javafx.fxml;
     exports it.univr.telemedicina.users;
     opens it.univr.telemedicina.users to javafx.fxml;
+    exports it.univr.telemedicina.controller.doctor;
+    opens it.univr.telemedicina.controller.doctor to javafx.fxml;
 }

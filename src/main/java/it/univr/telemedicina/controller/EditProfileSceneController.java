@@ -78,23 +78,30 @@ public class EditProfileSceneController implements Initializable {
         txtUsername.setStyle("-fx-text-fill: black;");
         txtPhoneNumber.setStyle("-fx-text-fill: black;");
         txtEmail.setStyle("-fx-text-fill: black;");
-        flag = true;
 
         // all field empty -> nothing change
-        if(txtUsername.getText().isEmpty() && txtPassword.getText().isEmpty() && txtConfirmPassword.getText().isEmpty() && txtDomicile.getText().isEmpty() && txtPhoneNumber.getText().isEmpty() && txtEmail.getText().isEmpty())
-            newScene.showAlert("DATI","Nessun campo scritto", Alert.AlertType.INFORMATION);
+        if (txtUsername.getText().isEmpty() && txtPassword.getText().isEmpty() && txtConfirmPassword.getText().isEmpty() && txtDomicile.getText().isEmpty() && txtPhoneNumber.getText().isEmpty() && txtEmail.getText().isEmpty())
+            newScene.showAlert("DATI", "Nessun campo scritto", Alert.AlertType.INFORMATION);
 
         //if all checks are passed, update in database
-        if(checkUsername(txtUsername.getText()))
+        if (user.checkUsername(txtUsername.getText()))
             dati.put("Username", txtUsername.getText());
+        else {
+            txtUsername.setStyle("-fx-text-fill: red;");
+            canUpload = false;
+        }
 
-        if(checkEmail(txtEmail.getText()))
+        if (user.checkEmail(txtEmail.getText()))
             dati.put("Email", txtEmail.getText());
+        else {
+            canUpload = false;
+            txtEmail.setStyle("-fx-text-fill: red;");
+        }
 
-        if(checkPhoneNumber(txtPhoneNumber.getText()))
+        if (user.checkPhoneNumber(txtPhoneNumber.getText()))
             dati.put("phoneNumber", txtPhoneNumber.getText());
 
-        if(!txtDomicile.getText().isEmpty())
+        if (!txtDomicile.getText().isEmpty())
             dati.put("domicile", txtDomicile.getText());
         else {
             canUpload = false;
@@ -110,26 +117,26 @@ public class EditProfileSceneController implements Initializable {
         }
 
         // update database
-        if(!dati.isEmpty() && flag) {
+        if(!dati.isEmpty() && canUpload) {
             try {
                 Database db = new Database(2);
                 db.updateQuery("Patients", dati, Map.of("ID", ((Object) patient.getPatientID())));
 
                 if(dati.containsKey("Username"))
-                    patient.setUsername(dati.get("Username").toString());
+                    user.setUsername(dati.get("Username").toString());
                 if(dati.containsKey("Password"))
-                    patient.setPassword(dati.get("Password").toString());
+                    user.setPassword(dati.get("Password").toString());
                 if(dati.containsKey("phoneNumber"))
-                    patient.setPhoneNumber(dati.get("phoneNumber").toString());
-                if(dati.containsKey("domicile"))
-                    patient.setDomicile(dati.get("domicile").toString());
+                    user.setPhoneNumber(dati.get("phoneNumber").toString());
+                if(dati.containsKey("domicile") && user instanceof Patient)
+                    ((Patient) user).setDomicile(dati.get("domicile").toString());
                 if(dati.containsKey("email"))
-                    patient.setEmail(dati.get("email").toString());
+                    user.setEmail(dati.get("email").toString());
 
-                System.out.println(patient.toString());
+                System.out.println(user.toString());
                 newScene.showAlert("Dati", "Aggiornati con succeso!", Alert.AlertType.INFORMATION);
             } catch (SQLException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                newScene.showAlert("Error", "Errore caricamento", Alert.AlertType.ERROR);
             }
         }
         else
@@ -140,16 +147,12 @@ public class EditProfileSceneController implements Initializable {
     protected boolean equalPassword(String password, String confirmPassword){
         if(password.equals(confirmPassword))
             return true;
-        else{
-            flag = false;
-            txtPassword.setStyle("-fx-text-fill: red;");
-            txtConfirmPassword.setStyle("-fx-text-fill: red;");
-        }
-        return false;
+        else
+            return false;
     }
 
-    public void setPatient(Patient patient) {
-        EditProfileSceneController.patient = patient;
+    public void setUser(User user) {
+        EditProfileSceneController.user = user;
     }
 }
 
