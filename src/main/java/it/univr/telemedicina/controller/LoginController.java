@@ -81,6 +81,7 @@ public class LoginController implements Initializable {
                         PressureSceneController pressureController = new PressureSceneController();
                         pressureController.setPatient(patient);
 
+
                         DrugsSceneController drugsController = new DrugsSceneController();
                         drugsController.setPatient(patient);
 
