@@ -1,16 +1,16 @@
 package it.univr.telemedicina.controller.doctor;
 
+import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.chart.*;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 import java.net.URL;
@@ -44,12 +44,37 @@ public class DoctorHomeSceneController implements Initializable {
 
     // Doctor instance
     private static Doctor doctor;
+    @FXML
+    public BarChart<String, Integer> barChartNewPatients;
+    @FXML
+    public DatePicker buttonStartRegistration;
+    @FXML
+    public DatePicker buttonEndRegistration;
+    @FXML
+    public Button buttonSearchRegistration;
+    @FXML
+    public CategoryAxis xAxis;
+    private final MainApplication newScene = new MainApplication();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTablePatients();
     }
+
+    public void showNewRegistration(ActionEvent actionEvent){
+        if(buttonStartRegistration.getValue() != null && buttonEndRegistration.getValue() != null) {
+            buttonEndRegistration.setStyle("-fx-text-fill: black;");
+            buttonStartRegistration.setStyle("-fx-text-fill: black;");
+            setBarChartNewPatients();
+        }
+        else{
+            buttonEndRegistration.setStyle("-fx-text-fill: red;");
+            buttonStartRegistration.setStyle("-fx-text-fill: red;");
+        }
+    }
+
+
 
 
      //Method to initialize the table and the table columns with the Patient therapies
@@ -62,7 +87,7 @@ public class DoctorHomeSceneController implements Initializable {
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT ID, name, surname FROM Patients WHERE refDoc = " + doctor.getID(), new String[]{"ID", "name", "surname"});
             ArrayList<String> infoTherapies;
-            lblCountPatients.setText(info.size()/3 + ""); //Number of patients
+            lblCountPatients.setText(info.size()/3 + " "); //Number of patients
 
             // If there is no therapy
             if(info.isEmpty()) {
