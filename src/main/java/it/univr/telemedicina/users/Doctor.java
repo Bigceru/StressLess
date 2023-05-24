@@ -18,23 +18,23 @@ public class Doctor extends User{
     }
 
     @Override
-    protected boolean checkPhoneNumber(String phoneNumber) {
+    public boolean checkPhoneNumber(String phoneNumber) {
         return phoneNumber.matches("^[0-9]{11}$") && !alreadyExist("Doctors", "phoneNumber", phoneNumber);
     }
 
     @Override
-    protected boolean checkEmail(String email) {
+    public boolean checkEmail(String email) {
         return email.contains("@") && email.contains(".") && email.substring(email.indexOf("@")).contains("hospital")  && !alreadyExist("Doctors", "email", email);
     }
 
     @Override
-    protected boolean checkUsername(String username) {
+    public boolean checkUsername(String username) {
         // looking for Username already exist or is empty
         return !username.isEmpty() && !alreadyExist("Doctors", "username", username);
     }
 
     @Override
-    protected boolean checkPassword(String password) {
+    public boolean checkPassword(String password) {
         return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?.\\-_:,;])(?=\\S+$).{8,}$");
     }
 

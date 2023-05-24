@@ -52,12 +52,10 @@ public class HomeSceneController implements Initializable {
             if(info.isEmpty()) {
                 lblPressure.setText("--/--");
                 lblLastPressure.setText("--/--");
-                //lblPressureStatus.setText("Nessuna rilevazione");
             }
             else {
                 lblPressure.setText(info.get(0) + "/" + info.get(1));
                 lblLastPressure.setText(info.get(2));
-                //lblPressureStatus.setText(checkPressure(Integer.parseInt(info.get(0)),Integer.parseInt(info.get(1))));
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

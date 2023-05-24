@@ -213,7 +213,6 @@ public class PressureSceneController implements Initializable {
 
         return dati;
     }
-
     public void checkPressuresParameters(int systolic, int diastolic, LocalDate datePress, String time) {
         // check diastolic
         if (diastolic <= 0 || diastolic >= 150)

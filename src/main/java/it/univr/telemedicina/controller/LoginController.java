@@ -1,20 +1,15 @@
 package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.controller.doctor.ChangePasswordController;
+import it.univr.telemedicina.controller.doctor.DoctorHomeSceneController;
+import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
-import javafx.beans.binding.MapExpression;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +17,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Class to control Login page
+ */
 public class LoginController implements Initializable {
     private final MainApplication newScene = new MainApplication();
     @FXML
@@ -29,7 +27,7 @@ public class LoginController implements Initializable {
     @FXML
     private TextField txtPassword;
     @FXML
-    private ComboBox comboUserBox;
+    private ComboBox<String> comboUserBox;
     @FXML
     private Button loginButton;
     @FXML
@@ -41,27 +39,39 @@ public class LoginController implements Initializable {
         comboUserBox.getItems().add("Doctor");
     }
 
+    /**
+     * Method to handle loginButton action
+     *
+     */
     public void handleLoginButton(ActionEvent actionEvent) throws IOException {
-        ArrayList<String> credentials;
+        ArrayList<String> credentials;  // ArrayList to contains credentials values
 
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        // Change page if login has success
+        // If username or password fields are empty
         if(username.isEmpty() || password.isEmpty()){
-            newScene.showAlert("Campi non pieni","Compila tutti i campi", Alert.AlertType.ERROR);
+            newScene.showAlert("Campi non pieni","Compila tutti i campi", Alert.AlertType.ERROR);   // Show alert message
         }
         else {
             try {
                 String tableName;
-                if(comboUserBox.getValue().equals("Doctor"))   // Check if I want to login as doctor or patient
+
+                // Check if I want to login as doctor or patient
+                if(comboUserBox.getValue().equals("Doctor"))
                     tableName = "Doctors";
                 else
                     tableName = "Patients";
 
-                // connect to the database
+                // Connect to the database
                 Database database = new Database(2);
-                credentials = database.getQuery("SELECT * FROM " + tableName + " WHERE username = " + "\"" + txtUsername.getText() + "\" AND password = " + "\"" + txtPassword.getText() + "\"", new String[]{"name", "surname", "email", "phoneNumber", "username", "password", "birthPlace", "province", "birthDate", "domicile", "sex", "taxIDCode", "refDoc"});
+
+                // If the user type is patient
+                if(tableName.equals("Patients"))
+                    credentials = database.getQuery("SELECT * FROM " + tableName + " WHERE username = " + "\"" + txtUsername.getText() + "\" AND password = " + "\"" + txtPassword.getText() + "\"", new String[]{"name", "surname", "email", "phoneNumber", "username", "password", "birthPlace", "province", "birthDate", "domicile", "sex", "taxIDCode", "refDoc"});
+                else    // If is doctor
+                    credentials = database.getQuery("SELECT * FROM " + tableName + " WHERE username = " + "\"" + txtUsername.getText() + "\" AND password = " + "\"" + txtPassword.getText() + "\"", new String[]{"name", "surname", "email", "phoneNumber", "username", "password"});
+
                 database.closeAll();
 
                 // if is empty run error
@@ -81,19 +91,30 @@ public class LoginController implements Initializable {
                         PressureSceneController pressureController = new PressureSceneController();
                         pressureController.setPatient(patient);
 
-
                         DrugsSceneController drugsController = new DrugsSceneController();
                         drugsController.setPatient(patient);
 
                         EditProfileSceneController editProfileController = new EditProfileSceneController();
-                        editProfileController.setPatient(patient);
+                        editProfileController.setUser(patient);
 
                         // change scene
-                        newScene.changeScene("UserPage.fxml","title", actionEvent);
+                        newScene.changeScene("UserPage.fxml","Paziente", actionEvent);
                     }
-                    else
+                    else {
                         // change scene
-                        System.out.println("Vado nella pagina dei dottori");
+                        // Create new Doctor with the last query
+                        Doctor doctor = new Doctor(credentials.get(0), credentials.get(1), credentials.get(2),credentials.get(3),credentials.get(4),credentials.get(5));
+
+                        DoctorHomeSceneController homeDoctor = new DoctorHomeSceneController();
+                        homeDoctor.setDoctor(doctor);
+                        newScene.changeScene("doctorPages/DoctorPage.fxml", "Dottore", actionEvent);
+
+                        if(credentials.get(5).equals("1234")){
+                            ChangePasswordController changePassword = new ChangePasswordController();
+                            changePassword.setDoctor(doctor);
+                            newScene.addScene("/it/univr/telemedicina/doctorPages/ChangePasswordScene.fxml");
+                        }
+                    }
                 }
             } catch (SQLException e) {
                 System.out.println("Error with login");
@@ -112,10 +133,10 @@ public class LoginController implements Initializable {
     }
 
     public void handleComboBoxChoose(ActionEvent actionEvent) {
-        if (comboUserBox.getValue() == "Patient") {
+        if (Objects.equals(comboUserBox.getValue(), "Patient")) {
             loginButton.setVisible(true);
             registerButton.setVisible(true);
-        } else if (comboUserBox.getValue() == "Doctor") {
+        } else if (Objects.equals(comboUserBox.getValue(), "Doctor")) {
             loginButton.setVisible(true);
             registerButton.setVisible(false);
         } else {

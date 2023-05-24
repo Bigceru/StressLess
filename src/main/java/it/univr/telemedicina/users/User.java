@@ -14,7 +14,7 @@ public abstract class User {
     private String password;
     private boolean check;
 
-    // Constructor
+    // Main Constructor
     public User(String name, String surname, String email, String phoneNumber, String username, String password) {
         this.name = name;
         this.surname = surname;
@@ -22,6 +22,12 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
         this.username = username;
         this.password = password;
+    }
+
+    // Constructor for table view in Doctor home
+    public User(String name, String surname) {
+        this.name = name + " " + surname;
+        this.surname = surname;
     }
 
     //True if exists
@@ -47,10 +53,10 @@ public abstract class User {
 
     protected abstract boolean checkName(String name);
     protected abstract boolean checkSurname(String surname);
-    protected abstract boolean checkPhoneNumber(String phoneNumber);
-    protected abstract boolean checkEmail(String email);
-    protected abstract boolean checkUsername(String username);
-    protected abstract boolean checkPassword(String password);
+    public abstract boolean checkPhoneNumber(String phoneNumber);
+    public abstract boolean checkEmail(String email);
+    public abstract boolean checkUsername(String username);
+    public abstract boolean checkPassword(String password);
 
     public abstract boolean getCheck();
 

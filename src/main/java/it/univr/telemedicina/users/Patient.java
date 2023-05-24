@@ -20,8 +20,16 @@ public class Patient extends User {
     private int refDoc;
     private final RegistrationController reg;
     private boolean check;
+    private String therapy;     // Field for table view
 
-    //Constructor
+    // Constructor for table view in Doctor home
+    public Patient(String name, String surname, String therapy, RegistrationController reg){
+        super(name, surname);
+        this.reg = reg;
+        this.therapy = therapy;
+    }
+
+    // Main Constructor
     public Patient(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
         super(name, surname, email, phoneNumber, username, password);
 
@@ -222,19 +230,20 @@ public class Patient extends User {
         return tempCheck;
     }
 
-    protected boolean checkPhoneNumber(String phoneNumber)
+    public boolean checkPhoneNumber(String phoneNumber)
     {
         boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("Patients","phoneNumber", phoneNumber);
 
-        if (!tempCheck)
+        if (!tempCheck && reg != null)
             reg.setInvalidField("phoneNumber");
 
         return tempCheck;
     }
 
-    protected boolean checkEmail(String email) {
+    public boolean checkEmail(String email) {
         boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("Patients","email", email);
-        if (!tempCheck)
+
+        if (!tempCheck && reg != null)
             reg.setInvalidField("email");
         return tempCheck;
     }
@@ -257,20 +266,20 @@ public class Patient extends User {
         return tempCheck;
     }
 
-    protected boolean checkUsername(String username) {
+    public boolean checkUsername(String username) {
         // looking for Username already exist or is empty
         boolean tempCheck = !username.isEmpty() && !alreadyExist("Patients","username",username);
 
-        if(!tempCheck){
+        if(!tempCheck && reg != null){
             reg.setInvalidField("username");
         }
         return tempCheck;
     }
 
-    protected boolean checkPassword(String password) {
+    public boolean checkPassword(String password) {
         boolean tempCheck = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?.\\-_:,;])(?=\\S+$).{8,}$");
 
-        if (!tempCheck)
+        if (!tempCheck && reg != null)
             reg.setInvalidField("password");
 
         return tempCheck;
@@ -393,4 +402,7 @@ public class Patient extends User {
     }
     public void setDomicile(String domicile){this.domicile = domicile;}
 
+    public String getTherapy() {
+        return therapy;
+    }
 }

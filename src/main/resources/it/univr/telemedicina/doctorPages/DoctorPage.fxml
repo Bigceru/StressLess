@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.UserPageController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorPageController">
    <children>
       <GridPane>
          <columnConstraints>
@@ -63,7 +63,7 @@
                               <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="2em" />
                            </graphic>
                         </Button>
-                        <Button fx:id="buttonEditPressure" layoutX="30.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Ricerca Paziente" textFill="WHITE">
+                        <Button fx:id="buttonSearchPatient" layoutX="30.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Ricerca Paziente" textFill="WHITE">
                            <graphic>
                               <FontAwesomeIcon fill="WHITE" glyphName="USER" size="2em" />
                            </graphic>
@@ -73,13 +73,13 @@
                               <FontAwesomeIcon fill="WHITE" glyphName="PENCIL" size="2em" />
                            </graphic>
                         </Button>
-                        <Button fx:id="logoutButton" layoutX="12.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleChangeScene" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand; -fx-font-family: Montserrat;" text="Disconnetti" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
+                        <Button fx:id="buttonLogOut" layoutX="12.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleChangeScene" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand; -fx-font-family: Montserrat;" text="Disconnetti" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
                            <graphic>
                               <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="2em" />
                            </graphic>
                         </Button>
                         <Label layoutX="51.0" layoutY="648.0" prefHeight="17.0" prefWidth="0.0" textFill="WHITE" />
-                        <Button fx:id="buttonEditDrugs" layoutX="30.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Bottone Bonus" textFill="WHITE">
+                        <Button fx:id="buttonStatistic" layoutX="30.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Bottone Bonus" textFill="WHITE">
                            <graphic>
                               <FontAwesomeIcon fill="WHITE" glyphName="MEDKIT" size="2em" />
                            </graphic>
@@ -94,7 +94,8 @@
                <center>
                   <AnchorPane prefHeight="677.0" prefWidth="830.0" BorderPane.alignment="CENTER">
                      <children>
-
+                        <fx:include fx:id="DoctorHomeScene" source="DoctorHomeScene.fxml" />
+                        <fx:include fx:id="DoctorStatisticsScene" source="DoctorStatisticsScene.fxml" />
                      </children>
                   </AnchorPane>
                </center>

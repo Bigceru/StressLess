@@ -13,7 +13,6 @@ public class InfoTablePat {
         this.dose = dose;
     }
 
-
     public String getName() {
         return name;
     }

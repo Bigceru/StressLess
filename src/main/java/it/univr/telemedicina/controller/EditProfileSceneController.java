@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
@@ -47,25 +46,29 @@ public class EditProfileSceneController implements Initializable {
     @FXML
     public Button buttonSave;
 
-
-    private boolean flag = true;
-    private static Patient patient;
+    private static User user;
 
     public void initialize(URL location, ResourceBundle resources) {
-        txtName.setText(patient.getName());
-        txtSurname.setText(patient.getSurname());
-        txtTaxIDCode.setText(patient.getTaxIDCode());
-        txtBirthDate.setText(String.valueOf(patient.getBirthDate()));
-        txtBirthPlace.setText(patient.getBirthPlace());
-        txtProvince.setText(patient.getProvince());
-        txtUsername.setText(patient.getUsername());
-        txtDomicile.setText(patient.getDomicile());
-        txtEmail.setText(patient.getEmail());
-        txtPassword.setText(patient.getPassword());
-        txtPhoneNumber.setText(patient.getPhoneNumber());
+        txtName.setText(user.getName());
+        txtSurname.setText(user.getSurname());
+        txtUsername.setText(user.getUsername());
+        txtEmail.setText(user.getEmail());
+        // txtPassword.setText(user.getPassword());
+        txtPhoneNumber.setText(user.getPhoneNumber());
+
+        // For Patient
+        if(user instanceof Patient) {
+            txtProvince.setText(((Patient) user).getProvince());
+            txtTaxIDCode.setText(((Patient) user).getTaxIDCode());
+            txtBirthDate.setText(String.valueOf((((Patient) user).getBirthDate())));
+            txtBirthPlace.setText(((Patient) user).getBirthPlace());
+            txtDomicile.setText(((Patient) user).getDomicile());
+        }
     }
+
     public void buttonSaveOnAction(ActionEvent actionEvent) {
         Map<String, Object> dati = new TreeMap<>();
+        boolean canUpload = true;
 
         // reset color
         txtUsername.setStyle("-fx-text-fill: black;");
@@ -93,9 +96,18 @@ public class EditProfileSceneController implements Initializable {
 
         if(!txtDomicile.getText().isEmpty())
             dati.put("domicile", txtDomicile.getText());
+        else {
+            canUpload = false;
+            txtDomicile.setStyle("-fx-text-fill: red;");
+        }
 
-        if(checkPassword(txtPassword.getText()) && equalPassword(txtPassword.getText(),txtConfirmPassword.getText()))
+        if(user.checkPassword(txtPassword.getText()) && equalPassword(txtPassword.getText(),txtConfirmPassword.getText()))
             dati.put("Password", txtPassword.getText());
+        else if(!txtPassword.getText().isEmpty()){
+            txtPassword.setStyle("-fx-text-fill: red;");
+            txtConfirmPassword.setStyle("-fx-text-fill: red;");
+            canUpload = false;
+        }
 
         // update database
         if(!dati.isEmpty() && flag) {
@@ -120,54 +132,8 @@ public class EditProfileSceneController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
-
-    }
-
-    // already exist username
-    protected boolean checkUsername(String username) {
-        // looking for Username already exist or is empty
-        if(!username.isEmpty())
-            if (!patient.alreadyExist("Patients", "username", username))
-                return true;
-            else {
-                flag = false;
-                txtUsername.setStyle("-fx-text-fill: red;");
-            }
-        return false;
-    }
-
-    // Password and confirm password pass the validation
-    protected boolean checkPassword(String password) {
-        if(!password.isEmpty() )
-            if(password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?.\\-_:,;])(?=\\S+$).{8,}$"))
-                return true;
-            else {
-                flag = false;
-                txtPassword.setStyle("-fx-text-fill: red;");
-            }
-        return false;
-    }
-
-    // check lenght Phonenumber
-    protected  boolean checkPhoneNumber(String phoneNumber){
-        if(!phoneNumber.isEmpty())
-            if(phoneNumber.matches("^[0-9]{10,15}$") && !patient.alreadyExist("Patients", "phoneNumber", phoneNumber))
-                return true;
-            else{
-                flag = false;
-                txtPhoneNumber.setStyle("-fx-text-fill: red;");}
-        return false;
-    }
-
-    // check if email contain @ , .
-    protected boolean checkEmail(String email){
-        if(!email.isEmpty())
-            if(email.contains("@") && email.contains(".") && !patient.alreadyExist("Patients", "email", email))
-                return true;
-            else{
-                flag = false;
-                txtEmail.setStyle("-fx-text-fill: red;");}
-        return false;
+        else
+            newScene.showAlert("Dati", "Errore aggiornamento dati", Alert.AlertType.ERROR);
     }
 
     //check if password and confirm password are equal
