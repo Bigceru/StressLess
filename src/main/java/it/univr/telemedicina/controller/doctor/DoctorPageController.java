@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -20,10 +21,14 @@ public class DoctorPageController implements Initializable {
     public Button buttonEditProfile;
     public Button buttonSearchPatient;
     public Button buttonHome;
+    @FXML
     public Button buttonStatistic;
+    @FXML
+    public Label lblDoctorName;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         DoctorHomeScene.setVisible(true);
         DoctorStatisticsScene.setVisible(false);
     }

@@ -39,7 +39,7 @@
                   </AnchorPane>
                </top>
                <left>
-                  <AnchorPane fx:id="leftAnchor" prefWidth="250.0" style="-fx-background-color: #547AA5; -fx-border-radius: 10; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                  <AnchorPane fx:id="leftAnchor" prefWidth="250.0" style="-fx-background-color: #6ea483; -fx-border-radius: 10; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
                      <children>
                         <Label alignment="CENTER" layoutX="47.0" layoutY="150.0" prefHeight="20.0" prefWidth="152.0" text="Benvenuto" textAlignment="JUSTIFY" textFill="WHITE">
                            <font>
@@ -49,7 +49,7 @@
                               <Insets left="10.0" right="10.0" />
                            </padding>
                         </Label>
-                        <Label fx:id="lblName" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="168.0" prefHeight="37.0" prefWidth="218.0" text="Dott. Nome utente" textAlignment="JUSTIFY" textFill="WHITE">
+                        <Label fx:id="lblDoctorName" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="168.0" prefHeight="37.0" prefWidth="218.0" text="Dott. Nome utente" textAlignment="JUSTIFY" textFill="WHITE">
                            <font>
                               <Font name="Arial Bold Italic" size="23.0" />
                            </font>

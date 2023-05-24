@@ -3,6 +3,7 @@ package it.univr.telemedicina.controller;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.controller.doctor.ChangePasswordController;
 import it.univr.telemedicina.controller.doctor.DoctorHomeSceneController;
+import it.univr.telemedicina.controller.doctor.DoctorPageController;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
@@ -105,6 +106,8 @@ public class LoginController implements Initializable {
                         // Create new Doctor with the last query
                         Doctor doctor = new Doctor(credentials.get(0), credentials.get(1), credentials.get(2),credentials.get(3),credentials.get(4),credentials.get(5));
 
+                        DoctorPageController pageController = new DoctorPageController();
+                        pageController.setDoctor(doctor);
                         DoctorHomeSceneController homeDoctor = new DoctorHomeSceneController();
                         homeDoctor.setDoctor(doctor);
                         newScene.changeScene("doctorPages/DoctorPage.fxml", "Dottore", actionEvent);

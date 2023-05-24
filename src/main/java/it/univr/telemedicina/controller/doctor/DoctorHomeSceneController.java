@@ -15,8 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 /**
  * Class to control the DoctorHomeScene
@@ -50,9 +51,9 @@ public class DoctorHomeSceneController implements Initializable {
         setTablePatients();
     }
 
-    /**
-     * Method to initialize the table and the table columns with the Patient therapies
-     */
+
+     //Method to initialize the table and the table columns with the Patient therapies
+
     public void setTablePatients(){
         ObservableList<Patient> collection = FXCollections.observableArrayList();   // Collection of data to insert in the table
 
@@ -122,10 +123,75 @@ public class DoctorHomeSceneController implements Initializable {
         tablePatient.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    /**
-     * Method to set doctor's ID
-     * @param doctor doctor's ID
-     */
+    private void setBarChartNewPatients() {
+        ArrayList<String> list;
+        LocalDate start = buttonStartRegistration.getValue();
+        LocalDate end = buttonEndRegistration.getValue();
+
+        //Check date
+        if(start.isAfter(end)){
+            buttonEndRegistration.setStyle("-fx-text-fill: red;");
+            buttonStartRegistration.setStyle("-fx-text-fill: red;");
+            return;
+        }
+        else {
+            buttonEndRegistration.setStyle("-fx-text-fill: black;");
+            buttonStartRegistration.setStyle("-fx-text-fill: black;");
+        }
+
+        try {
+            System.out.print("Prima della query");
+            Database db = new Database(2);
+            list = db.getQuery("SELECT registration FROM Patients WHERE refDoc = " + doctor.getID() + " AND Registration BETWEEN '" + start + "' AND '" + end.toString() + "'", new String[]{"registration"});
+            db.closeAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        barChartNewPatients.setTitle("Istrogramma nuovi pazienti");
+
+        XYChart.Series<String, Integer> xSeries = new XYChart.Series<>();
+        xSeries.setName("Registrazioni");
+
+        // Collect data to add further to axis
+        TreeMap<LocalDate, Integer> dataTaken = new TreeMap<>();
+
+        // Insert all the date into dataTaken
+        start.datesUntil(end).forEach(localDate -> dataTaken.put(localDate, 0));
+        dataTaken.put(end, 0);
+
+        // Cycle the list of dates to add new registration event
+        for(String dataString : list) {
+            LocalDate date = LocalDate.parse(dataString);
+            dataTaken.put(date, dataTaken.get(date) + 1);
+        }
+
+        System.out.print("Ecco la lista dei giorni: \n");
+        dataTaken.forEach((localDate, integer) -> System.out.println(localDate.toString() + " --> " + integer + "\n"));
+
+        if(ChronoUnit.DAYS.between(start, end) <= 7 ){
+            dataTaken.forEach((localDate, integer) -> xSeries.getData().add(new XYChart.Data<>(localDate.toString(), integer)));
+        } else if (ChronoUnit.DAYS.between(start, end) <= 31) {
+            int somma = 0;
+            int i = 0;
+            for(LocalDate key : dataTaken.keySet()){
+                somma += dataTaken.get(key);
+
+                if(i % 7 == 0 && i != 0){
+                    xSeries.getData().add(new XYChart.Data<>(i/7 + " Settimana", somma));
+                    System.out.println("Settimana " + (i/7) + " Somma : " + somma );
+                    somma = 0;
+                }
+                i++;
+            }
+        }
+
+        // Add data to graphic
+        barChartNewPatients.getData().setAll(xSeries);
+        barChartNewPatients.setStyle("-fx-background-color: white");
+        barChartNewPatients.setAnimated(false);     // Remove the fucking animation to print right label  [Riccardo 1 (culo) Davide // ]
+    }
+
     public void setDoctor(Doctor doctor){
         DoctorHomeSceneController.doctor = doctor;
     }

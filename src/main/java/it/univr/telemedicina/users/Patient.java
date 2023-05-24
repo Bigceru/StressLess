@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Patient extends User {
 
-    private final static String[] stringFields = {"name", "surname", "birthPlace", "province", "birthDate", "phoneNumber", "domicile", "sex", "taxIDCode", "email", "username", "password", "refDoc"};
+    private final static String[] stringFields = {"name", "surname", "birthPlace", "province", "birthDate", "phoneNumber", "domicile", "sex", "taxIDCode", "email", "username", "password", "refDoc", "registration"};
     private String birthPlace;
     private String province;
     LocalDate birthDate;
@@ -50,7 +50,7 @@ public class Patient extends User {
                 try {
                     System.out.println("Provo ad entrare nel Database");
                     Database database = new Database(2);
-                    database.insertQuery("Patients", stringFields, new Object[]{name, surname, birthPlace, province, birthDate, phoneNumber, domicile, sex, taxIDCode, email, username, password, refDoc});
+                    database.insertQuery("Patients", stringFields, new Object[]{name, surname, birthPlace, province, birthDate, phoneNumber, domicile, sex, taxIDCode, email, username, password, refDoc, LocalDate.now()});
                 } catch (SQLException e) {
                     System.out.println("Error SQL query!");
                 } catch (ClassNotFoundException e) {
