@@ -4,6 +4,7 @@ import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

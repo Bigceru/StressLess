@@ -1,7 +1,9 @@
 package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.users.Doctor;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -15,11 +17,18 @@ import java.util.ResourceBundle;
 
 public class DoctorPageController implements Initializable {
     private final MainApplication newScene = new MainApplication();
+    private static Doctor doctor;
+    @FXML
     public AnchorPane DoctorHomeScene;
+    @FXML
     public AnchorPane DoctorStatisticsScene;
+    @FXML
     public Button buttonLogOut;
+    @FXML
     public Button buttonEditProfile;
+    @FXML
     public Button buttonSearchPatient;
+    @FXML
     public Button buttonHome;
     @FXML
     public Button buttonStatistic;
@@ -31,6 +40,7 @@ public class DoctorPageController implements Initializable {
 
         DoctorHomeScene.setVisible(true);
         DoctorStatisticsScene.setVisible(false);
+        lblDoctorName.setText("Dott. " + doctor.getName().charAt(0) + ". " + doctor.getSurname());
     }
 
     public void handleChangeScene(ActionEvent actionEvent) throws IOException {
@@ -52,5 +62,9 @@ public class DoctorPageController implements Initializable {
         else if(actionEvent.getSource() == buttonLogOut) {     // LogOut button click
             newScene.start((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
         }
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 }
