@@ -8,23 +8,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.util.converter.LocalDateStringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Struct;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-public class ChangeDataController implements Initializable {
+public class EditProfileSceneController implements Initializable {
     MainApplication newScene = new MainApplication();
     @FXML
     public TextField txtName;
     @FXML
-    public TextField txtPassword;
+    public PasswordField txtPassword;
     @FXML
     public TextField txtSurname;
     @FXML
@@ -48,9 +47,9 @@ public class ChangeDataController implements Initializable {
     @FXML
     public Button buttonSave;
 
-    private boolean flag = true;
 
-    Patient patient = new Patient(null,"Marco","Rossi","email@a.com","3463451651","test2","Prova123?","Verona","VR", LocalDate.of(2002, 07, 07),"VR",'M',"RSSMRC02L07L781Q", 1);
+    private boolean flag = true;
+    private static Patient patient;
 
     public void initialize(URL location, ResourceBundle resources) {
         txtName.setText(patient.getName());
@@ -59,6 +58,11 @@ public class ChangeDataController implements Initializable {
         txtBirthDate.setText(String.valueOf(patient.getBirthDate()));
         txtBirthPlace.setText(patient.getBirthPlace());
         txtProvince.setText(patient.getProvince());
+        txtUsername.setText(patient.getUsername());
+        txtDomicile.setText(patient.getDomicile());
+        txtEmail.setText(patient.getEmail());
+        txtPassword.setText(patient.getPassword());
+        txtPhoneNumber.setText(patient.getPhoneNumber());
     }
     public void buttonSaveOnAction(ActionEvent actionEvent) {
         Map<String, Object> dati = new TreeMap<>();
@@ -177,11 +181,15 @@ public class ChangeDataController implements Initializable {
         }
         return false;
     }
+
+    public void setPatient(Patient patient) {
+        EditProfileSceneController.patient = patient;
+    }
 }
 
 /**********************************
-DA RICORDARE
-***********************************
+ DA RICORDARE
+ ***********************************
  *
  * Posso mettere public already exist?
  */

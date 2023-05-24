@@ -26,6 +26,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -43,11 +44,15 @@ public class UserPageController implements Initializable{
     @FXML
     public Button buttonEditPressure;
     @FXML
+    public Button buttonEditDrugs;
+    @FXML
     public Button buttonEditProfile;
     @FXML
     public AnchorPane homeScene;
     @FXML
     public AnchorPane pressureScene;
+    @FXML
+    public AnchorPane drugsScene;
     @FXML
     public AnchorPane editProfileScene;
 
@@ -64,16 +69,6 @@ public class UserPageController implements Initializable{
     public CheckComboBox boxSymptoms;
     @FXML
     public TextField txtOtherSymptoms;
-    @FXML
-    public ComboBox boxDrugs;
-    @FXML
-    public ComboBox boxDrugsAmount;
-    @FXML
-    public DatePicker dateDrugs;
-    @FXML
-    public ComboBox boxTimeDrugs;
-    @FXML
-    public TextField txtTakenAmount;
     @FXML
     public ToggleButton weekPresToggle;
     @FXML
@@ -104,6 +99,7 @@ public class UserPageController implements Initializable{
         homeScene.setVisible(true);
         pressureScene.setVisible(false);
         editProfileScene.setVisible(false);
+        drugsScene.setVisible(false);
 
         // Edit button style to show the clicked one
         buttonHome.setStyle("-fx-background-color: #2A7878");
@@ -117,33 +113,9 @@ public class UserPageController implements Initializable{
             }
         };
         timer.start();
-
-        // Set doctor's name/surname label, pressure label
-        try {
-            Database db = new Database(2);
-            ArrayList<String> info = db.getQuery("SELECT * FROM Doctors WHERE ID = " + patient.getRefDoc(), new String[]{"Name","Surname"});    // Query to get doctor name
-            lblRefDoc.setText("Dr. " + info.get(0) + " " + info.get(1));
-
-            // Add last pressure value to the label
-            info = db.getQuery("SELECT SystolicPressure, DiastolicPressure, Date FROM BloodPressures WHERE IDPatient = " + patient.getPatientID() + " ORDER BY ID DESC", new String[]{"SystolicPressure", "DiastolicPressure", "Date"});
-            if(info.isEmpty()) {
-                lblPressure.setText("--/--");
-                lblLastPressure.setText("--/--");
-                //lblPressureStatus.setText("Nessuna rilevazione");
-            }
-            else {
-                lblPressure.setText(info.get(0) + "/" + info.get(1));
-                lblLastPressure.setText(info.get(2));
-                //lblPressureStatus.setText(checkPressure(Integer.parseInt(info.get(0)),Integer.parseInt(info.get(1))));
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        displayDrugs();
-        setTable();
     }
 
+    /*
     private void setTable() {
         ObservableList<InfoTablePat> therapy = FXCollections.observableArrayList();
         columnName.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/4
@@ -183,6 +155,8 @@ public class UserPageController implements Initializable{
         }
     }
 
+     */
+
     /**
      * Method that handle button click and use the type of the button chosen to change scene
      * @param event
@@ -193,17 +167,20 @@ public class UserPageController implements Initializable{
             homeScene.setVisible(true);
             pressureScene.setVisible(false);
             editProfileScene.setVisible(false);
+            drugsScene.setVisible(false);
 
             // Edit button style to show the clicked one
             buttonHome.setStyle("-fx-background-color: #2A7878");
             buttonEditPressure.setStyle("-fx-background-color: #0000");
             buttonEditProfile.setStyle("-fx-background-color: #0000");
+            buttonEditDrugs.setStyle("-fx-background-color: #0000");
 
         }
         else if(event.getSource() == buttonEditPressure){   // Pressure button click
             homeScene.setVisible(false);
             pressureScene.setVisible(true);
             editProfileScene.setVisible(false);
+            drugsScene.setVisible(false);
 
 
 
@@ -211,6 +188,21 @@ public class UserPageController implements Initializable{
             buttonHome.setStyle("-fx-background-color: #0000");
             buttonEditPressure.setStyle("-fx-background-color: #2A7878");
             buttonEditProfile.setStyle("-fx-background-color: #0000");
+            buttonEditDrugs.setStyle("-fx-background-color: #0000");
+        }
+        else if(event.getSource() == buttonEditDrugs){
+            homeScene.setVisible(false);
+            pressureScene.setVisible(false);
+            editProfileScene.setVisible(false);
+            drugsScene.setVisible(true);
+
+
+
+            // Edit button style to show the clicked one
+            buttonHome.setStyle("-fx-background-color: #0000");
+            buttonEditPressure.setStyle("-fx-background-color: #0000");
+            buttonEditProfile.setStyle("-fx-background-color: #0000");
+            buttonEditDrugs.setStyle("-fx-background-color: #2A7878");
         }
         else if(event.getSource() == logoutButton){     // LogOut button click
             newScene.start((Stage) ((Node) event.getSource()).getScene().getWindow());
@@ -219,11 +211,13 @@ public class UserPageController implements Initializable{
             homeScene.setVisible(false);
             pressureScene.setVisible(false);
             editProfileScene.setVisible(true);
+            drugsScene.setVisible(false);
 
             // Edit button style to show the clicked one
             buttonHome.setStyle("-fx-background-color: #0000");
             buttonEditPressure.setStyle("-fx-background-color: #0000");
             buttonEditProfile.setStyle("-fx-background-color: #2A7878");
+            buttonEditDrugs.setStyle("-fx-background-color: #0000");
         }
     }
 
@@ -233,6 +227,7 @@ public class UserPageController implements Initializable{
 
     //DRUGS*********************************************************************************************************
 
+    /*
     public void sendDrugsButton(ActionEvent actionEvent) {
         try {
             Database db = new Database(2);
@@ -254,12 +249,18 @@ public class UserPageController implements Initializable{
         }
     }
 
+     */
+
+    /*
     public void checkSymptomsParameters(LocalDate date){
         // check if the mensuration date is right
         if (date.isAfter(LocalDate.now()))
             throw new ParameterException("Data non valida");
-    }
 
+    }
+    */
+
+    /*
     private void displayDrugs() {
         ArrayList<String> info; //List of all drugs
         try {
@@ -273,6 +274,8 @@ public class UserPageController implements Initializable{
         boxDrugsAmount.getItems().addAll("1", "2", "3", "4", "5");
         boxTimeDrugs.getItems().addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
     }
+
+     */
 
 
 }

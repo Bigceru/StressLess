@@ -72,12 +72,20 @@ public class LoginController implements Initializable {
                         // Create new patient with the last query
                         Patient patient = new Patient(null, credentials.get(0), credentials.get(1), credentials.get(2),credentials.get(3),credentials.get(4),credentials.get(5),credentials.get(6),credentials.get(7), LocalDate.parse(credentials.get(8)), credentials.get(9), credentials.get(10).charAt(0),credentials.get(11),Integer.parseInt(credentials.get(12)));
 
+                        HomeSceneController homeController = new HomeSceneController();
+                        homeController.setPatient(patient);
                         // Attach the new patient to the controller
                         UserPageController controller = new UserPageController();
                         controller.setPatient(patient);
                         // Passing patient
                         PressureSceneController pressureController = new PressureSceneController();
                         pressureController.setPatient(patient);
+
+                        DrugsSceneController drugsController = new DrugsSceneController();
+                        drugsController.setPatient(patient);
+
+                        EditProfileSceneController editProfileController = new EditProfileSceneController();
+                        editProfileController.setPatient(patient);
 
                         // change scene
                         newScene.changeScene("UserPage.fxml","title", actionEvent);

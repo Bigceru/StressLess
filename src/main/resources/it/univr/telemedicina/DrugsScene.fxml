@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="drugsScene" layoutX="3.0" layoutY="4.0" prefHeight="774.0" prefWidth="883.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.DrugsSceneController">
+    <padding>
+        <Insets bottom="5.0" top="5.0" />
+    </padding>
+    <children>
+        <AnchorPane layoutX="8.0" layoutY="5.0" prefHeight="304.0" prefWidth="800.0" styleClass="anchor-style" stylesheets="@anchor.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <AnchorPane prefHeight="43.0" prefWidth="810.0" style="-fx-background-color: #3CA6A6;" styleClass="anchor-style" stylesheets="@anchor.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <children>
+                        <Label layoutX="288.0" layoutY="9.0" prefHeight="26.0" prefWidth="233.0" style="-fx-font-family: Montserrat;" text="FARMACI GIORNALIERI" textFill="WHITE" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="289.0" AnchorPane.topAnchor="9.0">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="40.0" layoutY="140.0" style="-fx-font-family: Montserrat;" text="Quantità assunte" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="460.0" layoutY="140.0" style="-fx-font-family: Montserrat;" text="Ora assunzione" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <DatePicker fx:id="dateDrugs" layoutX="250.0" layoutY="165.0" prefHeight="26.0" prefWidth="159.5" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                <Label layoutX="250.0" layoutY="140.0" style="-fx-font-family: Montserrat;" text="Data assunzione" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="40.0" layoutY="60.0" prefHeight="23.0" prefWidth="132.0" style="-fx-font-family: Montserrat;" text="Farmaci" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="638.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Button layoutX="670.0" layoutY="240.0" mnemonicParsing="false" onAction="#sendDrugsButton" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #54bc56; -fx-alignment: CENTER; -fx-background-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="AGGIUNGI" textFill="WHITE" AnchorPane.rightAnchor="24.0">
+                    <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
+                    </graphic>
+                </Button>
+                <Button layoutX="540.0" layoutY="240.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #ff5d5d; -fx-alignment: CENTER; -fx-background-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="RIMUOVI" textFill="WHITE" AnchorPane.rightAnchor="167.0">
+                    <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="MINUS" />
+                    </graphic>
+                </Button>
+                <ComboBox fx:id="boxTimeDrugs" layoutX="460.0" layoutY="165.0" prefWidth="150.0" style="-fx-background-radius: 10;" />
+                <ComboBox fx:id="boxDrugs" layoutX="40.0" layoutY="85.0" prefHeight="26.0" prefWidth="369.0" style="-fx-background-radius: 10;" />
+                <ComboBox fx:id="boxDrugsAmount" layoutX="40.0" layoutY="166.0" prefWidth="150.0" style="-fx-background-radius: 10;" />
+            </children>
+        </AnchorPane>
+        <SplitPane layoutX="195.0" layoutY="332.0" prefHeight="334.0" prefWidth="810.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="328.0">
+            <items>
+                <AnchorPane prefHeight="332.0" prefWidth="258.0" styleClass="anchor-style" stylesheets="@anchor.css">
+                    <children>
+                        <TableView fx:id="tableDrugs" prefHeight="339.0" prefWidth="402.0" stylesheets="@table.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0">
+                            <columns>
+                                <TableColumn fx:id="columnNameDrugsTable" prefWidth="193.0325927734375" text="Farmaco" />
+                                <TableColumn fx:id="columnDataDrugsTable" prefWidth="180.0116424560547" text="Data" />
+                        <TableColumn fx:id="columnHourDrugsTable" prefWidth="163.98837280273438" text="Ora" />
+                        <TableColumn fx:id="columnAmountDrugsTable" prefWidth="302.711181640625" text="Quantità" />
+                            </columns>
+                            <styleClass>
+                                <String fx:value="table-view" />
+                                <String fx:value="column-header-background" />
+                            </styleClass>
+                        </TableView>
+                        <Label layoutX="165.0" layoutY="7.0" style="-fx-font-family: Montserrat;" text="Raccolta " textFill="WHITE" AnchorPane.leftAnchor="40.0">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

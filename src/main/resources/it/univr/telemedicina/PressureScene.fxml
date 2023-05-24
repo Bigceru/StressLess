@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 
-<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<AnchorPane fx:id="pressureScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.univr.telemedicina.controller.PressureSceneController">
+<AnchorPane fx:id="pressureScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.PressureSceneController">
     <padding>
         <Insets bottom="5.0" top="5.0" />
     </padding>
@@ -54,12 +60,12 @@
                     </font>
                 </Label>
                 <CheckComboBox fx:id="boxSymptoms" layoutX="300.0" layoutY="85.0" prefHeight="26.0" prefWidth="483.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="27.0" />
-                <Button layoutX="677.0" layoutY="245.0" mnemonicParsing="false" onAction="#sendPressuresButton" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: #54bc56; -fx-alignment: CENTER; -fx-background-radius: 10; -fx-border-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="AGGIUNGI" textFill="WHITE" AnchorPane.rightAnchor="24.0">
+                <Button layoutX="670.0" layoutY="240.0" mnemonicParsing="false" onAction="#sendPressuresButton" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #54bc56; -fx-alignment: CENTER; -fx-background-radius: 10; -fx-border-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="AGGIUNGI" textFill="WHITE" AnchorPane.rightAnchor="24.0">
                     <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
                     </graphic>
                 </Button>
-                <Button layoutX="544.0" layoutY="245.0" mnemonicParsing="false" onAction="#removePressuresButton" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: #ff5d5d; -fx-alignment: CENTER; -fx-background-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="RIMUOVI" textFill="WHITE" AnchorPane.rightAnchor="157.0">
+                <Button layoutX="540.0" layoutY="240.0" mnemonicParsing="false" onAction="#removePressuresButton" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #ff5d5d; -fx-alignment: CENTER; -fx-background-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="RIMUOVI" textFill="WHITE" AnchorPane.rightAnchor="157.0">
                     <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="MINUS" />
                     </graphic>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="homeDocScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorStatisticsSceneController">
+    <padding>
+        <Insets bottom="5.0" top="5.0" />
+    </padding>
+    <children>
+        <AnchorPane layoutX="15.0" layoutY="25.0" prefHeight="433.0" prefWidth="709.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label layoutX="47.0" layoutY="25.0" text="Grafico di interesse: " textFill="WHITE" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <BarChart layoutX="5.0" layoutY="39.0" prefHeight="382.0" prefWidth="684.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <Label layoutX="173.0" layoutY="15.0" text="ATTUALE GRAFICO" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+        </AnchorPane>
+      <AnchorPane layoutX="15.0" layoutY="465.0" prefHeight="185.0" prefWidth="709.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="25.0" />
+    </children>
+</AnchorPane>

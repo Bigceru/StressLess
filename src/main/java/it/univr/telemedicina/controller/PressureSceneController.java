@@ -21,7 +21,9 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.*;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoZonedDateTime;
 import java.util.*;
 
 public class PressureSceneController implements Initializable {
@@ -227,7 +229,12 @@ public class PressureSceneController implements Initializable {
         // check if the mensuration date is right
         if (datePress.isAfter(LocalDate.now()))
             throw new ParameterException("Data errore");
-
+        if(datePress.isEqual(LocalDate.now())){
+            System.out.print(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+            if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < Integer.parseInt((String) boxTimePres.getValue())){
+                throw new ParameterException("Ora errore");
+            }
+        }
         if(time.isEmpty())
             throw new ParameterException("Orario errore");
     }
