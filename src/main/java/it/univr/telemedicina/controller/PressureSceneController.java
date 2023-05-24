@@ -1,6 +1,5 @@
 package it.univr.telemedicina.controller;
 
-import it.univr.telemedicina.InfoTablePat;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePat;
 import it.univr.telemedicina.exceptions.ParameterException;
@@ -22,8 +21,6 @@ import org.controlsfx.control.CheckComboBox;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.*;
-import java.time.chrono.ChronoLocalDateTime;
-import java.time.chrono.ChronoZonedDateTime;
 import java.util.*;
 
 public class PressureSceneController implements Initializable {
@@ -328,17 +325,6 @@ public class PressureSceneController implements Initializable {
         series2.getNode().setStyle("-fx-stroke: blue;");
         chartPatientPres.setStyle("-fx-background-color: white; CHART_COLOR_1: #ff0000; CHART_COLOR_2: #0000FF;");
         chartPatientPres.setCreateSymbols(false);
-
-
-        /*
-        try {
-            Database database = new Database(2);
-            database.updateQuery("BloodPressures", Map.of("SystolicPressure", 175, "DiastolicPressure", 90), Map.of("IDPatient", 6, "Date", LocalDate.of(2022, 5, 21)));
-            database.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-         */
     }
 
     private void displaySymptoms() {

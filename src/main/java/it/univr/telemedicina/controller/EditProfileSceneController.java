@@ -1,7 +1,9 @@
 package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.users.User;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,9 +44,10 @@ public class EditProfileSceneController implements Initializable {
     @FXML
     public TextField txtTaxIDCode;
     @FXML
-    public TextField txtConfirmPassword;
+    public PasswordField txtConfirmPassword;
     @FXML
     public Button buttonSave;
+
 
     private static User user;
 
@@ -100,6 +103,10 @@ public class EditProfileSceneController implements Initializable {
 
         if (user.checkPhoneNumber(txtPhoneNumber.getText()))
             dati.put("phoneNumber", txtPhoneNumber.getText());
+        else {
+            canUpload = false;
+            txtPhoneNumber.setStyle("-fx-text-fill: red;");
+        }
 
         if (!txtDomicile.getText().isEmpty())
             dati.put("domicile", txtDomicile.getText());
@@ -120,7 +127,11 @@ public class EditProfileSceneController implements Initializable {
         if(!dati.isEmpty() && canUpload) {
             try {
                 Database db = new Database(2);
-                db.updateQuery("Patients", dati, Map.of("ID", ((Object) patient.getPatientID())));
+
+                if(user instanceof Patient)
+                    db.updateQuery("Patients", dati, Map.of("ID", (((Patient) user).getPatientID())));
+                else
+                    db.updateQuery("Doctors", dati, Map.of("ID", (((Doctor) user).getID())));
 
                 if(dati.containsKey("Username"))
                     user.setUsername(dati.get("Username").toString());
@@ -143,8 +154,8 @@ public class EditProfileSceneController implements Initializable {
             newScene.showAlert("Dati", "Errore aggiornamento dati", Alert.AlertType.ERROR);
     }
 
-    //check if password and confirm password are equal
-    protected boolean equalPassword(String password, String confirmPassword){
+    //check if password and confirm password are equal (Usato per il pop-up del primo login doctor)
+    public boolean equalPassword(String password, String confirmPassword){
         if(password.equals(confirmPassword))
             return true;
         else

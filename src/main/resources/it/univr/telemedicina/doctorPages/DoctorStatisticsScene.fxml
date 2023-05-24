@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="homeDocScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorStatisticsSceneController">
+<AnchorPane fx:id="DoctorStatisticsScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorStatisticsSceneController">
     <padding>
         <Insets bottom="5.0" top="5.0" />
     </padding>

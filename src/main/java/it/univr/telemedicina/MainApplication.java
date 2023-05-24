@@ -36,6 +36,13 @@ public class MainApplication extends Application {
         stage.show();
     }
 
+    public void closeScene(String pathFXML, ActionEvent actionEvent) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(pathFXML));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
     public void addScene(String pathFXML) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(pathFXML));
         Parent root = loader.load();

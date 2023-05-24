@@ -3,28 +3,20 @@ package it.univr.telemedicina.controller;
 import it.univr.telemedicina.DrugsTablePat;
 import it.univr.telemedicina.utilities.Database;
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.TablePat;
 import it.univr.telemedicina.exceptions.ParameterException;
 import it.univr.telemedicina.users.Patient;
-import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 
 
