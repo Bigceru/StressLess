@@ -70,8 +70,45 @@ public class DoctorStatisticsSceneController {
     // Doctor instance
     private static Doctor doctor;
 
-    public void changeTab(){
-        System.out.print(tabPressure.getOnSelectionChanged().toString());
+    public void changeTab() {
+        if (tabPressure.isSelected()) {
+            lblActualGraphic.setText("ANDAMENTO PRESSIONI");
+            // remove all selected radio button in the other tab
+            if (radioTACE != null)
+                radioTACE.setSelected(false);
+            if (radioTBeta != null)
+                radioTBeta.setSelected(false);
+            if (radioTCalcium != null)
+                radioTCalcium.setSelected(false);
+            if (radioTDuretic != null)
+                radioTDuretic.setSelected(false);
+            if (radioTSart != null)
+                radioTSart.setSelected(false);
+            if (radioTSympatholytic != null)
+                radioTSympatholytic.setSelected(false);
+        } else {
+            lblActualGraphic.setText("ANDAMENTO TERAPIE");
+            if (radioP1Borderline != null)
+                radioP1Borderline.setSelected(false);
+            if (radioPIS != null)
+                radioPIS.setSelected(false);
+            if (radioP1Low != null)
+                radioP1Low.setSelected(false);
+            if (radioP2Moderate != null)
+                radioP2Moderate.setSelected(false);
+            if (radioPISBorderline != null)
+                radioPISBorderline.setSelected(false);
+            if (radioP3Critic != null)
+                radioP3Critic.setSelected(false);
+            if (radioPNormal != null)
+                radioPNormal.setSelected(false);
+            if (radioPNormalHigh != null)
+                radioPNormalHigh.setSelected(false);
+            if (radioPOptimal != null)
+                radioPOptimal.setSelected(false);
+
+        }
+
     }
 
     public void showNewGraph(ActionEvent actionEvent) {
@@ -186,3 +223,102 @@ public class DoctorStatisticsSceneController {
 
 
 }
+
+
+
+/*
+
+
+
+series.setName(Cate)
+ series.getData.add(newXYCHART.DATA("Brazil", 132);
+ series.getData.add(newXYCHART.DATA("AF", 132);
+ series.getData.add(newXYCHART.DATA("sf", 132);
+ series.getData.add(newXYCHART.DATA("fg", 132);
+ series.getData.add(newXYCHART.DATA("azil", 132);
+ series.getData.add(newXYCHART.DATA("d", 132);
+ series.setName(Cate)
+ series.getData.add(newXYCHART.DATA("Brazil", 132);
+ series.getData.add(newXYCHART.DATA("AF", 132);
+ series.getData.add(newXYCHART.DATA("sf", 132);
+ series.getData.add(newXYCHART.DATA("fg", 132);
+ series.getData.add(newXYCHART.DATA("azil", 132);
+ series.getData.add(newXYCHART.DATA("d", 132);
+ */
+
+
+
+
+
+
+
+
+
+
+/*
+list -> giorni  condizione
+
+
+treemap -> giorni, 0
+treemap -> giorni, ++
+
+arraylist(xychart("funzione", valore(treemap)))
+TREEMAP.0 -> arraylist.0
+
+
+
+ARRAYLIST<STRING date>
+serieX.setName(arralist.get(0)).getData.add(arralist.get(0))*/
+
+
+/*
+// Insert all the date into dataTaken
+        start.datesUntil(end).forEach(allDate::add);
+        allDate.add(end);
+
+        XYChart.Series<String, Integer>[] series = new XYChart.Series[allDate.size()];
+        int i = 0;
+
+        for(LocalDate date : allDate){
+            series[i] = new XYChart.Series<>();
+            series[i].setName(date.toString());
+            if(radioPOptimal.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ottimale"));
+            if(radioPNormal.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Normale"));
+            if(radioPNormalHigh.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Normale - alta"));
+            if(radioP1Borderline.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 1 borderline"));
+            if(radioP1Low.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 1 lieve"));
+            if(radioP2Moderate.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 2 Moderata"));
+            if(radioP3Critic.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 3 grave"));
+            if(radioPISBorderline.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione sistolica isolata borderline"));
+            if(radioPIS.isSelected())
+                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione sistolica isolata"));
+
+            //Add number on
+            /*
+            series[i].getData().forEach(data -> {
+                Label label = new Label(data.getYValue().toString());
+                label.setAlignment(Pos.TOP_CENTER);
+                label.setStyle("-fx-font-size: 16px; -fx-text-fill: white");
+                data.setNode(label);
+                data.getNode().setNodeOrientation(NodeOrientation.INHERIT);
+            });
+
+
+            i++;
+
+                    }
+                    stackedBarChart.getRotationAxis();
+                    stackedBarChart.getData().addAll(series);
+
+
+                    stackedBarChart.setAnimated(false);
+
+ */

@@ -222,9 +222,13 @@ public class DoctorHomeSceneController implements Initializable {
             for(LocalDate key : dataTaken.keySet()){
                 somma += dataTaken.get(key);
 
-                if(i % 7 == 0 && i != 0){
-                    xSeries.getData().add(new XYChart.Data<>(i/7 + " Settimana", somma));
-                    System.out.println("Settimana " + (i/7) + " Somma : " + somma );
+                if(dataTaken.size()-1 == i){
+                    xSeries.getData().add(new XYChart.Data<>(i/7+1   + " Settimana", somma));
+                    somma = 0;
+                }
+
+                if((i % 7 == 0 && i != 0)  ){
+                    xSeries.getData().add(new XYChart.Data<>(i/7  + " Settimana", somma));
                     somma = 0;
                 }
                 i++;
