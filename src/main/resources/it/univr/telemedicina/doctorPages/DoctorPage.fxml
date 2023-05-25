@@ -96,6 +96,7 @@
                      <children>
                         <fx:include fx:id="DoctorHomeScene" source="DoctorHomeScene.fxml" />
                         <fx:include fx:id="DoctorStatisticsScene" source="DoctorStatisticsScene.fxml" />
+                        <fx:include fx:id="DoctorEditProfileScene" source="DoctorEditProfileScene.fxml" />
                      </children>
                   </AnchorPane>
                </center>

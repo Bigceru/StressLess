@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="DoctorTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorTableController">
+    <children>
+        <AnchorPane prefHeight="80.0" prefWidth="750.0" style="-fx-background-color: #82C09A; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-5.0">
+            <children>
+                <Label layoutX="173.0" layoutY="14.0" prefHeight="52.0" prefWidth="255.0" style="-fx-font-family: Montserrat;" text="ISPEZIONE PAZIENTI" textFill="WHITE">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+      <TableView fx:id="doctorTable" layoutX="17.0" layoutY="93.0" prefHeight="399.0" prefWidth="554.0">
+        <columns>
+          <TableColumn fx:id="columnPatient" prefWidth="96.0" text="Paziente" />
+          <TableColumn fx:id="columnDate" prefWidth="92.0" text="Data" />
+            <TableColumn fx:id="columnCondition" prefWidth="172.0" text="Condizione pressione" />
+            <TableColumn fx:id="columnButton" prefWidth="193.00003051757812" text="Analizza" />
+        </columns>
+      </TableView>
+    </children>
+</AnchorPane>
