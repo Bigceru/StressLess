@@ -69,6 +69,7 @@ public class DoctorStatisticsSceneController {
 
     // Doctor instance
     private static Doctor doctor;
+    private int pos = 1;    // Position of week/month
 
     public void changeTab() {
         stackedBarChart.getData().clear();
@@ -107,9 +108,7 @@ public class DoctorStatisticsSceneController {
                 radioPNormalHigh.setSelected(false);
             if (radioPOptimal != null)
                 radioPOptimal.setSelected(false);
-
         }
-
     }
 
     public void showNewGraph(ActionEvent actionEvent) {
