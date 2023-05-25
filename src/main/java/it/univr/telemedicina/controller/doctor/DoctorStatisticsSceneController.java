@@ -122,6 +122,7 @@ public class DoctorStatisticsSceneController {
     }
 
     public void createGraph() {
+        stackedBarChart.getData().clear();
         ArrayList<String> list;
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
