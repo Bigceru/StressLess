@@ -151,6 +151,7 @@ public class DoctorStatisticsSceneController {
         allDate.add(end);
 
         XYChart.Series<String, Integer>[] series = new XYChart.Series[9];
+        
         int i = 0;
 
         /*
@@ -204,7 +205,7 @@ public class DoctorStatisticsSceneController {
         stackedBarChart.getRotationAxis();
         stackedBarChart.getData().addAll(series[1]);
 
-        stackedBarChart.getData().add(series[0]);
+        stackedBarChart.getData().add(series[8]);
 
         stackedBarChart.setAnimated(false);
     }
