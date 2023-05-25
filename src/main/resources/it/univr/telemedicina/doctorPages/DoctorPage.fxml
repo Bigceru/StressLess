@@ -58,7 +58,7 @@
                            </padding>
                         </Label>
                         <Line endX="100.0" layoutX="-87.0" layoutY="230.0" startX="323.76800537109375" startY="1.52587890625E-5" stroke="WHITE" strokeWidth="2.0" AnchorPane.leftAnchor="11.585784912109375" />
-                        <Button fx:id="buttonHome" layoutX="30.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Home" textFill="WHITE">
+                        <Button fx:id="buttonHomeDoc" layoutX="30.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Home" textFill="WHITE">
                            <graphic>
                               <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="2em" />
                            </graphic>
@@ -79,7 +79,7 @@
                            </graphic>
                         </Button>
                         <Label layoutX="51.0" layoutY="648.0" prefHeight="17.0" prefWidth="0.0" textFill="WHITE" />
-                        <Button fx:id="buttonStatistic" layoutX="30.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Bottone Bonus" textFill="WHITE">
+                        <Button fx:id="buttonStatisticDoc" layoutX="30.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleChangeScene" prefHeight="35.0" prefWidth="180.0" styleClass="button-view" stylesheets="@../button.css" text="Analisi Dottore" textFill="WHITE">
                            <graphic>
                               <FontAwesomeIcon fill="WHITE" glyphName="MEDKIT" size="2em" />
                            </graphic>

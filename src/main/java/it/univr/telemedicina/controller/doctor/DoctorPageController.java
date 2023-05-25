@@ -2,6 +2,7 @@ package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Doctor;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class DoctorPageController implements Initializable {
@@ -29,35 +32,46 @@ public class DoctorPageController implements Initializable {
     @FXML
     public Button buttonSearchPatient;
     @FXML
-    public Button buttonHome;
+    public Button buttonHomeDoc;
     @FXML
-    public Button buttonStatistic;
+    public Button buttonStatisticDoc;
     @FXML
     public Label lblDoctorName;
+    @FXML
+    public Label lblTime;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         DoctorHomeScene.setVisible(true);
+        buttonHomeDoc.setStyle("-fx-background-color: #3d5e49");
         DoctorStatisticsScene.setVisible(false);
         lblDoctorName.setText("Dott. " + doctor.getName().charAt(0) + ". " + doctor.getSurname());
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                lblTime.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            }
+        };
+        timer.start();
     }
 
     public void handleChangeScene(ActionEvent actionEvent) throws IOException {
-        if (actionEvent.getSource() == buttonHome) {  // Home button click
+        if (actionEvent.getSource() == buttonHomeDoc) {  // Home button click
             DoctorHomeScene.setVisible(true);
             DoctorStatisticsScene.setVisible(false);
 
             // Edit button style to show the clicked one
-            DoctorHomeScene.setStyle("-fx-background-color: #2A7878");
-            DoctorStatisticsScene.setStyle("-fx-background-color: #0000");
-        } else if (actionEvent.getSource() == buttonStatistic) {    // Statistic button click
+            buttonHomeDoc.setStyle("-fx-background-color: #3d5e49");
+            buttonStatisticDoc.setStyle("-fx-background-color: #0000");
+        } else if (actionEvent.getSource() == buttonStatisticDoc) {    // Statistic button click
             DoctorHomeScene.setVisible(false);
             DoctorStatisticsScene.setVisible(true);
 
             // Edit button style to show the clicked one
-            DoctorHomeScene.setStyle("-fx-background-color: #0000");
-            DoctorStatisticsScene.setStyle("-fx-background-color: #2A7878");
+            buttonHomeDoc.setStyle("-fx-background-color: #0000");
+            buttonStatisticDoc.setStyle("-fx-background-color: #3d5e49");
         }
         else if(actionEvent.getSource() == buttonLogOut) {     // LogOut button click
             newScene.start((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());

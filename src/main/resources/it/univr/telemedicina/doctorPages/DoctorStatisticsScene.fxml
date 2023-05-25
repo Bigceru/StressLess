@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -25,61 +25,61 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <BarChart fx:id="barChart" layoutX="5.0" layoutY="39.0" prefHeight="382.0" prefWidth="684.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </BarChart>
             <Label fx:id="lblActualGraphic" layoutX="173.0" layoutY="15.0" text="ATTUALE GRAFICO" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
+            <StackedBarChart fx:id="stackedBarChart" layoutX="14.0" layoutY="41.0" prefHeight="366.0" prefWidth="679.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" tickLabelFill="WHITE" />
+              </yAxis>
+            </StackedBarChart>
          </children>
         </AnchorPane>
-      <AnchorPane layoutX="15.0" layoutY="465.0" prefHeight="185.0" prefWidth="709.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="25.0">
+      <AnchorPane layoutX="489.0" layoutY="470.0" prefHeight="195.0" prefWidth="236.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="22.0">
          <children>
-            <DatePicker fx:id="dateStart" layoutX="509.0" layoutY="36.0" promptText="inizio" />
-            <DatePicker fx:id="dateEnd" layoutX="509.0" layoutY="90.0" promptText="fine" />
-            <TabPane layoutX="20.0" layoutY="24.0" prefHeight="146.0" prefWidth="464.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab fx:id="tabPressure" onSelectionChanged="#changeTab" text="Pressioni">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="394.0" style="-fx-background-color: white;">
-                           <children>
-                              <RadioButton fx:id="radioPOptimal" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Ottimale" />
-                              <RadioButton fx:id="radioPNormal" layoutX="14.0" layoutY="39.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="82.0" text="Normale " />
-                              <RadioButton fx:id="radioP1Borderline" layoutX="126.0" layoutY="15.0" mnemonicParsing="false" text="Ip. Grado I [Borderline]" />
-                              <RadioButton fx:id="radioPNormalHigh" layoutX="14.0" layoutY="67.0" mnemonicParsing="false" text="Normale - alta" />
-                              <RadioButton fx:id="radioP1Low" layoutX="127.0" layoutY="41.0" mnemonicParsing="false" text="Ip. Grado I [Lieve]" />
-                              <RadioButton fx:id="radioP2Moderate" layoutX="126.0" layoutY="67.0" mnemonicParsing="false" text="Ip. Grado II [Moderata]" />
-                              <RadioButton fx:id="radioP3Critic" layoutX="287.0" layoutY="15.0" mnemonicParsing="false" text="Ip. Grado III [Grave]" />
-                              <RadioButton fx:id="radioPISBorderline" layoutX="289.0" layoutY="40.0" mnemonicParsing="false" text="Ip. Isolata [Borderline]" />
-                              <RadioButton fx:id="radioPIS" layoutX="293.0" layoutY="67.0" mnemonicParsing="false" text="Ip. Isolata" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab fx:id="tabTherapies" onSelectionChanged="#changeTab" text="Terapie">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
-                           <children>
-                              <RadioButton layoutX="15.0" layoutY="21.0" mnemonicParsing="false" text="Diuretiche" />
-                              <RadioButton fx:id="radioTCalcium" layoutX="15.0" layoutY="48.0" mnemonicParsing="false" text="Calcio-antagonisti" />
-                              <RadioButton fx:id="radioTSympatholytic" layoutX="155.0" layoutY="12.0" mnemonicParsing="false" text="Simpaticolitici" />
-                              <RadioButton fx:id="radioTBeta" layoutX="156.0" layoutY="74.0" mnemonicParsing="false" text="Beta  bloccanti" />
-                              <RadioButton fx:id="radioTACE" layoutX="321.0" layoutY="21.0" mnemonicParsing="false" text="ACE-inibitori" />
-                              <RadioButton fx:id="radioTSart" layoutX="334.0" layoutY="65.0" mnemonicParsing="false" text="Sartani" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-            <Button fx:id="buttonShowGraph" layoutX="611.0" layoutY="133.0" mnemonicParsing="false" onAction="#showNewGraph" text="cerca" />
+            <DatePicker fx:id="dateStart" layoutX="13.0" layoutY="41.0" promptText="inizio" />
+            <DatePicker fx:id="dateEnd" layoutX="21.0" layoutY="85.0" onAction="#showNewGraph" promptText="fine" />
+            <Button fx:id="buttonShowGraph" layoutX="107.0" layoutY="137.0" mnemonicParsing="false" onAction="#showNewGraph" text="cerca" />
          </children></AnchorPane>
+      <TabPane layoutX="14.0" layoutY="461.0" prefHeight="184.0" prefWidth="464.0" stylesheets="@../tabpane.css" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabPressure" onSelectionChanged="#changeTab" text="Pressioni">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="394.0" styleClass="anchor-style" stylesheets="@../anchor.css">
+                     <children>
+                        <RadioButton fx:id="radioPOptimal" layoutX="24.0" layoutY="29.0" mnemonicParsing="false" text="Ottimale" textFill="WHITE" />
+                        <RadioButton fx:id="radioPNormal" layoutX="24.0" layoutY="59.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="82.0" text="Normale " textFill="WHITE" />
+                        <RadioButton fx:id="radioP1Borderline" layoutX="144.0" layoutY="29.0" mnemonicParsing="false" text="Ip. Grado I [Borderline]" textFill="WHITE" />
+                        <RadioButton fx:id="radioPNormalHigh" layoutX="24.0" layoutY="89.0" mnemonicParsing="false" text="Normale - alta" textFill="WHITE" />
+                        <RadioButton fx:id="radioP1Low" layoutX="144.0" layoutY="59.0" mnemonicParsing="false" text="Ip. Grado I [Lieve]" textFill="WHITE" />
+                        <RadioButton fx:id="radioP2Moderate" layoutX="144.0" layoutY="89.0" mnemonicParsing="false" text="Ip. Grado II [Moderata]" textFill="WHITE" />
+                        <RadioButton fx:id="radioP3Critic" layoutX="314.0" layoutY="29.0" mnemonicParsing="false" text="Ip. Grado III [Grave]" textFill="WHITE" />
+                        <RadioButton fx:id="radioPISBorderline" layoutX="314.0" layoutY="59.0" mnemonicParsing="false" text="Ip. Isolata [Borderline]" textFill="WHITE" />
+                        <RadioButton fx:id="radioPIS" layoutX="314.0" layoutY="89.0" mnemonicParsing="false" text="Ip. Isolata" textFill="WHITE" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tabTherapies" onSelectionChanged="#changeTab" text="Terapie">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="anchor-style" stylesheets="@../anchor.css">
+                     <children>
+                        <RadioButton fx:id="radioTDuretic" layoutX="15.0" layoutY="21.0" mnemonicParsing="false" text="Diuretiche" textFill="WHITE" />
+                        <RadioButton fx:id="radioTCalcium" layoutX="15.0" layoutY="48.0" mnemonicParsing="false" text="Calcio-antagonisti" textFill="WHITE" />
+                        <RadioButton fx:id="radioTSympatholytic" layoutX="155.0" layoutY="12.0" mnemonicParsing="false" text="Simpaticolitici" textFill="WHITE" />
+                        <RadioButton fx:id="radioTBeta" layoutX="156.0" layoutY="74.0" mnemonicParsing="false" text="Beta  bloccanti" textFill="WHITE" />
+                        <RadioButton fx:id="radioTACE" layoutX="321.0" layoutY="21.0" mnemonicParsing="false" text="ACE-inibitori" textFill="WHITE" />
+                        <RadioButton fx:id="radioTSart" layoutX="334.0" layoutY="65.0" mnemonicParsing="false" text="Sartani" textFill="WHITE" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
     </children>
 </AnchorPane>

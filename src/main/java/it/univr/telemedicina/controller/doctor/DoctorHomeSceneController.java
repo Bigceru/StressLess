@@ -5,15 +5,31 @@ import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
+import javafx.scene.chart.XYChart.Data;
+
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -175,6 +191,7 @@ public class DoctorHomeSceneController implements Initializable {
         }
 
         barChartNewPatients.setTitle("Istrogramma nuovi pazienti");
+        barChartNewPatients.lookup(".chart-title").setStyle("-fx-text-fill: white;");
 
         XYChart.Series<String, Integer> xSeries = new XYChart.Series<>();
         xSeries.setName("Registrazioni");
@@ -214,8 +231,15 @@ public class DoctorHomeSceneController implements Initializable {
 
         // Add data to graphic
         barChartNewPatients.getData().setAll(xSeries);
-        barChartNewPatients.setStyle("-fx-background-color: white");
-        barChartNewPatients.setAnimated(false);     // Remove the fucking animation to print right label  [Riccardo 1 (culo) Davide // ]
+        for(Node n:barChartNewPatients.lookupAll(".default-color0.chart-bar")) {
+            n.setStyle("-fx-bar-fill: #6ea483;-fx-text-fill: white");
+        }
+
+        //CHART_COLOR_1: #ff0000;
+        barChartNewPatients.setStyle("CHART_COLOR_1: #6ea483;");
+
+        barChartNewPatients.setAnimated(false);     // Remove the fucking animation to print right label
+
     }
 
     public void setDoctor(Doctor doctor){

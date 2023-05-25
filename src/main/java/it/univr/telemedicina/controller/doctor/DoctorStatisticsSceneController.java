@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
 import java.util.Date;
@@ -59,6 +61,9 @@ public class DoctorStatisticsSceneController {
         System.out.print(tabPressure.getOnSelectionChanged().toString());
     }
     public void showNewGraph(ActionEvent actionEvent) {
+
+
+        createGraph();
     }
 
 }
