@@ -4,6 +4,7 @@ import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.controller.doctor.ChangePasswordController;
 import it.univr.telemedicina.controller.doctor.DoctorHomeSceneController;
 import it.univr.telemedicina.controller.doctor.DoctorPageController;
+import it.univr.telemedicina.controller.doctor.DoctorStatisticsSceneController;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
@@ -110,6 +111,8 @@ public class LoginController implements Initializable {
                         pageController.setDoctor(doctor);
                         DoctorHomeSceneController homeDoctor = new DoctorHomeSceneController();
                         homeDoctor.setDoctor(doctor);
+                        DoctorStatisticsSceneController statisticsSceneController = new DoctorStatisticsSceneController();
+                        statisticsSceneController.setDoctor(doctor);
                         newScene.changeScene("doctorPages/DoctorPage.fxml", "Dottore", actionEvent);
 
                         if(credentials.get(5).equals("1234")){

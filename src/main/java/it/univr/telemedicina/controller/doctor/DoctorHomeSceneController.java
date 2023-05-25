@@ -214,8 +214,10 @@ public class DoctorHomeSceneController implements Initializable {
 
         if(ChronoUnit.DAYS.between(start, end) <= 7 ){
             dataTaken.forEach((localDate, integer) -> xSeries.getData().add(new XYChart.Data<>(localDate.toString(), integer)));
+
         } else if (ChronoUnit.DAYS.between(start, end) <= 31) {
             int somma = 0;
+            int wasteDays = 0;
             int i = 0;
             for(LocalDate key : dataTaken.keySet()){
                 somma += dataTaken.get(key);
@@ -227,7 +229,38 @@ public class DoctorHomeSceneController implements Initializable {
                 }
                 i++;
             }
+
+        }else{
+            int somma = 0;
+            int i = 0;
+
+            for(LocalDate key : dataTaken.keySet()){
+                somma += dataTaken.get(key);
+
+                if(dataTaken.size()-1 == i){
+                    xSeries.getData().add(new XYChart.Data<>(i/30+1   + " Mese", somma));
+                    somma = 0;
+                }
+
+                if(i % 30 == 0 && i != 0){
+                    xSeries.getData().add(new XYChart.Data<>(i/30 + " Mese", somma));
+                    somma = 0;
+                }
+                i++;
+            }
+
         }
+
+
+        //Add number on
+        xSeries.getData().forEach(data -> {
+            Label label = new Label(data.getYValue().toString());
+            label.setAlignment(Pos.TOP_CENTER);
+            label.setStyle("-fx-font-size: 16px; -fx-text-fill: white");
+            data.setNode(label);
+            data.getNode().setNodeOrientation(NodeOrientation.INHERIT);
+        });
+
 
         // Add data to graphic
         barChartNewPatients.getData().setAll(xSeries);
