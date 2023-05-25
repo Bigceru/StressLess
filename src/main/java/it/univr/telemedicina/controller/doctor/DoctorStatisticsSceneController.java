@@ -15,13 +15,13 @@ import javafx.scene.control.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.locks.Condition;
 
 import javafx.scene.chart.XYChart.Data;
 
 public class DoctorStatisticsSceneController {
-
     @FXML
     private StackedBarChart<String, Integer> stackedBarChart;
     @FXML
@@ -74,7 +74,7 @@ public class DoctorStatisticsSceneController {
     public void changeTab() {
         stackedBarChart.getData().clear();
         if (tabPressure.isSelected()) {
-            lblActualGraphic.setText("ANDAMENTO PRESSIONI");
+            lblActualGraphic.setText("ANDAMENTO PRESSIONE");
             // remove all selected radio button in the other tab
             if (radioTACE != null)
                 radioTACE.setSelected(false);
@@ -127,8 +127,8 @@ public class DoctorStatisticsSceneController {
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
 
-        //Check date
-        if (start.isAfter(end)) {
+        // Check date
+        if (start.isAfter(end) || end.equals(null) || start.equals(null)) {
             dateStart.setStyle("-fx-text-fill: red;");
             dateEnd.setStyle("-fx-text-fill: red;");
             return;
@@ -297,13 +297,39 @@ public class DoctorStatisticsSceneController {
      */
     private XYChart.Data<String, Integer> returnNumberCondition(String dateStart,String dateEnd, ArrayList<String> queryResult, String condition) {
         int count = 0;
-        for (int i = 0; i < list.size() - 1; i = i + 2) {
-            // Date equal i have value
-            if (list.get(i).equals(date) && list.get(i + 1).equals(condition)) {
-                count++;
+
+        // If the range of time is <= 14 days
+        if(dateEnd == null) {
+            // Cycle all the therapies/pressures and find math with startDate and condition (therapy/pressure)
+            for (int i = 0; i < queryResult.size() - 1; i = i + 2) {
+                // If I found equal date values and equal conditions
+                if (queryResult.get(i).equals(dateStart) && queryResult.get(i + 1).equals(condition)) {
+                    count++;
+                }
             }
+            return new XYChart.Data<>(dateStart, count);
         }
-        return new XYChart.Data<>(date, count);
+        else {  // If the range of time is > 14 days, Part with defined end
+            // Reconvert the String date to LocalDate type
+            LocalDate start = LocalDate.parse(dateStart);
+            LocalDate end = LocalDate.parse(dateEnd);
+
+            // Check if the condition is validated between the start and end dates
+            for (int i = 0; i < queryResult.size() - 1; i = i + 2) {
+                // If I found equal date values and equal conditions
+                if (((LocalDate.parse(queryResult.get(i)).isAfter(start) && LocalDate.parse(queryResult.get(i)).isBefore(end)) || ((LocalDate.parse(queryResult.get(i)).isEqual(start) || LocalDate.parse(queryResult.get(i)).isEqual(end)))) && queryResult.get(i + 1).equals(condition)) {
+                    count++;
+                }
+            }
+
+            // Set String value for day range
+            String fase; // Variable indicating the period
+            if(ChronoUnit.DAYS.between(start, end) <= 7)
+                fase = "Settimana " + pos;
+            else
+                fase = "Mese " + pos;
+            return new XYChart.Data<>(fase, count);
+        }
     }
 
 

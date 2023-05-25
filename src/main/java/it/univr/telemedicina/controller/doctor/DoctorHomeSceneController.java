@@ -171,7 +171,7 @@ public class DoctorHomeSceneController implements Initializable {
         LocalDate end = buttonEndRegistration.getValue();
 
         //Check date
-        if(start.isAfter(end)){
+        if(start.isAfter(end) || end.equals(null) || start.equals(null)){
             buttonEndRegistration.setStyle("-fx-text-fill: red;");
             buttonStartRegistration.setStyle("-fx-text-fill: red;");
             return;
