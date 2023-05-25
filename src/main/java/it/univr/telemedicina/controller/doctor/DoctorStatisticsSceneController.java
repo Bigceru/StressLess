@@ -203,9 +203,10 @@ public class DoctorStatisticsSceneController {
         stackedBarChart.getRotationAxis();
         stackedBarChart.getData().addAll(series[1]);
 
+        stackedBarChart.getData().add(series[0]);
 
         stackedBarChart.setAnimated(false);
-        }
+    }
 
 
 
