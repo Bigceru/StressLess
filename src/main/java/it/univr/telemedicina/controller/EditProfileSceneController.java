@@ -74,10 +74,12 @@ public class EditProfileSceneController implements Initializable {
         boolean canUpload = true;
 
         // reset color
+        if(user instanceof Patient){
+            txtDomicile.setStyle("-fx-text-fill: black;");
+        }
         txtUsername.setStyle("-fx-text-fill: black;");
         txtPassword.setStyle("-fx-text-fill: black;");
         txtConfirmPassword.setStyle("-fx-text-fill: black;");
-        txtDomicile.setStyle("-fx-text-fill: black;");
         txtUsername.setStyle("-fx-text-fill: black;");
         txtPhoneNumber.setStyle("-fx-text-fill: black;");
         txtEmail.setStyle("-fx-text-fill: black;");
@@ -108,11 +110,13 @@ public class EditProfileSceneController implements Initializable {
             txtPhoneNumber.setStyle("-fx-text-fill: red;");
         }
 
-        if (!txtDomicile.getText().isEmpty())
-            dati.put("domicile", txtDomicile.getText());
-        else {
-            canUpload = false;
-            txtDomicile.setStyle("-fx-text-fill: red;");
+        if(user instanceof Patient){
+            if (!txtDomicile.getText().isEmpty())
+                dati.put("domicile", txtDomicile.getText());
+            else {
+                canUpload = false;
+                txtDomicile.setStyle("-fx-text-fill: red;");
+            }
         }
 
         if(user.checkPassword(txtPassword.getText()) && equalPassword(txtPassword.getText(),txtConfirmPassword.getText()))
@@ -163,7 +167,7 @@ public class EditProfileSceneController implements Initializable {
     }
 
     public void setUser(User user) {
-        EditProfileSceneController.user = user;
+        this.user = user;
     }
 }
 

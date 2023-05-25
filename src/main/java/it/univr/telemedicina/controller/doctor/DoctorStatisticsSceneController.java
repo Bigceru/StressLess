@@ -112,16 +112,20 @@ public class DoctorStatisticsSceneController {
     }
 
     public void showNewGraph(ActionEvent actionEvent) {
-
-
-        createGraph();
+        if(dateStart.getValue() == null || dateEnd.getValue() == null)
+            return;
+        if(tabPressure.isSelected())
+            createGraphPression();
+        else
+            createGraphTherapie();
     }
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
 
-    public void createGraph() {
+    public void createGraphPression() {
+        // Reset data
         stackedBarChart.getData().clear();
         ArrayList<String> list;
         LocalDate start = dateStart.getValue();
@@ -331,105 +335,4 @@ public class DoctorStatisticsSceneController {
             return new XYChart.Data<>(fase, count);
         }
     }
-
-
 }
-
-
-
-/*
-
-
-
-series.setName(Cate)
- series.getData.add(newXYCHART.DATA("Brazil", 132);
- series.getData.add(newXYCHART.DATA("AF", 132);
- series.getData.add(newXYCHART.DATA("sf", 132);
- series.getData.add(newXYCHART.DATA("fg", 132);
- series.getData.add(newXYCHART.DATA("azil", 132);
- series.getData.add(newXYCHART.DATA("d", 132);
- series.setName(Cate)
- series.getData.add(newXYCHART.DATA("Brazil", 132);
- series.getData.add(newXYCHART.DATA("AF", 132);
- series.getData.add(newXYCHART.DATA("sf", 132);
- series.getData.add(newXYCHART.DATA("fg", 132);
- series.getData.add(newXYCHART.DATA("azil", 132);
- series.getData.add(newXYCHART.DATA("d", 132);
- */
-
-
-
-
-
-
-
-
-
-
-/*
-list -> giorni  condizione
-
-
-treemap -> giorni, 0
-treemap -> giorni, ++
-
-arraylist(xychart("funzione", valore(treemap)))
-TREEMAP.0 -> arraylist.0
-
-
-
-ARRAYLIST<STRING date>
-serieX.setName(arralist.get(0)).getData.add(arralist.get(0))*/
-
-
-/*
-// Insert all the date into dataTaken
-        start.datesUntil(end).forEach(allDate::add);
-        allDate.add(end);
-
-        XYChart.Series<String, Integer>[] series = new XYChart.Series[allDate.size()];
-        int i = 0;
-
-        for(LocalDate date : allDate){
-            series[i] = new XYChart.Series<>();
-            series[i].setName(date.toString());
-            if(radioPOptimal.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ottimale"));
-            if(radioPNormal.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Normale"));
-            if(radioPNormalHigh.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Normale - alta"));
-            if(radioP1Borderline.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 1 borderline"));
-            if(radioP1Low.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 1 lieve"));
-            if(radioP2Moderate.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 2 Moderata"));
-            if(radioP3Critic.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione di Grado 3 grave"));
-            if(radioPISBorderline.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione sistolica isolata borderline"));
-            if(radioPIS.isSelected())
-                series[i].getData().add(returnNumberCondition(date.toString(), list, "Ipertensione sistolica isolata"));
-
-            //Add number on
-            /*
-            series[i].getData().forEach(data -> {
-                Label label = new Label(data.getYValue().toString());
-                label.setAlignment(Pos.TOP_CENTER);
-                label.setStyle("-fx-font-size: 16px; -fx-text-fill: white");
-                data.setNode(label);
-                data.getNode().setNodeOrientation(NodeOrientation.INHERIT);
-            });
-
-
-            i++;
-
-                    }
-                    stackedBarChart.getRotationAxis();
-                    stackedBarChart.getData().addAll(series);
-
-
-                    stackedBarChart.setAnimated(false);
-
- */

@@ -75,6 +75,7 @@ public class DoctorPageController implements Initializable {
         } else if (actionEvent.getSource() == buttonStatisticDoc) {    // Statistic button click
             DoctorHomeScene.setVisible(false);
             DoctorStatisticsScene.setVisible(true);
+            DoctorEditProfileScene.setVisible(false);
 
             // Edit button style to show the clicked one
             buttonHomeDoc.setStyle("-fx-background-color: #0000");

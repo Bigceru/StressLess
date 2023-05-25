@@ -113,6 +113,9 @@ public class LoginController implements Initializable {
                         homeDoctor.setDoctor(doctor);
                         DoctorStatisticsSceneController statisticsSceneController = new DoctorStatisticsSceneController();
                         statisticsSceneController.setDoctor(doctor);
+                        EditProfileSceneController editProfileController = new EditProfileSceneController();
+                        editProfileController.setUser(doctor);
+
                         newScene.changeScene("doctorPages/DoctorPage.fxml", "Dottore", actionEvent);
 
                         if(credentials.get(5).equals("1234")){
