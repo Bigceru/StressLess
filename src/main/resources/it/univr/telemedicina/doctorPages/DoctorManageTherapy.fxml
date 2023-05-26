@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
+
+<AnchorPane prefHeight="456.0" prefWidth="740.0" style="-fx-background-radius: 20; -fx-background-color: #272932;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorManageTherapy">
+      <children>
+          <Label layoutX="238.0" layoutY="79.0" style="-fx-font-family: Montserrat;" text="NOME TERAPIA" textFill="WHITE" visible="false">
+              <font>
+                  <Font size="14.0" />
+              </font>
+          </Label>
+          <DatePicker fx:id="dateStart" layoutX="60.0" layoutY="269.0" prefHeight="24.0" prefWidth="204.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
+          <Label layoutX="240.0" layoutY="161.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DOSE GIORNALIERA" textFill="WHITE" visible="false">
+              <font>
+                  <Font size="14.0" />
+              </font>
+          </Label>
+          <Label layoutX="64.0" layoutY="79.0" style="-fx-font-family: Montserrat;" text="TERAPIE" textFill="WHITE">
+              <font>
+                  <Font size="14.0" />
+              </font>
+          </Label>
+          <ComboBox fx:id="boxTherapy" layoutX="60.0" layoutY="109.0" onAction="#handleBoxTherapy" prefHeight="26.0" prefWidth="133.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+          <Label layoutX="91.0" layoutY="374.0" prefHeight="17.0" prefWidth="0.0" textFill="WHITE" />
+          <TextArea fx:id="errorCodeLabel" layoutX="17.0" layoutY="413.0" prefHeight="200.0" prefWidth="866.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <ComboBox fx:id="boxTherapyName" layoutX="240.0" layoutY="109.0" prefHeight="26.0" prefWidth="133.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
+      <Label layoutX="64.0" layoutY="162.0" style="-fx-font-family: Montserrat;" text="FARMACI" textFill="WHITE" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="boxDrugs" layoutX="60.0" layoutY="189.0" prefHeight="26.0" prefWidth="133.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
+      <Label layoutX="428.0" layoutY="162.0" prefHeight="18.0" prefWidth="86.0" style="-fx-font-family: Montserrat;" text="QUANTITÀ" textFill="WHITE" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dateEnd" layoutX="307.0" layoutY="269.0" prefHeight="24.0" prefWidth="204.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
+      <Label layoutX="60.0" layoutY="243.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DATA INIZIO" textFill="WHITE" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="307.0" layoutY="243.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DATA FINE" textFill="WHITE" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="600.0" layoutY="162.0" style="-fx-font-family: Montserrat;" text="ISTRUZIONI" textFill="WHITE" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="boxAmount" layoutX="428.0" layoutY="189.0" prefHeight="26.0" prefWidth="133.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
+      <ComboBox fx:id="boxDailyDoses" layoutX="238.0" layoutY="189.0" prefHeight="26.0" prefWidth="133.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
+      <CheckComboBox fx:id="checkBoxInstruction" layoutX="600.0" layoutY="190.0" prefHeight="24.0" prefWidth="81.0" visible="false" />
+      <Button fx:id="buttonSend" layoutX="574.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleManageButton" prefHeight="58.0" prefWidth="133.0" style="-fx-background-color: yellow;" text="INVIA" visible="false" />
+      <Label layoutX="57.0" layoutY="27.0" prefHeight="16.0" prefWidth="516.0" text="AGGIUNGI MODIFICA TERAPIE PAZIENTE" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonDelete" layoutX="48.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="43.0" prefWidth="127.0" text="ELIMINA" visible="false" />
+      <Line endX="618.0" layoutX="111.0" layoutY="414.0" startX="-100.0" />
+      <TextArea fx:id="txtAreaInformation" layoutX="60.0" layoutY="457.0" prefHeight="65.0" prefWidth="630.0" />
+      <Label layoutX="60.0" layoutY="427.0" prefHeight="20.0" prefWidth="218.0" style="-fx-font-family: Montserrat;" text="INFORMAZIONI AGGIUNTIVE" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="270.0" layoutY="546.0" mnemonicParsing="false" onAction="#handleSendInformationButton" prefHeight="24.0" prefWidth="204.0" text="Invia informazioni" />
+      </children>
+  </AnchorPane>
