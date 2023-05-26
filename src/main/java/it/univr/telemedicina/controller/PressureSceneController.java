@@ -115,8 +115,6 @@ public class PressureSceneController implements Initializable {
     public void sendPressuresButton(ActionEvent actionEvent) {
         int systolic;
         int diastolic;
-        String otherSymptoms = null;
-        LocalDate pressureDate = null;
 
         try {
             Database db = new Database(2);
@@ -131,8 +129,6 @@ public class PressureSceneController implements Initializable {
             String[] keyString = key.toArray(new String[0]);
             Collection<Object> values = dati.values();
             Object[] valuesString = values.toArray(new Object[0]);
-            System.out.println("Dati values; " + dati.values());
-            System.out.println("Key: " + keyString);
 
             //Query for insert data in BloodPressures
             db.insertQuery("BloodPressures", keyString, valuesString);

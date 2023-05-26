@@ -116,7 +116,6 @@ public class DrugsSceneController implements Initializable {
         if (date.isAfter(LocalDate.now()))
             throw new ParameterException("Data errore");
         if(date.isEqual(LocalDate.now())){
-            System.out.print(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
             if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < Integer.parseInt((String) boxTimeDrugs.getValue())){
                 throw new ParameterException("Ora errore");
             }
