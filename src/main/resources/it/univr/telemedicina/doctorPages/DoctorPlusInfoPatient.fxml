@@ -14,6 +14,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="DoctorPlusInfoPatientScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorPlusInfoPatientController">
     <padding>
@@ -22,11 +23,11 @@
     <children>
         <AnchorPane layoutX="19.0" layoutY="25.0" prefHeight="643.0" prefWidth="719.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
-              <SplitPane dividerPositions="0.5" prefHeight="328.0" prefWidth="699.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="330.0">
+              <SplitPane dividerPositions="0.5" layoutY="215.0" prefHeight="418.0" prefWidth="730.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="215.0">
                   <items>
-                  <AnchorPane prefHeight="301.0" prefWidth="372.0">
+                  <AnchorPane prefHeight="573.0" prefWidth="501.0">
                      <children>
-                            <LineChart fx:id="lineChartPression" prefHeight="326.0" prefWidth="501.0" visible="false">
+                            <LineChart fx:id="lineChartPression" prefHeight="371.0" prefWidth="501.0">
                                 <xAxis>
                                     <CategoryAxis side="BOTTOM" />
                                 </xAxis>
@@ -34,7 +35,7 @@
                                     <NumberAxis side="LEFT" />
                                 </yAxis>
                             </LineChart>
-                        <StackedBarChart fx:id="barChartDrug" layoutX="-6.0" prefHeight="276.0" prefWidth="500.0">
+                        <StackedBarChart fx:id="barChartDrug" layoutX="-6.0" layoutY="3.0" prefHeight="371.0" prefWidth="500.0" visible="false">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -52,7 +53,7 @@
                                     <Tab fx:id="tabDrug" onSelectionChanged="#handleChangeTab" text="Farmaci" />
                                 </tabs>
                             </TabPane>
-                                <AnchorPane layoutY="47.0" minHeight="0.0" minWidth="0.0" prefHeight="133.0" prefWidth="200.0">
+                                <AnchorPane layoutX="-10.0" layoutY="47.0" minHeight="0.0" minWidth="0.0" prefHeight="133.0" prefWidth="210.0">
                            <children>
                               <DatePicker fx:id="dateStart" layoutX="14.0" layoutY="21.0" prefHeight="24.0" prefWidth="119.0" promptText="Inizio" />
                               <DatePicker fx:id="dateEnd" layoutX="14.0" layoutY="50.0" prefHeight="24.0" prefWidth="119.0" promptText="Fine" />
@@ -63,10 +64,19 @@
                   </AnchorPane>
                   </items>
               </SplitPane>
-            <Label layoutX="119.0" layoutY="36.0" prefHeight="16.0" prefWidth="427.0" text="Maggiori informazioni del paziente" textFill="WHITE" />
-            <Label fx:id="lblTitle" layoutX="192.0" layoutY="308.0" text="titolo" textFill="WHITE" />
-            <TextArea fx:id="txtAreaInfo" layoutX="126.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0" />
+            <Label layoutX="43.0" layoutY="36.0" prefHeight="26.0" prefWidth="283.0" text="MAGGIORI INFORMAZIONI" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font></Label>
+            <Label fx:id="lblTitle" layoutX="95.0" layoutY="190.0" text="titolo" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <TextArea fx:id="txtAreaInfo" layoutX="35.0" layoutY="83.0" prefHeight="43.0" prefWidth="677.0">
+               <font>
+                  <Font size="19.0" />
+               </font></TextArea>
+            <Line endX="723.0" endY="320.0" layoutX="4.0" layoutY="-140.0" startX="17.292892456054688" startY="320.0" stroke="WHITE" />
          </children></AnchorPane>
-      <Line endX="723.0" endY="320.0" startX="17.292892456054688" startY="320.0" stroke="WHITE" />
     </children>
 </AnchorPane>

@@ -55,7 +55,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Button layoutX="10.0" layoutY="171.0" mnemonicParsing="false" styleClass="button-view" stylesheets="@../button.css" text="CAMBIA TERAPIA" />
+                        <Button layoutX="10.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleTherapyButton" style="-fx-background-color: #272932;" styleClass="button-view" stylesheets="@../button.css" text="CAMBIA TERAPIA" />
                      </children>
                   </AnchorPane>
                   <TableView fx:id="tableSearchPatient" prefHeight="299.0" prefWidth="658.0" stylesheets="@../table.css">

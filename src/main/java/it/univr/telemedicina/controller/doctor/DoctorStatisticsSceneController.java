@@ -189,7 +189,7 @@ public class DoctorStatisticsSceneController {
         LocalDate end = dateEnd.getValue();
 
         //Check date
-        if (start.isAfter(end) || end.equals(null) || start.equals(null)) {
+        if (end.equals(null) || start.equals(null) || start.isAfter(end)) {
             dateStart.setStyle("-fx-text-fill: red;");
             dateEnd.setStyle("-fx-text-fill: red;");
             return;

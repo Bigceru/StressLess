@@ -15,11 +15,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class DoctorPlusInfoPatientController {
@@ -44,9 +46,39 @@ public class DoctorPlusInfoPatientController {
     @FXML
     public DatePicker dateEnd;
 
+    /***
+     * this method fill the text area where the doctor put his note about the problem of the patient
+     * @param location
+     * @param resources
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try{
+            Database database = new Database(2);
+            ArrayList<String> resultInfoQuery = database.getQuery("SELECT Detail FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"Detail"});
+            database.closeAll();
+
+            //set generic Title to graph
+            lblTitle.setText("Grafico Pressione");
+
+            // Add detail of patient in the textArea
+            if(!resultInfoQuery.isEmpty()){
+                txtAreaInfo.setText(resultInfoQuery.toString());
+            }else{
+                txtAreaInfo.setText("Non sono presenti note riguardo al paziente selezionato");
+            }
+        }catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * block eventually problem with empty field and show the graphs
+     * @param actionEvent
+     */
     public void buttonSend(ActionEvent actionEvent) {
-        // If startDate is before endDate and both them are not null
-        if(dateStart.getValue().isBefore(dateEnd.getValue()) && dateStart.getValue() != null && dateEnd.getValue() != null) {
+        // If startDate is before endDate or equal to see one day and both them are not null
+        if((dateStart.getValue().isBefore(dateEnd.getValue()) || dateStart.getValue().isEqual(dateEnd.getValue())) && dateStart.getValue() != null && dateEnd.getValue() != null) {
             // Set date to black color
             dateStart.setStyle("-fx-text-fill: black;");
             dateEnd.setStyle("-fx-text-fill: black;");
@@ -54,9 +86,11 @@ public class DoctorPlusInfoPatientController {
             // If tab pressure is pressed
             if(tabPressure.isSelected()) {
                 updateGraph(dateStart.getValue(), dateEnd.getValue());
+
             }
             else {  // Otherwise show the barchart
                 createGraphDrug(dateStart.getValue(), dateEnd.getValue());
+
             }
         }
         else {  // If some fields are incorrect
@@ -66,6 +100,10 @@ public class DoctorPlusInfoPatientController {
         }
     }
 
+    /***
+     * Method to manage the tabs and figure out which graph to display
+     * @param event allows you to understand in which tab it was chosen
+     */
     public void handleChangeTab(Event event) {
         if(event.getSource() == tabPressure) {
             lineChartPression.setVisible(true);
@@ -282,4 +320,6 @@ public class DoctorPlusInfoPatientController {
     public static void setPatient(int idPatient) {
         DoctorPlusInfoPatientController.idPatient = idPatient;
     }
+
+
 }
