@@ -28,6 +28,8 @@ public class DoctorPageController implements Initializable {
     @FXML
     public AnchorPane DoctorStatisticsScene;
     @FXML
+    public AnchorPane DoctorPatientAnalysisScene;
+    @FXML
     public Button buttonLogOut;
     @FXML
     public Button buttonEditProfile;
@@ -50,6 +52,8 @@ public class DoctorPageController implements Initializable {
         buttonHomeDoc.setStyle("-fx-background-color: #3d5e49");
         DoctorStatisticsScene.setVisible(false);
         DoctorEditProfileScene.setVisible(false);
+        DoctorPatientAnalysisScene.setVisible(false);
+
 
         lblDoctorName.setText("Dott. " + doctor.getName().charAt(0) + ". " + doctor.getSurname());
         AnimationTimer timer = new AnimationTimer() {
@@ -66,21 +70,24 @@ public class DoctorPageController implements Initializable {
             DoctorHomeScene.setVisible(true);
             DoctorStatisticsScene.setVisible(false);
             DoctorEditProfileScene.setVisible(false);
-
+            DoctorPatientAnalysisScene.setVisible(false);
 
             // Edit button style to show the clicked one
             buttonHomeDoc.setStyle("-fx-background-color: #3d5e49");
             buttonStatisticDoc.setStyle("-fx-background-color: #0000");
             buttonEditProfile.setStyle("-fx-background-color: #0000");
+            buttonSearchPatient.setStyle("-fx-background-color: #0000");
         } else if (actionEvent.getSource() == buttonStatisticDoc) {    // Statistic button click
             DoctorHomeScene.setVisible(false);
             DoctorStatisticsScene.setVisible(true);
             DoctorEditProfileScene.setVisible(false);
+            DoctorPatientAnalysisScene.setVisible(false);
 
             // Edit button style to show the clicked one
             buttonHomeDoc.setStyle("-fx-background-color: #0000");
             buttonStatisticDoc.setStyle("-fx-background-color: #3d5e49");
             buttonEditProfile.setStyle("-fx-background-color: #0000");
+            buttonSearchPatient.setStyle("-fx-background-color: #0000");
         }
         else if(actionEvent.getSource() == buttonLogOut) {     // LogOut button click
             newScene.start((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
@@ -89,6 +96,7 @@ public class DoctorPageController implements Initializable {
             DoctorHomeScene.setVisible(false);
             DoctorStatisticsScene.setVisible(false);
             DoctorEditProfileScene.setVisible(true);
+            DoctorPatientAnalysisScene.setVisible(false);
 
             buttonHomeDoc.setStyle("-fx-background-color: #0000");
             buttonStatisticDoc.setStyle("-fx-background-color: #0000");

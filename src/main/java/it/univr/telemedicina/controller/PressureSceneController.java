@@ -319,6 +319,7 @@ public class PressureSceneController implements Initializable {
         series2.getNode().setStyle("-fx-stroke: blue;");
         chartPatientPres.setStyle("-fx-background-color: white; CHART_COLOR_1: #ff0000; CHART_COLOR_2: #0000FF;");
         chartPatientPres.setCreateSymbols(false);
+        chartPatientPres.setAnimated(false);
     }
 
     private void displaySymptoms() {

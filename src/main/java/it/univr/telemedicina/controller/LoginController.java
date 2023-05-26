@@ -1,10 +1,7 @@
 package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.controller.doctor.ChangePasswordController;
-import it.univr.telemedicina.controller.doctor.DoctorHomeSceneController;
-import it.univr.telemedicina.controller.doctor.DoctorPageController;
-import it.univr.telemedicina.controller.doctor.DoctorStatisticsSceneController;
+import it.univr.telemedicina.controller.doctor.*;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
@@ -115,6 +112,9 @@ public class LoginController implements Initializable {
                         statisticsSceneController.setDoctor(doctor);
                         EditProfileSceneController editProfileController = new EditProfileSceneController();
                         editProfileController.setUser(doctor);
+
+                        DoctorPatientAnalysisController doctorPatientAnalysisController = new DoctorPatientAnalysisController();
+                        doctorPatientAnalysisController.setDoctor(doctor);
 
                         newScene.changeScene("doctorPages/DoctorPage.fxml", "Dottore", actionEvent);
 
