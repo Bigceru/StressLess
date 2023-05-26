@@ -75,7 +75,7 @@ public class DoctorPatientAnalysisController implements Initializable {
      */
     public void handleSearchButton(ActionEvent actionEvent){
         int idPatient;
-        if(!boxPatientList.getValue().isEmpty()) {
+        if(boxPatientList.getValue() != null) {
             idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
 
             try {
@@ -262,6 +262,12 @@ public class DoctorPatientAnalysisController implements Initializable {
             // Error
             newScene.showAlert("ComboBox vuota","Inserire un valore nella combo box", Alert.AlertType.ERROR);
         }
+    }
+    public void handleTherapyButton(ActionEvent actionEvent) throws IOException{
+        int idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
+        DoctorManageTherapy.setPatient(idPatient);
+        newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorManageTherapy.fxml");
+
     }
 
 }

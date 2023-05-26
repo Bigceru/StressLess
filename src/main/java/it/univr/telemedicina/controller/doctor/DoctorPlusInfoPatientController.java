@@ -5,6 +5,7 @@ import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-public class DoctorPlusInfoPatientController {
+public class DoctorPlusInfoPatientController implements Initializable {
     private int pos = 1;    // Position of week/month
     @FXML
     public LineChart lineChartPression;
@@ -83,6 +84,7 @@ public class DoctorPlusInfoPatientController {
             dateStart.setStyle("-fx-text-fill: black;");
             dateEnd.setStyle("-fx-text-fill: black;");
 
+
             // If tab pressure is pressed
             if(tabPressure.isSelected()) {
                 updateGraph(dateStart.getValue(), dateEnd.getValue());
@@ -108,10 +110,18 @@ public class DoctorPlusInfoPatientController {
         if(event.getSource() == tabPressure) {
             lineChartPression.setVisible(true);
             barChartDrug.setVisible(false);
+
+            // change title and clear the graph
+            lblTitle.setText("Grafico Pressione");
+            lineChartPression.getData().clear();
         }
         else if(event.getSource() == tabDrug){
             lineChartPression.setVisible(false);
             barChartDrug.setVisible(true);
+
+            // change title and clear the graph
+            lblTitle.setText("Grafico Farmaci Assunte");
+            barChartDrug.getData().clear();
         }
     }
 
@@ -132,7 +142,7 @@ public class DoctorPlusInfoPatientController {
             throw new RuntimeException(e);
         }
 
-        lineChartPression.setTitle("Grafico Pressione");
+        //lineChartPression.setTitle("Grafico Pressione");
 
         XYChart.Series series = new XYChart.Series<>();
         series.setName("Pressione Sistolica");
@@ -317,6 +327,10 @@ public class DoctorPlusInfoPatientController {
         }
     }
 
+    /**
+     *method to take the id of the patient
+     * @param idPatient integer
+     */
     public static void setPatient(int idPatient) {
         DoctorPlusInfoPatientController.idPatient = idPatient;
     }

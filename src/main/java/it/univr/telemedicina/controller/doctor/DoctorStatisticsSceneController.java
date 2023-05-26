@@ -6,9 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
@@ -16,10 +13,7 @@ import javafx.scene.control.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.concurrent.locks.Condition;
-
-import javafx.scene.chart.XYChart.Data;
+import java.util.ArrayList;
 
 public class DoctorStatisticsSceneController {
     @FXML
