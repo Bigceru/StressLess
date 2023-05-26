@@ -35,7 +35,7 @@
                   <FontAwesomeIcon fill="WHITE" glyphName="SEARCH" />
                </graphic>
             </Button>
-            <Button layoutX="622.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: blue;" styleClass="button-view" stylesheets="@../button.css" text="INFO">
+            <Button layoutX="622.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleInfoButton" style="-fx-background-color: blue;" styleClass="button-view" stylesheets="@../button.css" text="INFO">
                <graphic>
                   <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
                </graphic>

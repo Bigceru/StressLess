@@ -9,11 +9,13 @@ import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -42,7 +44,6 @@ public class DoctorPatientAnalysisController implements Initializable {
     public TableColumn<TablePatientPressures,String> columnPressure;
     @FXML
     public TableColumn<TablePatientPressures,String> columnHour;
-
 
     // Doctor instance
     private static Doctor doctor;
@@ -249,4 +250,18 @@ public class DoctorPatientAnalysisController implements Initializable {
     public void setDoctor(Doctor doctor){
         DoctorPatientAnalysisController.doctor = doctor;
     }
+
+    public void handleInfoButton(ActionEvent actionEvent) throws IOException {
+        int idPatient;
+        if(boxPatientList.getValue() != null) {
+            idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
+            DoctorPlusInfoPatientController.setPatient(idPatient);
+            newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorPlusInfoPatient.fxml");
+        }
+        else {
+            // Error
+            newScene.showAlert("ComboBox vuota","Inserire un valore nella combo box", Alert.AlertType.ERROR);
+        }
+    }
+
 }

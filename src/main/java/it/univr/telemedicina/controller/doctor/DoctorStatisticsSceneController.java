@@ -155,7 +155,6 @@ public class DoctorStatisticsSceneController {
         allDate.add(end);
 
         // All category
-        ArrayList<String> category = new ArrayList<>(Arrays.asList("Ottimale", "Normale", "Normale - alta", "Ipertensione di Grado 1 borderline", "Ipertensione di Grado 1 lieve", "Ipertensione di Grado 2 moderata", "Ipertensione di Grado 3 grave", "Ipertensione sistolica isolata borderline", "Ipertensione sistolica isolata"));
         ArrayList<String> categorySelected = new ArrayList<>();
 
         // Inizialite categorySelected
