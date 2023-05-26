@@ -93,6 +93,19 @@ public class DoctorPageController implements Initializable {
             buttonHomeDoc.setStyle("-fx-background-color: #0000");
             buttonStatisticDoc.setStyle("-fx-background-color: #0000");
             buttonEditProfile.setStyle("-fx-background-color: #3d5e49");
+            buttonSearchPatient.setStyle("-fx-background-color: #0000");
+        }
+        else if(actionEvent.getSource() == buttonSearchPatient) {
+            DoctorHomeScene.setVisible(false);
+            DoctorStatisticsScene.setVisible(false);
+            DoctorEditProfileScene.setVisible(false);
+            DoctorPatientAnalysisScene.setVisible(true);
+
+            // Edit button style to show the clicked one
+            buttonHomeDoc.setStyle("-fx-background-color: #0000");
+            buttonStatisticDoc.setStyle("-fx-background-color: #0000");
+            buttonEditProfile.setStyle("-fx-background-color: #0000");
+            buttonSearchPatient.setStyle("-fx-background-color: #3d5e49");
         }
     }
 

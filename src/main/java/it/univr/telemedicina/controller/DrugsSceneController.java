@@ -90,6 +90,27 @@ public class DrugsSceneController implements Initializable {
         setTableDrugs();
     }
 
+    public void removeDrugsButton(ActionEvent actionEvent) {
+        try {
+            Database db = new Database(2);
+            LocalDate date = dateDrugs.getValue();
+            String hours =  String.valueOf(boxTimeDrugs.getValue());
+            checkDrugsParameters(date);
+            String drug = boxDrugs.getValue().toString();
+
+            db.deleteQuery("TakenDrugs", Map.of("IDPatient", patient.getPatientID(), "Date", date, "Hour", hours, "DrugName", drug, "Quantity", Integer.parseInt((String) boxDrugsAmount.getValue())));
+
+            // Add pressure success
+            newScene.showAlert("Eliminati","Valori eliminati correttamente", Alert.AlertType.INFORMATION);
+        } catch (ParameterException | NumberFormatException | NullPointerException e) {
+            newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
+        } catch (SQLException | ClassNotFoundException e) {
+            newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
+            throw new RuntimeException(e);
+        }
+        setTableDrugs();
+    }
+
     public void checkDrugsParameters(LocalDate date){
         // check if the mensuration date is right
         if (date.isAfter(LocalDate.now()))

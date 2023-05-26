@@ -1,7 +1,7 @@
 package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.TablePat;
+import it.univr.telemedicina.TablePatientPressures;
 import it.univr.telemedicina.exceptions.ParameterException;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
@@ -45,15 +45,15 @@ public class PressureSceneController implements Initializable {
 
     // Table pressure
     @FXML
-    public TableView <TablePat> tablePatientPres;
+    public TableView <TablePatientPressures> tablePatientPres;
     @FXML
-    public TableColumn <TablePat, LocalDate>  columnDataPresTable;
+    public TableColumn <TablePatientPressures, LocalDate>  columnDataPresTable;
     @FXML
-    public TableColumn <TablePat, String> columnPressurePresTable;
+    public TableColumn <TablePatientPressures, String> columnPressurePresTable;
     @FXML
-    public TableColumn <TablePat, String> columnStatePresTable;
+    public TableColumn <TablePatientPressures, String> columnStatePresTable;
     @FXML
-    public TableColumn <TablePat, String > columnHourPresTable;
+    public TableColumn <TablePatientPressures, String > columnHourPresTable;
     @FXML
     public LineChart<?,?> chartPatientPres;
 
@@ -76,13 +76,13 @@ public class PressureSceneController implements Initializable {
 
     //TABLE VIEW HOME
     private void setTablePat() {
-        ObservableList<TablePat> collection = FXCollections.observableArrayList();
+        ObservableList<TablePatientPressures> collection = FXCollections.observableArrayList();
         tablePatientPres.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         try{
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT * FROM BloodPressures WHERE IDPatient = " + patient.getPatientID(),new String[]{"Date","Hour","SystolicPressure", "DiastolicPressure", "ConditionPressure"});
-            TablePat dati;
+            TablePatientPressures dati;
 
             //There is no therapy
             if(info.isEmpty()) {
@@ -92,7 +92,7 @@ public class PressureSceneController implements Initializable {
 
             //Initialize
             for(int i = 0; i < info.size()-4; i = i + 5){
-                dati = new TablePat(LocalDate.parse(info.get(i)), info.get(i+1), Integer.parseInt(info.get(i+2)), Integer.parseInt(info.get(i+3)), info.get(i+4));
+                dati = new TablePatientPressures(LocalDate.parse(info.get(i)), info.get(i+1), Integer.parseInt(info.get(i+2)), Integer.parseInt(info.get(i+3)), info.get(i+4));
                 collection.add(dati);
             }
             //Setting columns
@@ -226,7 +226,6 @@ public class PressureSceneController implements Initializable {
         if (datePress.isAfter(LocalDate.now()))
             throw new ParameterException("Data errore");
         if(datePress.isEqual(LocalDate.now())){
-            System.out.print(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
             if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < Integer.parseInt((String) boxTimePres.getValue())){
                 throw new ParameterException("Ora errore");
             }
@@ -271,7 +270,7 @@ public class PressureSceneController implements Initializable {
         ArrayList<String> list;
         LocalDate today = LocalDate.now();
         LocalDate lastPressureToTake = today.minusDays(dayToTake);
-        System.out.println(lastPressureToTake.toString());
+
         // take pressure from database
         try {
             Database db = new Database(2);
@@ -308,7 +307,6 @@ public class PressureSceneController implements Initializable {
 
         // populating the series with data
         for(LocalDate key : pressures.keySet()) {
-            System.out.println("Key: " + key);
             dataSeries.add(new XYChart.Data<>(key.toString(), pressures.get(key).get(0)/list.stream().filter(s -> s.equals(key.toString())).count()));
             dataSeries2.add(new XYChart.Data<>(key.toString(), pressures.get(key).get(1)/list.stream().filter(s -> s.equals(key.toString())).count()));
         }

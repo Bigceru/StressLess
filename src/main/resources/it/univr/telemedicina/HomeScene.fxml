@@ -9,20 +9,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="homeScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0"
-            style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;"
-            AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-            AnchorPane.topAnchor="3.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.HomeSceneController">
+<AnchorPane fx:id="homeScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="it.univr.telemedicina.controller.HomeSceneController">
     <padding>
         <Insets bottom="5.0" top="5.0" />
     </padding>
@@ -57,8 +51,8 @@
                                 <TableView fx:id="tableTherapies" prefHeight="347.0" prefWidth="506.0" stylesheets="@table.css" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                     <columns>
                                         <TableColumn fx:id="columnName" prefWidth="118.30364990234375" text="Nome" />
-                                        <TableColumn fx:id="columnAmount" prefWidth="121.651123046875" text="Dosi giornaliere" />
-                                        <TableColumn fx:id="columnDoses" prefWidth="66.5" text="Quantità per dose" />
+                                        <TableColumn fx:id="columnDoses" prefWidth="121.651123046875" text="Dosi giornaliere" />
+                                        <TableColumn fx:id="columnAmount" prefWidth="66.5" text="Quantità per dose" />
                                         <TableColumn fx:id="columnInstruction" prefWidth="210.0" text="Istruzioni uso" />
                                     </columns>
                                     <styleClass>

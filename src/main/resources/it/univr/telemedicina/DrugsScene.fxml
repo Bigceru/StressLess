@@ -55,7 +55,7 @@
                         <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
                     </graphic>
                 </Button>
-                <Button layoutX="540.0" layoutY="240.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #ff5d5d; -fx-alignment: CENTER; -fx-background-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="RIMUOVI" textFill="WHITE" AnchorPane.rightAnchor="167.0">
+                <Button layoutX="540.0" layoutY="240.0" mnemonicParsing="false" onAction="#removeDrugsButton" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #ff5d5d; -fx-alignment: CENTER; -fx-background-radius: 10;" styleClass="button-view" stylesheets="@button.css" text="RIMUOVI" textFill="WHITE" AnchorPane.rightAnchor="167.0">
                     <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="MINUS" />
                     </graphic>

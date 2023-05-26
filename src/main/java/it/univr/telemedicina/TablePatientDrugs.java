@@ -1,12 +1,12 @@
 package it.univr.telemedicina;
 
-public class InfoTablePat {
+public class TablePatientDrugs {
     private String name;
     private String instruction;
     private int amount;
     private int dose;
 
-    public InfoTablePat(String name, int dose, int amount, String instruction){
+    public TablePatientDrugs(String name, int dose, int amount, String instruction){
         this.name = name;
         this.instruction = instruction;
         this.amount = amount;

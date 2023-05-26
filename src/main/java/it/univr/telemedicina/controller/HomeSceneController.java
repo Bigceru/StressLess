@@ -1,6 +1,6 @@
 package it.univr.telemedicina.controller;
 
-import it.univr.telemedicina.InfoTablePat;
+import it.univr.telemedicina.TablePatientDrugs;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
@@ -28,15 +28,15 @@ public class HomeSceneController implements Initializable {
     @FXML
     public Label lblTherapyState;
     @FXML
-    public TableView<InfoTablePat> tableTherapies;
+    public TableView<TablePatientDrugs> tableTherapies;
     @FXML
-    public TableColumn<InfoTablePat, String> columnName;
+    public TableColumn<TablePatientDrugs, String> columnName;
     @FXML
-    public TableColumn<InfoTablePat, String> columnInstruction;
+    public TableColumn<TablePatientDrugs, String> columnInstruction;
     @FXML
-    public TableColumn<InfoTablePat, Integer> columnAmount;
+    public TableColumn<TablePatientDrugs, Integer> columnAmount;
     @FXML
-    public TableColumn<InfoTablePat, Integer> columnDoses;
+    public TableColumn<TablePatientDrugs, Integer> columnDoses;
     private static Patient patient;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,16 +65,17 @@ public class HomeSceneController implements Initializable {
     }
 
     private void setTable() {
-        ObservableList<InfoTablePat> therapy = FXCollections.observableArrayList();
-        columnName.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/4
-        columnDoses.prefWidthProperty().bind(tableTherapies.widthProperty().divide(6)); // w * 1/5
-        columnAmount.prefWidthProperty().bind(tableTherapies.widthProperty().divide(6)); // w * 1/5
+        ObservableList<TablePatientDrugs> therapy = FXCollections.observableArrayList();
+
+        columnName.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/3
+        columnDoses.prefWidthProperty().bind(tableTherapies.widthProperty().divide(6)); // w * 1/6
+        columnAmount.prefWidthProperty().bind(tableTherapies.widthProperty().divide(6)); // w * 1/6
         columnInstruction.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/3
 
         try{
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT * FROM Therapies WHERE IDPatient = " + patient.getPatientID(),new String[]{"DrugName","DailyDoses","AmountTaken","Instructions"});
-            InfoTablePat dati;
+            TablePatientDrugs dati;
 
             //There is no therapy
             if(info.isEmpty()) {
@@ -87,9 +88,10 @@ public class HomeSceneController implements Initializable {
 
             //Initialize
             for(int i = 0; i < info.size()-3; i = i + 4){
-                dati = new InfoTablePat(info.get(i), Integer.parseInt(info.get(i+1)), Integer.parseInt(info.get(i+2)),info.get(i+3));
+                dati = new TablePatientDrugs(info.get(i), Integer.parseInt(info.get(i+1)), Integer.parseInt(info.get(i+2)),info.get(i+3));
                 therapy.add(dati);
             }
+
             //Setting columns
             columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
             columnDoses.setCellValueFactory(new PropertyValueFactory<>("dose"));

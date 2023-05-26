@@ -1,15 +1,23 @@
 package it.univr.telemedicina;
 
-import java.sql.Struct;
 import java.time.LocalDate;
 
-public class TablePat {
+public class TablePatientPressures {
     private LocalDate date;
     private String hour;
     private String pressSD;
     private String state;
+    private String symptomps;
 
-    public TablePat(LocalDate date, String hour, int pressSystolic, int pressDiastolic , String state){
+    /**
+     * Constructor for table in Patient home scene
+     * @param date
+     * @param hour
+     * @param pressSystolic
+     * @param pressDiastolic
+     * @param state
+     */
+    public TablePatientPressures(LocalDate date, String hour, int pressSystolic, int pressDiastolic, String state){
         this.date = date;
         this.pressSD = pressSystolic + "/" + pressDiastolic;
         this.hour = hour;
