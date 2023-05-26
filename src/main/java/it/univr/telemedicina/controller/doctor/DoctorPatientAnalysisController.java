@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -24,7 +25,6 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class DoctorPatientAnalysisController implements Initializable {
-
     MainApplication newScene = new MainApplication();
     @FXML
     private ComboBox<String> boxPatientList;
