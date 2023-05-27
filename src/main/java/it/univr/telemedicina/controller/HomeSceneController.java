@@ -3,6 +3,7 @@ package it.univr.telemedicina.controller;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePatientDrugs;
+import it.univr.telemedicina.Therapy;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
@@ -20,6 +21,7 @@ import javafx.scene.paint.Paint;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -131,6 +133,30 @@ public class HomeSceneController implements Initializable {
     @FXML
     private void handleChatButton(ActionEvent actionEvent) throws IOException {
         newScene.addScene("/it/univr/telemedicina/chatPages/ChatMenu.fxml");
+    }
+
+    private void systemMessage(){
+        Therapy therapy = new Therapy();
+
+        try {
+            Database database = new Database(2);
+            ArrayList<String> resultTherapyQuery =  database.getQuery("SELECT TherapyName, DrugName, DailyDoses, AmountTaken, Instructions FROM Therapies WHERE IDPatient = " + patient.getPatientID() + " AND EndDate >= '" + LocalDate.now() +  "' AND  StartDate <= '" + LocalDate.now().minusDays(3)+ "'", new String[]{"TherapyName", "DrugName", "DailyDoses", "AmountTaken", "Instructions"});
+
+            // Cycle all the therapies fo the Patient
+            for(int i = 0; i < resultTherapyQuery.size()-4; i += 5){
+                // check for each therapy if patient do the right thing
+                boolean check =  therapy.checkTherapy(patient.getPatientID(), resultTherapyQuery.get(i),resultTherapyQuery.get(i+1),Integer.parseInt(resultTherapyQuery.get(i+2)) , Integer.parseInt(resultTherapyQuery.get(i+3)),resultTherapyQuery.get(i+4),LocalDate.now(),LocalDate.now().minusDays(3));
+
+                if(!check) {
+                    // Query to insert the new alert message in database
+                    database.insertQuery("Chat", new String[]{"Sender", "Receiver", "Text", "ReadFlag"}, new Object[]{-1, patient.getPatientID(), "Non stai seguendo in modo corretto la terapia (" + resultTherapyQuery.get(i) + ")", 0});
+                }
+            }
+
+            database.closeAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setPatient(Patient patient) {HomeSceneController.patient = patient;}
