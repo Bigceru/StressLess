@@ -133,6 +133,11 @@ public class PressureSceneController implements Initializable {
             // Query for insert data in BloodPressures
             db.insertQuery("BloodPressures", keyString, valuesString);
 
+            // Send email if ConditionPressure is elevate
+            if(!(dati.get("ConditionPressure").equals("Ottimale") || dati.get("ConditionPressure").equals("Normale") || dati.get("ConditionPressure").equals("Normale – alta"))){
+                db.insertQuery("Chat", new String[]{"Sender", "Receiver", "Text", "ReadFlag"}, new Object[]{-1, patient.getRefDoc(), "Il paziente " + patient.getName() + " " + patient.getSurname() + " ha registrato una pressione di tipo: " + dati.get("ConditionPressure"), 0});
+            }
+
             // Add pressure success
             newScene.showAlert("Invio","Valori inviati correttamente", Alert.AlertType.INFORMATION);
 
