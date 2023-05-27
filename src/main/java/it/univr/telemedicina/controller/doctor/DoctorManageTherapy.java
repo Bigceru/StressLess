@@ -40,6 +40,21 @@ public class DoctorManageTherapy implements Initializable {
     private Button buttonSend;
     @FXML
     private Button buttonDelete;
+    @FXML
+    private Label lblNameTherapy;
+    @FXML
+    private Label lblDailyDoses;
+    @FXML
+    private Label lblDrugs;
+    @FXML
+    private Label lblAmount;
+    @FXML
+    private Label lblDateStart;
+    @FXML
+    private Label lblDateEnd;
+    @FXML
+    private Label lblInstruction;
+
 
     // Manage note
     @FXML
@@ -57,15 +72,22 @@ public class DoctorManageTherapy implements Initializable {
 
             //fill the txt area
             if(!resultNotePatientQuery.isEmpty())
-                txtAreaInformation.setText(resultNotePatientQuery.toString().replace("", " ").replace("]", ""));
+                txtAreaInformation.setText(resultNotePatientQuery.toString().substring(1, resultNotePatientQuery.toString().length()-1));
             else
                 txtAreaInformation.setText("");
 
             // INITIALIZE ALL COMBOBOX
             // Therapy (if i want modify one already present)
-            ArrayList<String> resultTherapyQuery = database.getQuery("SELECT TherapyName FROM Therapies WHERE IDPatient = " + idPatient, new String[]{"TherapyName"});
+            ArrayList<String> resultTherapyQuery = database.getQuery("SELECT TherapyName, DrugName FROM Therapies WHERE IDPatient = " + idPatient, new String[]{"TherapyName", "DrugName"});
             ArrayList<String> resultDrugsQuery = database.getQuery("SELECT DrugName FROM Drugs", new String[]{"DrugName"});
-            boxTherapy.getItems().addAll(resultTherapyQuery);
+
+            // crete the therapy, merging Therapy and DrugName
+            ArrayList<String> result = new ArrayList<>();
+            for(int i = 0; i< resultTherapyQuery.size()-1; i+=2){
+                result.add(resultTherapyQuery.get(i) + " - " + resultTherapyQuery.get(i+1));
+            }
+
+            boxTherapy.getItems().addAll(result);
             boxTherapy.getItems().add("Nuova");
             boxDrugs.getItems().addAll(resultDrugsQuery);
 
@@ -133,6 +155,12 @@ public class DoctorManageTherapy implements Initializable {
 
                 // Set label visibility properties
                 boxDrugs.setVisible(true);
+                lblAmount.setVisible(true);
+                lblDailyDoses.setVisible(true);
+                lblDrugs.setVisible(true);
+                lblDateEnd.setVisible(true);
+                lblDateStart.setVisible(true);
+                lblInstruction.setVisible(true);
                 boxDailyDoses.setVisible(true);
                 boxAmount.setVisible(true);
                 checkBoxInstruction.setVisible(true);
@@ -158,8 +186,9 @@ public class DoctorManageTherapy implements Initializable {
 
         try {
             Database database = new Database(2);
-            String[] keys = {"IDPatient","TherapyName","DrugName","DailyDoses","AmountTaken","Instructions","StartDate","EndDate"};
-            Object[] values = {idPatient,boxTherapyName.getValue(),boxDrugs.getValue(),boxDailyDoses.getValue(),boxAmount.getValue(),checkBoxInstruction.getCheckModel().getCheckedItems().toString(),dateStart.getValue(),dateEnd.getValue()};
+            String[] keys = {"IDPatient", "TherapyName", "DrugName", "DailyDoses", "AmountTaken", "Instructions", "StartDate", "EndDate"};
+            String instruction = checkBoxInstruction.getCheckModel().getCheckedItems().toString();
+            Object[] values = {idPatient, boxTherapyName.getValue(), boxDrugs.getValue(), Integer.parseInt(boxDailyDoses.getValue()), Integer.parseInt(boxAmount.getValue()), instruction.substring(1, instruction.length()-1), dateStart.getValue(), dateEnd.getValue()};
 
             // Map contain (Field : Values)
             Map<String, Object> info = new TreeMap<>();
@@ -167,12 +196,14 @@ public class DoctorManageTherapy implements Initializable {
                 info.put(keys[i],values[i]);
             }
 
-            //Add a new therapy
-            if(boxTherapy.getValue().equals("Nuovo")){
+            // Add a new therapy
+            if(boxTherapy.getValue().equals("Nuova")){
                 database.insertQuery("Therapies", keys, values);
+                newScene.showAlert("Invio", "Dati aggiunti correttamente", Alert.AlertType.INFORMATION);
             }
             else {
                 database.updateQuery("Therapies", info, Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue()));
+                newScene.showAlert("Invio", "Dati modificati correttamente", Alert.AlertType.INFORMATION);
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

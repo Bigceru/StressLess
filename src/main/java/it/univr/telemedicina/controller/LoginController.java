@@ -97,6 +97,9 @@ public class LoginController implements Initializable {
                         EditProfileSceneController editProfileController = new EditProfileSceneController();
                         editProfileController.setUser(patient);
 
+                        ChatMenuController chatMenuController = new ChatMenuController();
+                        chatMenuController.setUser(patient);
+
                         // change scene
                         newScene.changeScene("UserPage.fxml","Paziente", actionEvent);
                     }

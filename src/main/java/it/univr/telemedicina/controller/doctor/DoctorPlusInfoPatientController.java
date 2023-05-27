@@ -1,6 +1,5 @@
 package it.univr.telemedicina.controller.doctor;
 
-import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -34,8 +33,6 @@ public class DoctorPlusInfoPatientController implements Initializable {
     @FXML
     public TextArea txtAreaInfo;
     @FXML
-    public Label lblTitle;
-    @FXML
     public Tab tabPressure;
     @FXML
     public Tab tabDrug;
@@ -47,10 +44,8 @@ public class DoctorPlusInfoPatientController implements Initializable {
     @FXML
     public DatePicker dateEnd;
 
-    /***
+    /**
      * this method fill the text area where the doctor put his note about the problem of the patient
-     * @param location
-     * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,12 +54,9 @@ public class DoctorPlusInfoPatientController implements Initializable {
             ArrayList<String> resultInfoQuery = database.getQuery("SELECT Detail FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"Detail"});
             database.closeAll();
 
-            //set generic Title to graph
-            lblTitle.setText("Grafico Pressione");
-
             // Add detail of patient in the textArea
             if(!resultInfoQuery.isEmpty()){
-                txtAreaInfo.setText(resultInfoQuery.toString());
+                txtAreaInfo.setText(resultInfoQuery.toString().substring(1, resultInfoQuery.toString().length()-1));
             }else{
                 txtAreaInfo.setText("Non sono presenti note riguardo al paziente selezionato");
             }
@@ -74,8 +66,8 @@ public class DoctorPlusInfoPatientController implements Initializable {
     }
 
     /**
-     * block eventually problem with empty field and show the graphs
-     * @param actionEvent
+     * Method thath block eventually problem with empty field and show the graphs
+     *
      */
     public void buttonSend(ActionEvent actionEvent) {
         // If startDate is before endDate or equal to see one day and both them are not null
@@ -112,7 +104,7 @@ public class DoctorPlusInfoPatientController implements Initializable {
             barChartDrug.setVisible(false);
 
             // change title and clear the graph
-            lblTitle.setText("Grafico Pressione");
+            lineChartPression.setTitle("Grafico Pressioni");
             lineChartPression.getData().clear();
         }
         else if(event.getSource() == tabDrug){
@@ -120,7 +112,7 @@ public class DoctorPlusInfoPatientController implements Initializable {
             barChartDrug.setVisible(true);
 
             // change title and clear the graph
-            lblTitle.setText("Grafico Farmaci Assunte");
+            barChartDrug.setTitle("Grafico Farmaci Assunte");
             barChartDrug.getData().clear();
         }
     }
@@ -222,7 +214,7 @@ public class DoctorPlusInfoPatientController implements Initializable {
                 categorySelected.add(queryResult.get(i+1));
         }
 
-        int j = 0;  // Go trough days
+        int j;  // Go trough days
         XYChart.Series<String, Integer>[] series = new XYChart.Series[categorySelected.size()];
 
         // Cycle all the categories selected
@@ -283,9 +275,9 @@ public class DoctorPlusInfoPatientController implements Initializable {
 
     /**
      * Method that calculates occurrences in the specified period and which satisfies a certain condition
-     * @param dateStart
-     * @param dateEnd
-     * @param queryResult
+     * @param dateStart start date to see
+     * @param dateEnd  last date we care
+     * @param queryResult taken data from drug Database
      * @param condition pressure or therapy
      * @return XYChart.Data<String, Integer>    return XYChart.Data to add to the Series, String is value for day range and Integer is number of occurrences of the condition in the date range
      */

@@ -16,7 +16,7 @@ public enum Therapies {
     public static Collection<String> returnCollection(){
         List<String> list = new ArrayList<>();
         for(Therapies i : Therapies.values()){
-            list.add((i.toString().contains("_"))? i.toString().replace("_","-") : i.toString());
+            list.add((i.toString().contains("_"))? i.toString().replace("_"," ") : i.toString());
         }
 
         return list;

@@ -1,10 +1,12 @@
 package it.univr.telemedicina.controller;
 
+import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePatientDrugs;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -12,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class HomeSceneController implements Initializable {
 
+    private final MainApplication newScene = new MainApplication();
     @FXML
     public Label lblPressure;
     @FXML
@@ -103,6 +107,10 @@ public class HomeSceneController implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    private void handleChatButton(ActionEvent actionEvent) throws IOException {
+        newScene.addScene("/it/univr/telemedicina/chatPages/ChatMenu.fxml");
     }
 
     public void setPatient(Patient patient) {HomeSceneController.patient = patient;}

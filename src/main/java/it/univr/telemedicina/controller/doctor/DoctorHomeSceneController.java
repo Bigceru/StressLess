@@ -4,32 +4,20 @@ import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.utilities.Database;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
-import javafx.scene.chart.XYChart.Data;
 
-
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -48,8 +36,7 @@ public class DoctorHomeSceneController implements Initializable {
     public Button buttonMailBox;
     @FXML
     public Circle lblNewMail;
-    @FXML
-    public Button inspectPatientButton;
+    private final MainApplication newScene = new MainApplication();
 
     // Table variable
     @FXML
@@ -71,7 +58,7 @@ public class DoctorHomeSceneController implements Initializable {
     public Button buttonSearchRegistration;
     @FXML
     public CategoryAxis xAxis;
-    private final MainApplication newScene = new MainApplication();
+
 
 
     @Override
@@ -212,7 +199,6 @@ public class DoctorHomeSceneController implements Initializable {
 
         } else if (ChronoUnit.DAYS.between(start, end) <= 31) {
             int somma = 0;
-            int wasteDays = 0;
             int i = 0;
             for(LocalDate key : dataTaken.keySet()){
                 somma += dataTaken.get(key);
@@ -273,6 +259,11 @@ public class DoctorHomeSceneController implements Initializable {
         barChartNewPatients.setAnimated(false);     // Remove the fucking animation to print right label
 
     }
+    @FXML
+    private void handleChatButton(ActionEvent actionEvent) throws IOException {
+        newScene.addScene("/it/univr/telemedicina/chatPages/ChatMenu.fxml");
+    }
+
 
     public void setDoctor(Doctor doctor){
         DoctorHomeSceneController.doctor = doctor;
