@@ -9,10 +9,8 @@ import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -22,7 +20,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 
 public class DoctorPatientAnalysisController implements Initializable {
     MainApplication newScene = new MainApplication();

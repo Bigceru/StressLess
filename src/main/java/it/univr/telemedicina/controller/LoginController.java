@@ -122,7 +122,7 @@ public class LoginController implements Initializable {
 
                         ChatMenuController chatMenu = new ChatMenuController();
                         chatMenu.setUser(doctor);
-                        
+
                         newScene.changeScene("doctorPages/DoctorPage.fxml", "Dottore", actionEvent);
 
                         if(credentials.get(5).equals("1234")){

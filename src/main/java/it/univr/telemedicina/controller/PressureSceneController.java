@@ -124,13 +124,13 @@ public class PressureSceneController implements Initializable {
             diastolic = (int) dati.get("DiastolicPressure");
             dati.put("ConditionPressure", checkPressure(systolic, diastolic));
 
-            //Convert keySet in keyArrayString
+            // Convert keySet in keyArrayString
             Set<String> key = dati.keySet();
             String[] keyString = key.toArray(new String[0]);
             Collection<Object> values = dati.values();
             Object[] valuesString = values.toArray(new Object[0]);
 
-            //Query for insert data in BloodPressures
+            // Query for insert data in BloodPressures
             db.insertQuery("BloodPressures", keyString, valuesString);
 
             // Add pressure success

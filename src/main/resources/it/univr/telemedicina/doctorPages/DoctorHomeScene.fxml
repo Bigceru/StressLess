@@ -37,8 +37,8 @@
       </AnchorPane>
       <Button fx:id="buttonSendText" layoutX="467.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-font-size: 20; -fx-font-family: Montserrat; -fx-background-radius: 10; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="INVIA MESSAGGIO" textAlignment="RIGHT" textFill="WHITE" textOverrun="LEADING_WORD_ELLIPSIS" underline="true" AnchorPane.topAnchor="80.0" />
       <Button fx:id="buttonMailBox" layoutX="467.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-font-size: 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="NOTIFICHE" textFill="WHITE" underline="true" AnchorPane.leftAnchor="467.0" AnchorPane.topAnchor="15.0" />
-      <FontAwesomeIcon fill="WHITE" glyphName="ENVELOPE" layoutX="667.0" layoutY="58.0" size="3em" text="" />
-      <Circle fx:id="lblNewMail" fill="#e85858" layoutX="712.0" layoutY="33.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+      <FontAwesomeIcon fx:id="emailIcon" fill="WHITE" glyphName="ENVELOPE" layoutX="667.0" layoutY="58.0" size="3em" text="" />
+      <Circle fx:id="lblNewMail" fill="#e85858" layoutX="712.0" layoutY="33.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
       <FontAwesomeIcon fill="WHITE" glyphName="EDIT" layoutX="677.0" layoutY="123.0" size="3em" />
       <SplitPane dividerPositions="0.4" layoutX="13.0" layoutY="146.0" prefHeight="517.0" prefWidth="713.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="146.0">
         <items>

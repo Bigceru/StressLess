@@ -117,8 +117,8 @@
                         </AnchorPane>
                         <Button fx:id="buttonSendText" layoutX="281.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-font-size: 20; -fx-font-family: Montserrat; -fx-background-radius: 10; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="INVIA MESSAGGIO" textAlignment="RIGHT" textFill="WHITE" textOverrun="LEADING_WORD_ELLIPSIS" underline="true" />
                         <Button fx:id="buttonMailBox" layoutX="550.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-font-size: 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="NOTIFICHE" textFill="WHITE" underline="true" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="ENVELOPE" layoutX="750.0" layoutY="157.0" size="3em" text="" />
-                        <Circle fx:id="lblNewMail" fill="#e85858" layoutX="795.0" layoutY="132.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+                        <FontAwesomeIcon fx:id="emailIcon" fill="WHITE" glyphName="ENVELOPE" layoutX="750.0" layoutY="157.0" size="3em" text="" />
+                        <Circle fx:id="lblNewMail" fill="#e85858" layoutX="795.0" layoutY="132.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
                         <FontAwesomeIcon fill="WHITE" glyphName="EDIT" layoutX="492.0" layoutY="159.0" size="3em" />
                     </children>
                     <effect>

@@ -1,5 +1,6 @@
 package it.univr.telemedicina.controller;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePatientDrugs;
 import it.univr.telemedicina.users.Patient;
@@ -13,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +28,8 @@ public class HomeSceneController implements Initializable {
     private final MainApplication newScene = new MainApplication();
     @FXML
     public Label lblPressure;
+    @FXML
+    public FontAwesomeIcon emailIcon;
     @FXML
     private Label lblRefDoc;
     @FXML
@@ -44,8 +49,10 @@ public class HomeSceneController implements Initializable {
     private static Patient patient;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Take patient therapies and check if the patient is following it right
+        systemMessage();
 
-        // Set doctor's name/surname label, pressure label
+        // Set doctor's name/surname label, pressure label, emailIcon
         try {
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT * FROM Doctors WHERE ID = " + patient.getRefDoc(), new String[]{"Name","Surname"});    // Query to get doctor name
@@ -61,6 +68,19 @@ public class HomeSceneController implements Initializable {
                 lblPressure.setText(info.get(0) + "/" + info.get(1));
                 lblLastPressure.setText(info.get(2));
             }
+
+            // Query to set emailIcon
+            ArrayList<String> messageToReadQuery = db.getQuery("SELECT ReadFlag FROM Chat WHERE Receiver = " + patient.getPatientID() + " AND ReadFlag = 0", new String[]{"ReadFlag"});
+
+            // If there are no new messages
+            if(messageToReadQuery.isEmpty()) {
+                emailIcon.setFill(Color.WHITE);
+            }
+            else {
+                emailIcon.setFill(Color.RED);
+            }
+
+            db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

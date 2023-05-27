@@ -41,7 +41,6 @@ public class UserPageController implements Initializable{
     @FXML
     public Button logoutButton;
 
-
     private final MainApplication newScene = new MainApplication();
     private static Patient patient;
 
@@ -90,8 +89,6 @@ public class UserPageController implements Initializable{
             editProfileScene.setVisible(false);
             drugsScene.setVisible(false);
 
-
-
             // Edit button style to show the clicked one
             buttonHome.setStyle("-fx-background-color: #0000");
             buttonEditPressure.setStyle("-fx-background-color: #2A7878");
@@ -103,8 +100,6 @@ public class UserPageController implements Initializable{
             pressureScene.setVisible(false);
             editProfileScene.setVisible(false);
             drugsScene.setVisible(true);
-
-
 
             // Edit button style to show the clicked one
             buttonHome.setStyle("-fx-background-color: #0000");

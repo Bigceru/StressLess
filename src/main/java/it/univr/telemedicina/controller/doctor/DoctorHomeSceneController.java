@@ -1,5 +1,6 @@
 package it.univr.telemedicina.controller.doctor;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.io.IOException;
@@ -36,6 +38,8 @@ public class DoctorHomeSceneController implements Initializable {
     public Button buttonMailBox;
     @FXML
     public Circle lblNewMail;
+    @FXML
+    public FontAwesomeIcon emailIcon;
     private final MainApplication newScene = new MainApplication();
 
     // Table variable
@@ -45,9 +49,6 @@ public class DoctorHomeSceneController implements Initializable {
     public TableColumn<?, ?> columnNamePatientTable;
     @FXML
     public TableColumn<?, ?> columnStatePatientTable;
-
-    // Doctor instance
-    private static Doctor doctor;
     @FXML
     public BarChart<String, Integer> barChartNewPatients;
     @FXML
@@ -59,10 +60,29 @@ public class DoctorHomeSceneController implements Initializable {
     @FXML
     public CategoryAxis xAxis;
 
-
+    // Doctor instance
+    private static Doctor doctor;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            Database database = new Database(2);
+
+            // Query to set emailIcon
+            ArrayList<String> messageToReadQuery = database.getQuery("SELECT ReadFlag FROM Chat WHERE Receiver = " + doctor.getID() + " AND ReadFlag = 0", new String[]{"ReadFlag"});
+
+            // If there are no new messages
+            if(messageToReadQuery.isEmpty()) {
+                emailIcon.setFill(Color.WHITE);
+            }
+            else {
+                emailIcon.setFill(Color.RED);
+            }
+
+            database.closeAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         setTablePatients();
     }
 
@@ -78,11 +98,7 @@ public class DoctorHomeSceneController implements Initializable {
         }
     }
 
-
-
-
-     //Method to initialize the table and the table columns with the Patient therapies
-
+    //Method to initialize the table and the table columns with the Patient therapies
     public void setTablePatients(){
         ObservableList<Patient> collection = FXCollections.observableArrayList();   // Collection of data to insert in the table
 

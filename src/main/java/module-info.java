@@ -4,6 +4,7 @@ module com.example.telemedicina {
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires org.controlsfx.controls;
+    requires fontawesomefx;
 
     opens it.univr.telemedicina to javafx.fxml;
     exports it.univr.telemedicina;
@@ -13,4 +14,5 @@ module com.example.telemedicina {
     opens it.univr.telemedicina.users to javafx.fxml;
     exports it.univr.telemedicina.controller.doctor;
     opens it.univr.telemedicina.controller.doctor to javafx.fxml;
+    exports it.univr.telemedicina.controller.chat;
 }

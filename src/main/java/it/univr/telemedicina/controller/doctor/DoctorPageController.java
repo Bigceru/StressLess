@@ -47,13 +47,11 @@ public class DoctorPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         DoctorHomeScene.setVisible(true);
         buttonHomeDoc.setStyle("-fx-background-color: #3d5e49");
         DoctorStatisticsScene.setVisible(false);
         DoctorEditProfileScene.setVisible(false);
         DoctorPatientAnalysisScene.setVisible(false);
-
 
         lblDoctorName.setText("Dott. " + doctor.getName().charAt(0) + ". " + doctor.getSurname());
         AnimationTimer timer = new AnimationTimer() {
