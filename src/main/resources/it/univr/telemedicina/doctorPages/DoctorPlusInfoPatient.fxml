@@ -68,11 +68,7 @@
                <font>
                   <Font size="21.0" />
                </font></Label>
-            <Label fx:id="lblTitle" layoutX="95.0" layoutY="190.0" text="titolo" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font></Label>
-            <TextArea fx:id="txtAreaInfo" layoutX="35.0" layoutY="83.0" prefHeight="43.0" prefWidth="677.0">
+            <TextArea fx:id="txtAreaInfo" editable="false" layoutX="35.0" layoutY="83.0" prefHeight="43.0" prefWidth="677.0">
                <font>
                   <Font size="19.0" />
                </font></TextArea>

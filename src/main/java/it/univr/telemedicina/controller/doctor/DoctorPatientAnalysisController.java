@@ -264,10 +264,14 @@ public class DoctorPatientAnalysisController implements Initializable {
         }
     }
     public void handleTherapyButton(ActionEvent actionEvent) throws IOException{
-        int idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
-        DoctorManageTherapy.setPatient(idPatient);
-        newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorManageTherapy.fxml");
-
+        if(boxPatientList.getValue() != null) {
+            int idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
+            DoctorManageTherapy.setPatient(idPatient);
+            newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorManageTherapy.fxml");
+        }
+        else {
+            // Error
+            newScene.showAlert("ComboBox vuota","Inserire un valore nella combo box", Alert.AlertType.ERROR);
+        }
     }
-
 }

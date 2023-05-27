@@ -134,7 +134,6 @@ public class DoctorHomeSceneController implements Initializable {
                 for(int j = 0; j < infoTherapies.size()-1; j += 2) {
                     if(infoTherapies.get(j).equals(info.get(i))) {
                         terapie.append(infoTherapies.get(j + 1)).append(", ");
-                        System.out.println(infoTherapies.get(j + 1));
                     }
                 }
 
@@ -182,7 +181,6 @@ public class DoctorHomeSceneController implements Initializable {
         }
 
         try {
-            System.out.print("Prima della query");
             Database db = new Database(2);
             list = db.getQuery("SELECT registration FROM Patients WHERE refDoc = " + doctor.getID() + " AND Registration BETWEEN '" + start + "' AND '" + end.toString() + "'", new String[]{"registration"});
             db.closeAll();
@@ -208,9 +206,6 @@ public class DoctorHomeSceneController implements Initializable {
             LocalDate date = LocalDate.parse(dataString);
             dataTaken.put(date, dataTaken.get(date) + 1);
         }
-
-        System.out.print("Ecco la lista dei giorni: \n");
-        dataTaken.forEach((localDate, integer) -> System.out.println(localDate.toString() + " --> " + integer + "\n"));
 
         if(ChronoUnit.DAYS.between(start, end) <= 7 ){
             dataTaken.forEach((localDate, integer) -> xSeries.getData().add(new XYChart.Data<>(localDate.toString(), integer)));

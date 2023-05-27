@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class DoctorManageTherapy implements Initializable {
     MainApplication newScene = new MainApplication();
@@ -44,7 +42,6 @@ public class DoctorManageTherapy implements Initializable {
     private Button buttonDelete;
 
     // Manage note
-
     @FXML
     private TextArea txtAreaInformation;
 
@@ -64,7 +61,6 @@ public class DoctorManageTherapy implements Initializable {
             else
                 txtAreaInformation.setText("");
 
-
             // INITIALIZE ALL COMBOBOX
             // Therapy (if i want modify one already present)
             ArrayList<String> resultTherapyQuery = database.getQuery("SELECT TherapyName FROM Therapies WHERE IDPatient = " + idPatient, new String[]{"TherapyName"});
@@ -72,13 +68,16 @@ public class DoctorManageTherapy implements Initializable {
             boxTherapy.getItems().addAll(resultTherapyQuery);
             boxTherapy.getItems().add("Nuova");
             boxDrugs.getItems().addAll(resultDrugsQuery);
-            // therapy name
 
+            // therapy name
             boxTherapyName.getItems().addAll(Therapies.returnCollection());
+
             //DailyDoses
             boxDailyDoses.getItems().addAll("01","02","03","04","05","06");
+
             //boxAmount
             boxAmount.getItems().addAll("01","02","03","04","05","06","07","08","09","10");
+
             //Istruction
             checkBoxInstruction.getItems().addAll(Instructions.returnCollection());
         } catch (SQLException | ClassNotFoundException e) {
@@ -86,22 +85,24 @@ public class DoctorManageTherapy implements Initializable {
         }
     }
 
+    /**
+     * Method that controls what has been selected in box therapy
+     * Set all visible (if not empty)
+     * Set all box (if NUOVO is not selected)
+     */
     @FXML
-    // Method that controls what has been selected in box therapy
-    // Set all visible (if not empy)
-    // Set all box (if NUOVO is not selected)
     public void handleBoxTherapy(ActionEvent actionEvent) {
         try{
             Database database = new Database(2);
 
-            //Check if there is a value in boxTherapy
+            // Check if there is a value in boxTherapy
             if(boxTherapy.getValue().isEmpty()) {
                 newScene.showAlert("Errore", "Inserire il campo TERAPIA", Alert.AlertType.ERROR);
-                return;
             }
-            //Set all visible
-            else{
-                if(boxTherapy.getValue().equals("Nuova"))
+            // Set all visible
+            else {
+                // If "Nuova" was selected
+                if(boxTherapy.getValue().equals("Nuova")) {
                     boxTherapyName.setVisible(true);
                 else
                     boxTherapyName.setVisible(false);
@@ -115,31 +116,15 @@ public class DoctorManageTherapy implements Initializable {
                 buttonSend.setVisible(true);
                 buttonDelete.setVisible(true);
             }
-
-            //If "Nuova" was NOT selected, modify the selected therapy. Set all box with relative dates
-            if(!boxTherapy.getValue().equals("Nuova")){
-                ArrayList<String> resultTherapiesQuery = database.getQuery("SELECT * FROM Therapies WHERE IDPatient = " + idPatient + " AND TherapyName = '" + boxTherapy.getValue() +"'", new String[]{"TherapyName","DrugName","DailyDoses","AmountTaken","Instructions","StartDate","EndDate"});
-                boxTherapyName.setValue(resultTherapiesQuery.get(0));
-                boxDrugs.setValue(resultTherapiesQuery.get(1));
-                boxDailyDoses.setValue(resultTherapiesQuery.get(2));
-                boxAmount.setValue(resultTherapiesQuery.get(3));
-                checkBoxInstruction.getCheckModel().check(Instructions.valueOf(resultTherapiesQuery.get(4)).ordinal());
-                System.out.println(Instructions.valueOf(resultTherapiesQuery.get(4)).ordinal());
-                dateStart.setValue(LocalDate.parse(resultTherapiesQuery.get(5)));
-                dateEnd.setValue(LocalDate.parse(resultTherapiesQuery.get(6)));
-            }else{
-                buttonSend.setText("Modifica");
-            }
-
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @FXML
-    /***
+    /**
      * Method that add or modify therapy
      */
+    @FXML
     private void handleManageButton(ActionEvent actionEvent){
         //Check if there is all box are not empty
         if(boxTherapy.getValue().isEmpty() && boxTherapyName.getValue().isEmpty() && boxDrugs.getValue().isEmpty() && boxAmount.getValue().isEmpty() && boxDailyDoses.getValue().isEmpty()){
@@ -147,12 +132,12 @@ public class DoctorManageTherapy implements Initializable {
             return;
         }
 
-        try{
+        try {
             Database database = new Database(2);
             String[] keys = {"IDPatient","TherapyName","DrugName","DailyDoses","AmountTaken","Instructions","StartDate","EndDate"};
             Object[] values = {idPatient,boxTherapyName.getValue(),boxDrugs.getValue(),boxDailyDoses.getValue(),boxAmount.getValue(),checkBoxInstruction.getCheckModel().getCheckedItems().toString(),dateStart.getValue(),dateEnd.getValue()};
 
-            //Map contain (Field : Values)
+            // Map contain (Field : Values)
             Map<String, Object> info = new TreeMap<>();
             for(int i = 0; i < keys.length; i++){
                 info.put(keys[i],values[i]);
@@ -162,17 +147,16 @@ public class DoctorManageTherapy implements Initializable {
             if(boxTherapy.getValue().equals("Nuovo")){
                 database.insertQuery("Therapies", keys, values);
             }
-            else{
+            else {
                 database.updateQuery("Therapies", info, Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue()));
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
+
     /**
-     * Delete the selected entry in Therapies DATABASE
-     * @param actionEvent
+     * Method to delete the selected entry in Therapies DATABASE when pressed delete button
      */
     @FXML
     private void handleDeleteButton(ActionEvent actionEvent){
@@ -192,8 +176,7 @@ public class DoctorManageTherapy implements Initializable {
     }
 
     /**
-     * Update the PatientsDetails DATABASE
-     * @param actionEvent
+     * Method to update the PatientsDetails DATABASE when pressed send information button
      */
     @FXML
     private void handleSendInformationButton(ActionEvent actionEvent){
@@ -214,18 +197,31 @@ public class DoctorManageTherapy implements Initializable {
 
        } catch (SQLException | ClassNotFoundException e) {  // Send a show aller if the update has failed
            newScene.showAlert("Errore Invio", "Errore! Dati non aggiornati, Riprovare", Alert.AlertType.ERROR);
-           return;
        }
     }
 
     /**
-     *method to take the id of the patient
+     * Method to take the id of the patient
      * @param idPatient integer
      */
     public static void setPatient(int idPatient) {
         DoctorManageTherapy.idPatient = idPatient;
     }
 
+    // Check all box if are empty
+    // Return false if there is a problem with controls
+    public boolean checkCombo(){
+        // if box are not empty or box therapy is not NUOVO
+        if(boxTherapy.getValue().isEmpty() && boxTherapyName.getValue().isEmpty() && boxDrugs.getValue().isEmpty() && boxAmount.getValue().isEmpty() && boxDailyDoses.getValue().isEmpty() && !boxTherapy.getValue().equals("Nuova")){
+            newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
+            return false;
+        }
 
-
+        // Check dates
+        if(dateEnd.getValue() == null || dateStart.getValue() == null || dateEnd.getValue().isBefore(dateStart.getValue()) || (boxTherapy.getValue().equals("Nuova") && dateStart.getValue().isBefore(LocalDate.now()))){
+            newScene.showAlert("Errore", "Date inserite non consistenti", Alert.AlertType.ERROR);
+            return false;
+        }
+        return true;
+    }
 }

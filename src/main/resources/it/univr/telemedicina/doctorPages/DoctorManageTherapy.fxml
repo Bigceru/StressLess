@@ -12,13 +12,13 @@
 
 <AnchorPane prefHeight="456.0" prefWidth="740.0" style="-fx-background-radius: 20; -fx-background-color: #272932;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.doctor.DoctorManageTherapy">
       <children>
-          <Label layoutX="238.0" layoutY="79.0" style="-fx-font-family: Montserrat;" text="NOME TERAPIA" textFill="WHITE" visible="false">
+          <Label fx:id="lblNameTherapy" layoutX="238.0" layoutY="79.0" style="-fx-font-family: Montserrat;" text="NOME TERAPIA" textFill="WHITE" visible="false">
               <font>
                   <Font size="14.0" />
               </font>
           </Label>
           <DatePicker fx:id="dateStart" layoutX="60.0" layoutY="269.0" prefHeight="24.0" prefWidth="204.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
-          <Label layoutX="240.0" layoutY="161.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DOSE GIORNALIERA" textFill="WHITE" visible="false">
+          <Label fx:id="lblDailyDoses" layoutX="240.0" layoutY="161.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DOSE GIORNALIERA" textFill="WHITE" visible="false">
               <font>
                   <Font size="14.0" />
               </font>
@@ -32,29 +32,29 @@
           <Label layoutX="91.0" layoutY="374.0" prefHeight="17.0" prefWidth="0.0" textFill="WHITE" />
           <TextArea fx:id="errorCodeLabel" layoutX="17.0" layoutY="413.0" prefHeight="200.0" prefWidth="866.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <ComboBox fx:id="boxTherapyName" layoutX="240.0" layoutY="109.0" prefHeight="26.0" prefWidth="133.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
-      <Label layoutX="64.0" layoutY="162.0" style="-fx-font-family: Montserrat;" text="FARMACI" textFill="WHITE" visible="false">
+      <Label fx:id="lblDrugs" layoutX="64.0" layoutY="162.0" style="-fx-font-family: Montserrat;" text="FARMACI" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="boxDrugs" layoutX="60.0" layoutY="189.0" prefHeight="26.0" prefWidth="133.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
-      <Label layoutX="428.0" layoutY="162.0" prefHeight="18.0" prefWidth="86.0" style="-fx-font-family: Montserrat;" text="QUANTITÀ" textFill="WHITE" visible="false">
+      <Label fx:id="lblAmount" layoutX="428.0" layoutY="162.0" prefHeight="18.0" prefWidth="86.0" style="-fx-font-family: Montserrat;" text="QUANTITÀ" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <DatePicker fx:id="dateEnd" layoutX="307.0" layoutY="269.0" prefHeight="24.0" prefWidth="204.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" visible="false" />
-      <Label layoutX="60.0" layoutY="243.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DATA INIZIO" textFill="WHITE" visible="false">
+      <Label fx:id="lblDateStart" layoutX="60.0" layoutY="243.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DATA INIZIO" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="307.0" layoutY="243.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DATA FINE" textFill="WHITE" visible="false">
+      <Label fx:id="lblDateEnd" layoutX="307.0" layoutY="243.0" prefHeight="20.0" prefWidth="149.0" style="-fx-font-family: Montserrat;" text="DATA FINE" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="600.0" layoutY="162.0" style="-fx-font-family: Montserrat;" text="ISTRUZIONI" textFill="WHITE" visible="false">
+      <Label fx:id="lblInstruction" layoutX="600.0" layoutY="162.0" style="-fx-font-family: Montserrat;" text="ISTRUZIONI" textFill="WHITE" visible="false">
          <font>
             <Font size="14.0" />
          </font>

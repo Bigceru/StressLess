@@ -195,7 +195,6 @@ public class DoctorStatisticsSceneController {
         try {
             Database db = new Database(2);
             queryResult = db.getQuery("SELECT StartDate, TherapyName FROM Therapies WHERE StartDate >='" + start.toString() + "'", new String[]{"StartDate", "TherapyName"});
-            System.out.println(queryResult.toString());
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

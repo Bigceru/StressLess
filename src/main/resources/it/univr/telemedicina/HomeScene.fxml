@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="homeScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="it.univr.telemedicina.controller.HomeSceneController">
+<AnchorPane fx:id="homeScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.HomeSceneController">
     <padding>
         <Insets bottom="5.0" top="5.0" />
     </padding>
@@ -115,8 +115,8 @@
                                 <FontAwesomeIcon fill="WHITE" glyphName="FILE" layoutX="16.0" layoutY="60.0" size="3em" />
                             </children>
                         </AnchorPane>
-                        <Button fx:id="buttonSendText" layoutX="281.0" layoutY="119.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-font-size: 20; -fx-font-family: Montserrat; -fx-background-radius: 10; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="INVIA MESSAGGIO" textAlignment="RIGHT" textFill="WHITE" textOverrun="LEADING_WORD_ELLIPSIS" underline="true" />
-                        <Button fx:id="buttonMailBox" layoutX="550.0" layoutY="119.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-font-size: 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="NOTIFICHE" textFill="WHITE" underline="true" />
+                        <Button fx:id="buttonSendText" layoutX="281.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-font-size: 20; -fx-font-family: Montserrat; -fx-background-radius: 10; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="INVIA MESSAGGIO" textAlignment="RIGHT" textFill="WHITE" textOverrun="LEADING_WORD_ELLIPSIS" underline="true" />
+                        <Button fx:id="buttonMailBox" layoutX="550.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-font-size: 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="NOTIFICHE" textFill="WHITE" underline="true" />
                         <FontAwesomeIcon fill="WHITE" glyphName="ENVELOPE" layoutX="750.0" layoutY="157.0" size="3em" text="" />
                         <Circle fx:id="lblNewMail" fill="#e85858" layoutX="795.0" layoutY="132.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
                         <FontAwesomeIcon fill="WHITE" glyphName="EDIT" layoutX="492.0" layoutY="159.0" size="3em" />

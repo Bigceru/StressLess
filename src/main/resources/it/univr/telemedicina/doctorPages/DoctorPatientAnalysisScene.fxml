@@ -50,12 +50,12 @@
                               <Font size="23.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblTrendTherapy" layoutX="14.0" layoutY="34.0" prefHeight="65.0" prefWidth="318.0" text="Il paziente la segue correttamente" textFill="WHITE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="34.0">
+                        <Label fx:id="lblTrendTherapy" layoutX="14.0" layoutY="40.0" prefHeight="122.0" prefWidth="642.0" text="Il paziente la segue correttamente" textFill="WHITE" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Button layoutX="10.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleTherapyButton" style="-fx-background-color: #272932;" styleClass="button-view" stylesheets="@../button.css" text="CAMBIA TERAPIA" />
+                        <Button layoutX="10.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleTherapyButton" style="-fx-background-color: #272932;" styleClass="button-view" stylesheets="@../button.css" text="CAMBIA TERAPIA" AnchorPane.bottomAnchor="33.0" />
                      </children>
                   </AnchorPane>
                   <TableView fx:id="tableSearchPatient" prefHeight="299.0" prefWidth="658.0" stylesheets="@../table.css">

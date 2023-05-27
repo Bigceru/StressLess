@@ -28,9 +28,9 @@ import java.util.TreeMap;
 public class DoctorPlusInfoPatientController implements Initializable {
     private int pos = 1;    // Position of week/month
     @FXML
-    public LineChart lineChartPression;
+    public LineChart<String, Long> lineChartPression;
     @FXML
-    public StackedBarChart barChartDrug;
+    public StackedBarChart<String, Integer> barChartDrug;
     @FXML
     public TextArea txtAreaInfo;
     @FXML
@@ -79,7 +79,7 @@ public class DoctorPlusInfoPatientController implements Initializable {
      */
     public void buttonSend(ActionEvent actionEvent) {
         // If startDate is before endDate or equal to see one day and both them are not null
-        if((dateStart.getValue().isBefore(dateEnd.getValue()) || dateStart.getValue().isEqual(dateEnd.getValue())) && dateStart.getValue() != null && dateEnd.getValue() != null) {
+        if(dateStart.getValue() != null && dateEnd.getValue() != null && (dateStart.getValue().isBefore(dateEnd.getValue()) || dateStart.getValue().isEqual(dateEnd.getValue()))) {
             // Set date to black color
             dateStart.setStyle("-fx-text-fill: black;");
             dateEnd.setStyle("-fx-text-fill: black;");
@@ -144,14 +144,14 @@ public class DoctorPlusInfoPatientController implements Initializable {
 
         //lineChartPression.setTitle("Grafico Pressione");
 
-        XYChart.Series series = new XYChart.Series<>();
+        XYChart.Series<String, Long> series = new XYChart.Series<>();
         series.setName("Pressione Sistolica");
-        XYChart.Series series2 = new XYChart.Series<>();
+        XYChart.Series<String, Long> series2 = new XYChart.Series<>();
         series2.setName("Pressione Diastolica");
 
         // create the list with 7/30 values
-        ArrayList<XYChart.Data> dataSeries = new ArrayList<>();
-        ArrayList<XYChart.Data> dataSeries2 = new ArrayList<>();
+        ArrayList<XYChart.Data<String, Long>> dataSeries = new ArrayList<>();
+        ArrayList<XYChart.Data<String, Long>> dataSeries2 = new ArrayList<>();
 
         // TreeMap of (Date, [Systolic, Diastolic])
         TreeMap<LocalDate, ArrayList<Integer>> pressures = new TreeMap<>();
@@ -194,8 +194,6 @@ public class DoctorPlusInfoPatientController implements Initializable {
      */
     public void createGraphDrug(LocalDate start, LocalDate end) {
         // Reset data
-        System.out.println(start.toString());
-        System.out.println(end.toString());
         barChartDrug.getData().clear();
         ArrayList<String> queryResult;
 
@@ -243,7 +241,6 @@ public class DoctorPlusInfoPatientController implements Initializable {
             else if (ChronoUnit.DAYS.between(start, end) <= 31)  {
                 // I take the range of one week
                 for (j = 0; j < allDate.size() - 6; j += 7) {
-                    System.out.println("Giorno: " + allDate.get(j));
                     series[i].getData().add(returnNumberCondition(allDate.get(j).toString(), allDate.get(j + 6).toString(), queryResult, category));
                     pos++;
                 }
@@ -278,7 +275,7 @@ public class DoctorPlusInfoPatientController implements Initializable {
             });
         }
 
-        //stackedBarChart.setStyle(".chart-series-0 .default-color8.chart-bar { -fx-bar-fill: black;} ");
+        barChartDrug.setStyle("-fx-background-color: white;");
         barChartDrug.getData().addAll(series);
         barChartDrug.setAnimated(false);
 
