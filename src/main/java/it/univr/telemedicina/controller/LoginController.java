@@ -1,6 +1,7 @@
 package it.univr.telemedicina.controller;
 
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.controller.chat.ChatMenuController;
 import it.univr.telemedicina.controller.doctor.*;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
@@ -116,6 +117,9 @@ public class LoginController implements Initializable {
                         DoctorPatientAnalysisController doctorPatientAnalysisController = new DoctorPatientAnalysisController();
                         doctorPatientAnalysisController.setDoctor(doctor);
 
+                        ChatMenuController chatMenu = new ChatMenuController();
+                        chatMenu.setUser(doctor);
+                        
                         newScene.changeScene("doctorPages/DoctorPage.fxml", "Dottore", actionEvent);
 
                         if(credentials.get(5).equals("1234")){

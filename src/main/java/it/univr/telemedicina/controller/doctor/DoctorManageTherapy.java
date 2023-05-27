@@ -104,9 +104,34 @@ public class DoctorManageTherapy implements Initializable {
                 // If "Nuova" was selected
                 if(boxTherapy.getValue().equals("Nuova")) {
                     boxTherapyName.setVisible(true);
-                else
+                    lblNameTherapy.setVisible(true);
+                    buttonSend.setText("Aggiungi");
+                }
+                else {  // If "Nuova" was NOT selected, modify the selected therapy. Set all box with relative dates
+                    // Edit button specs
                     boxTherapyName.setVisible(false);
+                    lblNameTherapy.setVisible(false);
+                    buttonSend.setText("Modifica");
 
+                    // Do a query and add all the values in the fields/boxes
+                    ArrayList<String> resultTherapiesQuery = database.getQuery("SELECT * FROM Therapies WHERE IDPatient = " + idPatient + " AND TherapyName = '" + boxTherapy.getValue().split("-")[0].trim() + "' AND DrugName = '" + boxTherapy.getValue().split("-")[1].substring(1) + "'", new String[]{"TherapyName", "DrugName", "DailyDoses", "AmountTaken", "Instructions", "StartDate", "EndDate"});
+                    boxTherapyName.setValue(resultTherapiesQuery.get(0));
+                    boxDrugs.setValue(resultTherapiesQuery.get(1));
+                    boxDailyDoses.setValue(resultTherapiesQuery.get(2));
+                    boxAmount.setValue(resultTherapiesQuery.get(3));
+
+                    // Cicle all the instruction and set in which period of the day the patient have to take the pillow
+                    for(String instruction : resultTherapiesQuery.get(4).split(",")) {
+                        System.out.println(instruction.trim());
+                        checkBoxInstruction.getCheckModel().check(Instructions.valueOf(instruction.trim()).ordinal());
+                    }
+
+                    dateStart.setValue(LocalDate.parse(resultTherapiesQuery.get(5)));
+                    System.out.println(LocalDate.parse(resultTherapiesQuery.get(5)).toString());
+                    dateEnd.setValue(LocalDate.parse(resultTherapiesQuery.get(6)));
+                }
+
+                // Set label visibility properties
                 boxDrugs.setVisible(true);
                 boxDailyDoses.setVisible(true);
                 boxAmount.setVisible(true);
@@ -126,9 +151,8 @@ public class DoctorManageTherapy implements Initializable {
      */
     @FXML
     private void handleManageButton(ActionEvent actionEvent){
-        //Check if there is all box are not empty
-        if(boxTherapy.getValue().isEmpty() && boxTherapyName.getValue().isEmpty() && boxDrugs.getValue().isEmpty() && boxAmount.getValue().isEmpty() && boxDailyDoses.getValue().isEmpty()){
-            newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
+        //checkCombo return false, send error
+        if(!checkCombo()){
             return;
         }
 
@@ -160,18 +184,17 @@ public class DoctorManageTherapy implements Initializable {
      */
     @FXML
     private void handleDeleteButton(ActionEvent actionEvent){
-        // if box are not empty or box therapy is not NUOVO
-        if(boxTherapy.getValue().isEmpty() && boxTherapyName.getValue().isEmpty() && boxDrugs.getValue().isEmpty() && boxAmount.getValue().isEmpty() && boxDailyDoses.getValue().isEmpty() && !boxTherapy.getValue().equals("Nuova")){
-            newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
-            return;
+        //checkCombo return false, send error
+        if(!checkCombo()){
+           return;
         }
 
         try{
             Database database = new Database(2);
-            database.deleteQuery("Therapies",Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue()));
+            database.deleteQuery("Therapies",Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue(),"DrugName",boxDrugs.getValue()));
+            newScene.showAlert("Elimina", "Dati  elimanti correttamente", Alert.AlertType.INFORMATION);
         } catch (SQLException | ClassNotFoundException e) {
-            newScene.showAlert("Errore Eliminazione0", "Errore! Dati non eliminati, Riprovare", Alert.AlertType.ERROR);
-            return;
+            newScene.showAlert("Errore Eliminazione", "Errore! Dati non eliminati, Riprovare", Alert.AlertType.ERROR);
         }
     }
 
@@ -180,8 +203,12 @@ public class DoctorManageTherapy implements Initializable {
      */
     @FXML
     private void handleSendInformationButton(ActionEvent actionEvent){
+        //checkCombo return false, send error
+        if(!checkCombo()){
+            return;
+        }
 
-       try {
+        try {
            Database database = new Database(2);
            //Check if exist
            ArrayList<String> list = database.getQuery("SELECT * FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"IDPatient", "Detail"});
