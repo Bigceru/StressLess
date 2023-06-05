@@ -163,4 +163,8 @@ public class HomeSceneController implements Initializable {
     }
 
     public void setPatient(Patient patient) {HomeSceneController.patient = patient;}
+
+    public void setColor(Color color){
+        emailIcon.setFill(color);
+    }
 }
