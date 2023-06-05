@@ -16,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.io.IOException;
@@ -30,6 +29,8 @@ import java.util.*;
  * Class to control the DoctorHomeScene
  */
 public class DoctorHomeSceneController implements Initializable {
+
+    private final MainApplication newScene = new MainApplication();
     @FXML
     public Label lblCountPatients;
     @FXML
@@ -37,10 +38,9 @@ public class DoctorHomeSceneController implements Initializable {
     @FXML
     public Button buttonMailBox;
     @FXML
-    public Circle lblNewMail;
-    @FXML
     public FontAwesomeIcon emailIcon;
-    private final MainApplication newScene = new MainApplication();
+    @FXML
+    public Circle iconNewMail;
 
     // Table variable
     @FXML
@@ -275,8 +275,10 @@ public class DoctorHomeSceneController implements Initializable {
         barChartNewPatients.setAnimated(false);     // Remove the fucking animation to print right label
 
     }
+
     @FXML
     private void handleChatButton(ActionEvent actionEvent) throws IOException {
+        iconNewMail.setVisible(false);
         newScene.addScene("/it/univr/telemedicina/chatPages/ChatMenu.fxml");
     }
 

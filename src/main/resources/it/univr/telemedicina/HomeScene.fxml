@@ -25,7 +25,7 @@
             <children>
                 <AnchorPane layoutX="3.0" layoutY="-5.0" prefHeight="457.0" prefWidth="800.0" style="-fx-background-color: #272932; -fx-background-radius: 10;" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="203.0">
                     <children>
-                        <Label layoutX="21.0" layoutY="25.0" prefHeight="25.0" prefWidth="161.0" style="-fx-font-family: Montserrat;" text="Attualmente risulti: " textFill="WHITE">
+                        <Label layoutX="21.0" layoutY="25.0" prefHeight="25.0" prefWidth="207.0" style="-fx-font-family: Montserrat;" text="Attualmente risulti: " textFill="WHITE">
                             <font>
                                 <Font size="19.0" />
                             </font>
@@ -35,7 +35,7 @@
                                 <Font name="Baloo 2 Regular" size="20.0" />
                             </font>
                         </Label>
-                        <Label layoutX="260.0" layoutY="25.0" prefHeight="25.0" prefWidth="291.0" style="-fx-font-family: Montserrat;" text="I farmaci che devi ancora assumere:" textFill="WHITE">
+                        <Label layoutX="260.0" layoutY="25.0" prefHeight="25.0" prefWidth="371.0" style="-fx-font-family: Montserrat;" text="I farmaci che devi ancora assumere:" textFill="WHITE">
                             <font>
                                 <Font size="19.0" />
                             </font>
@@ -70,15 +70,15 @@
             <children>
                 <AnchorPane prefHeight="224.0" prefWidth="820.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0,0);">
                     <children>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="155.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="552.0" AnchorPane.topAnchor="14.0">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="155.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="540.0" AnchorPane.topAnchor="14.0">
                             <children>
                                 <FontAwesomeIcon fill="WHITE" glyphName="HEARTBEAT" layoutX="193.0" layoutY="129.0" size="4em" text="" />
-                                <Label fx:id="lblPressure" layoutX="14.0" layoutY="14.0" prefHeight="85.0" prefWidth="179.0" style="-fx-font-family: Montserrat;" text="100/100" textFill="WHITE">
+                                <Label fx:id="lblPressure" layoutX="14.0" layoutY="14.0" prefHeight="85.0" prefWidth="207.0" style="-fx-font-family: Montserrat;" text="100/100" textFill="WHITE">
                                     <font>
                                         <Font name="System Italic" size="48.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="14.0" layoutY="111.0" prefHeight="26.0" prefWidth="104.0" style="-fx-font-family: Montserrat;" text="PRESSIONE" textFill="WHITE">
+                                <Label layoutX="14.0" layoutY="111.0" prefHeight="26.0" prefWidth="119.0" style="-fx-font-family: Montserrat;" text="PRESSIONE" textFill="WHITE">
                                     <font>
                                         <Font name="Baloo 2 Regular" size="20.0" />
                                     </font>
@@ -92,8 +92,8 @@
                                         <Font name="Baloo 2 Regular" size="20.0" />
                                     </font>
                                 </Label>
-                                <FontAwesomeIcon fill="WHITE" glyphName="USER_MD" layoutX="205.0" layoutY="65.0" size="4em" text="" />
-                                <Label fx:id="lblRefDoc" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="161.0" style="-fx-font-family: Montserrat;" text="Dott. Mago Merlino" textFill="WHITE">
+                                <FontAwesomeIcon fill="WHITE" glyphName="USER_MD" layoutX="201.0" layoutY="73.0" size="4em" text="" />
+                                <Label fx:id="lblRefDoc" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="207.0" style="-fx-font-family: Montserrat;" text="Dott. Mago Merlino" textFill="WHITE">
                                     <font>
                                         <Font name="Baloo 2 Regular" size="20.0" />
                                     </font>
@@ -102,12 +102,12 @@
                         </AnchorPane>
                         <AnchorPane layoutX="550.0" layoutY="15.0" prefHeight="93.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.topAnchor="15.0">
                             <children>
-                                <Label fx:id="lblLastPressure" layoutX="142.0" layoutY="46.0" prefHeight="34.0" prefWidth="114.0" style="-fx-font-family: Montserrat;" text="21/04/2023" textFill="WHITE">
+                                <Label fx:id="lblLastPressure" layoutX="123.0" layoutY="46.0" prefHeight="34.0" prefWidth="133.0" style="-fx-font-family: Montserrat;" text="21/04/2023" textFill="WHITE">
                                     <font>
                                         <Font name="Baloo Bhaina 2 Regular" size="20.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="68.0" layoutY="14.0" prefHeight="25.0" prefWidth="186.0" style="-fx-font-family: Montserrat;" text="Data ultima rilevazione" textFill="WHITE">
+                                <Label layoutX="74.0" layoutY="14.0" prefHeight="25.0" prefWidth="180.0" style="-fx-font-family: Montserrat;" text="Ultima rilevazione" textFill="WHITE">
                                     <font>
                                         <Font size="19.0" />
                                     </font>
@@ -118,7 +118,7 @@
                         <Button fx:id="buttonSendText" layoutX="281.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-font-size: 20; -fx-font-family: Montserrat; -fx-background-radius: 10; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="INVIA MESSAGGIO" textAlignment="RIGHT" textFill="WHITE" textOverrun="LEADING_WORD_ELLIPSIS" underline="true" />
                         <Button fx:id="buttonMailBox" layoutX="550.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleChatButton" prefHeight="50.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-font-size: 20; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-border-radius: 10;" text="NOTIFICHE" textFill="WHITE" underline="true" />
                         <FontAwesomeIcon fx:id="emailIcon" fill="WHITE" glyphName="ENVELOPE" layoutX="750.0" layoutY="157.0" size="3em" text="" />
-                        <Circle fx:id="lblNewMail" fill="#e85858" layoutX="795.0" layoutY="132.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
+                        <Circle fx:id="iconNewMail" fill="#e85858" layoutX="789.0" layoutY="132.0" radius="8.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
                         <FontAwesomeIcon fill="WHITE" glyphName="EDIT" layoutX="492.0" layoutY="159.0" size="3em" />
                     </children>
                     <effect>

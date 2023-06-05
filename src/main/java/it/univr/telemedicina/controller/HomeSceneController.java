@@ -1,6 +1,5 @@
 package it.univr.telemedicina.controller;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePatientDrugs;
 import it.univr.telemedicina.Therapy;
@@ -15,9 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-
+import javafx.scene.shape.Circle;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -31,7 +28,7 @@ public class HomeSceneController implements Initializable {
     @FXML
     public Label lblPressure;
     @FXML
-    public FontAwesomeIcon emailIcon;
+    public Circle iconNewMail;
     @FXML
     private Label lblRefDoc;
     @FXML
@@ -49,12 +46,13 @@ public class HomeSceneController implements Initializable {
     @FXML
     public TableColumn<TablePatientDrugs, Integer> columnDoses;
     private static Patient patient;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Take patient therapies and check if the patient is following it right
         systemMessage();
 
-        // Set doctor's name/surname label, pressure label, emailIcon
+        // Set doctor's name/surname label, pressure label, iconNewMail
         try {
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT * FROM Doctors WHERE ID = " + patient.getRefDoc(), new String[]{"Name","Surname"});    // Query to get doctor name
@@ -71,18 +69,11 @@ public class HomeSceneController implements Initializable {
                 lblLastPressure.setText(info.get(2));
             }
 
-            /*
-            // Query to set emailIcon
+            // Query to set iconNewMail
             ArrayList<String> messageToReadQuery = db.getQuery("SELECT ReadFlag FROM Chat WHERE Receiver = " + patient.getPatientID() + " AND ReadFlag = 0", new String[]{"ReadFlag"});
 
             // If there are no new messages
-            if(messageToReadQuery.isEmpty()) {
-                emailIcon.setFill(Color.WHITE);
-            }
-            else {
-                emailIcon.setFill(Color.RED);
-            }
-             */
+            iconNewMail.setVisible(!messageToReadQuery.isEmpty());
 
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
@@ -135,6 +126,7 @@ public class HomeSceneController implements Initializable {
 
     @FXML
     private void handleChatButton(ActionEvent actionEvent) throws IOException {
+        iconNewMail.setVisible(false);
         newScene.addScene("/it/univr/telemedicina/chatPages/ChatMenu.fxml");
     }
 
@@ -163,8 +155,4 @@ public class HomeSceneController implements Initializable {
     }
 
     public void setPatient(Patient patient) {HomeSceneController.patient = patient;}
-
-    public void setColor(Color color){
-        emailIcon.setFill(color);
-    }
 }
