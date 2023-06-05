@@ -248,7 +248,7 @@ public class DoctorStatisticsSceneController {
                     pos++;
                 }
                 // I check if there are other days less than 7 days
-                if(allDate.size()-1-j != 0 ){
+                if(allDate.size()-1-j > 0 ){
                     series[i].getData().add(returnNumberCondition(allDate.get(j).toString(), allDate.get(allDate.size()-1).toString(), queryResult, category));
                     pos++;
                 }
@@ -261,7 +261,7 @@ public class DoctorStatisticsSceneController {
                 }
 
                 // I check if there are other days less than 30 days
-                if(allDate.size()-1-j != 0 ){
+                if(allDate.size()-1-j > 0 ){
                     series[i].getData().add(returnNumberCondition(allDate.get(j).toString(), allDate.get(allDate.size()-1).toString(), queryResult, category));
                     pos++;
                 }

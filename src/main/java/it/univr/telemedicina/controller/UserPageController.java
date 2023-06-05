@@ -1,5 +1,6 @@
 package it.univr.telemedicina.controller;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Patient;
 import javafx.animation.AnimationTimer;
@@ -12,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -72,6 +74,7 @@ public class UserPageController implements Initializable{
     public void handleChangeScene(ActionEvent event) throws IOException {
         if (event.getSource() == buttonHome) {  // Home button click
             homeScene.setVisible(true);
+            refreshNotificationIcon();      // Method to refresh icon color
             pressureScene.setVisible(false);
             editProfileScene.setVisible(false);
             drugsScene.setVisible(false);

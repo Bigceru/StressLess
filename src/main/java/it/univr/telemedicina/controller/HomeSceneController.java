@@ -71,6 +71,7 @@ public class HomeSceneController implements Initializable {
                 lblLastPressure.setText(info.get(2));
             }
 
+            /*
             // Query to set emailIcon
             ArrayList<String> messageToReadQuery = db.getQuery("SELECT ReadFlag FROM Chat WHERE Receiver = " + patient.getPatientID() + " AND ReadFlag = 0", new String[]{"ReadFlag"});
 
@@ -81,6 +82,7 @@ public class HomeSceneController implements Initializable {
             else {
                 emailIcon.setFill(Color.RED);
             }
+             */
 
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
