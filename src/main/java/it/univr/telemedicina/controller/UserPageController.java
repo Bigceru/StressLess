@@ -3,6 +3,7 @@ package it.univr.telemedicina.controller;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.utilities.Database;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,6 +52,7 @@ public class UserPageController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         // Set scene to be visible
         homeScene.setVisible(true);
+        refreshNotificationIcon();      // Method to refresh icon color
         pressureScene.setVisible(false);
         editProfileScene.setVisible(false);
         drugsScene.setVisible(false);
@@ -85,7 +87,6 @@ public class UserPageController implements Initializable{
             buttonEditPressure.setStyle("-fx-background-color: #0000");
             buttonEditProfile.setStyle("-fx-background-color: #0000");
             buttonEditDrugs.setStyle("-fx-background-color: #0000");
-
         }
         else if(event.getSource() == buttonEditPressure){   // Pressure button click
             homeScene.setVisible(false);
@@ -126,6 +127,32 @@ public class UserPageController implements Initializable{
             buttonEditProfile.setStyle("-fx-background-color: #2A7878");
             buttonEditDrugs.setStyle("-fx-background-color: #0000");
         }
+    }
+
+    /**
+     * Method to check refresh the new message icon's color, doing a query
+     */
+    private void refreshNotificationIcon() {
+        HomeSceneController home = new HomeSceneController();
+        //home.
+        try {
+            Database db = new Database(2);
+            // Query to set emailIcon
+            ArrayList<String> messageToReadQuery = db.getQuery("SELECT ReadFlag FROM Chat WHERE Receiver = " + patient.getPatientID() + " AND ReadFlag = 0", new String[]{"ReadFlag"});
+
+            // If there are no new messages
+            if(messageToReadQuery.isEmpty()) {
+                home.setColor(Color.WHITE);
+            }
+            else {
+                home.setColor(Color.RED);
+            }
+
+            db.closeAll();
+        } catch (SQLException | ClassNotFoundException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void setPatient(Patient patient){

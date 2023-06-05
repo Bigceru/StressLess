@@ -132,6 +132,7 @@ public class HomeSceneController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     private void handleChatButton(ActionEvent actionEvent) throws IOException {
         newScene.addScene("/it/univr/telemedicina/chatPages/ChatMenu.fxml");

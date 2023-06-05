@@ -33,6 +33,8 @@ public class LoginController implements Initializable {
     @FXML
     private Button registerButton;
 
+    public static HomeSceneController homeController;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         comboUserBox.getItems().add("Patient");
@@ -84,9 +86,11 @@ public class LoginController implements Initializable {
 
                         HomeSceneController homeController = new HomeSceneController();
                         homeController.setPatient(patient);
+
                         // Attach the new patient to the controller
                         UserPageController controller = new UserPageController();
                         controller.setPatient(patient);
+
                         // Passing patient
                         PressureSceneController pressureController = new PressureSceneController();
                         pressureController.setPatient(patient);
