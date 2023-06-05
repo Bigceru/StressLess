@@ -114,8 +114,10 @@ public class LoginController implements Initializable {
                         pageController.setDoctor(doctor);
                         DoctorHomeSceneController homeDoctor = new DoctorHomeSceneController();
                         homeDoctor.setDoctor(doctor);
+
                         DoctorStatisticsSceneController statisticsSceneController = new DoctorStatisticsSceneController();
                         statisticsSceneController.setDoctor(doctor);
+
                         EditProfileSceneController editProfileController = new EditProfileSceneController();
                         editProfileController.setUser(doctor);
 

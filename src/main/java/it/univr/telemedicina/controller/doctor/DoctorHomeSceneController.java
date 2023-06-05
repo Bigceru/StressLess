@@ -72,12 +72,7 @@ public class DoctorHomeSceneController implements Initializable {
             ArrayList<String> messageToReadQuery = database.getQuery("SELECT ReadFlag FROM Chat WHERE Receiver = " + doctor.getID() + " AND ReadFlag = 0", new String[]{"ReadFlag"});
 
             // If there are no new messages
-            if(messageToReadQuery.isEmpty()) {
-                emailIcon.setFill(Color.WHITE);
-            }
-            else {
-                emailIcon.setFill(Color.RED);
-            }
+            iconNewMail.setVisible(!messageToReadQuery.isEmpty());
 
             database.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
