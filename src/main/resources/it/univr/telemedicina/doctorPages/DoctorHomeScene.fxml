@@ -65,6 +65,11 @@
                       <NumberAxis fx:id="yAxis" side="LEFT" tickLabelFill="WHITE" />
                     </yAxis>
                   </BarChart>
+                  <Label fx:id="lblTableTitle" layoutX="78.0" layoutY="8.0" text="Istogramma nuovi pazienti" textFill="WHITE" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="78.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
         </items>

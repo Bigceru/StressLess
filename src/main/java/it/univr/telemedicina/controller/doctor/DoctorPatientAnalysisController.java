@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +21,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DoctorPatientAnalysisController implements Initializable {
+
     MainApplication newScene = new MainApplication();
+    @FXML
+    public Line lineAnalysisScene;
+    @FXML
+    public AnchorPane patientAnalysisPane;
     @FXML
     private ComboBox<String> boxPatientList;
     @FXML
@@ -44,6 +51,10 @@ public class DoctorPatientAnalysisController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Set line size property
+        //lineAnalysisScene.endXProperty().bind(patientAnalysisPane.widthProperty().subtract(12));
+        //lineAnalysisScene.setEndY(lineAnalysisScene.getStartY());
+
         // Initialize value for boxPatientList
         try {
             Database database = new Database(2);

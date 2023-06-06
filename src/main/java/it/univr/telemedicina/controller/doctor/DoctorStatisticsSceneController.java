@@ -49,17 +49,11 @@ public class DoctorStatisticsSceneController {
     @FXML
     private RadioButton radioTSart;
     @FXML
-    private Button buttonShowGraph;
-    @FXML
-    private Label lblActualGraphic;
-    @FXML
     private DatePicker dateStart;
     @FXML
     private DatePicker dateEnd;
     @FXML
     private Tab tabPressure;
-    @FXML
-    private Tab tabTherapies;
 
     // Doctor instance
     private static Doctor doctor;
@@ -68,7 +62,7 @@ public class DoctorStatisticsSceneController {
     public void changeTab() {
         stackedBarChart.getData().clear();
         if (tabPressure.isSelected()) {
-            lblActualGraphic.setText("ANDAMENTO PRESSIONE");
+            stackedBarChart.setTitle("ANDAMENTO PRESSIONI");
             // remove all selected radio button in the other tab
             if (radioTACE != null)
                 radioTACE.setSelected(false);
@@ -83,7 +77,7 @@ public class DoctorStatisticsSceneController {
             if (radioTSympatholytic != null)
                 radioTSympatholytic.setSelected(false);
         } else {
-            lblActualGraphic.setText("ANDAMENTO TERAPIE");
+            stackedBarChart.setTitle("ANDAMENTO TERAPIE");
             if (radioP1Borderline != null)
                 radioP1Borderline.setSelected(false);
             if (radioPIS != null)
@@ -115,7 +109,7 @@ public class DoctorStatisticsSceneController {
     }
 
     public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+        DoctorStatisticsSceneController.doctor = doctor;
     }
 
     public void createGraphPression() {
@@ -126,7 +120,7 @@ public class DoctorStatisticsSceneController {
         LocalDate end = dateEnd.getValue();
 
         // Check date
-        if (start.isAfter(end) || end.equals(null) || start.equals(null)) {
+        if (end == null || start == null || start.isAfter(end)) {
             dateStart.setStyle("-fx-text-fill: red;");
             dateEnd.setStyle("-fx-text-fill: red;");
             return;
@@ -137,7 +131,7 @@ public class DoctorStatisticsSceneController {
 
         try {
             Database db = new Database(2);
-            list = db.getQuery("SELECT Date, ConditionPressure FROM BloodPressures WHERE Date BETWEEN '" + start.toString() + "' AND '" + end.toString() + "'", new String[]{"Date", "ConditionPressure"});
+            list = db.getQuery("SELECT Date, ConditionPressure FROM BloodPressures WHERE Date BETWEEN '" + start + "' AND '" + end + "'", new String[]{"Date", "ConditionPressure"});
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

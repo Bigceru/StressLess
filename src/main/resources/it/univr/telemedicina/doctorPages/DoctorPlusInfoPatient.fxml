@@ -21,13 +21,22 @@
         <Insets bottom="5.0" top="5.0" />
     </padding>
     <children>
-        <AnchorPane layoutX="19.0" layoutY="25.0" prefHeight="643.0" prefWidth="719.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+        <AnchorPane fx:id="infoPane" layoutX="19.0" layoutY="25.0" prefHeight="643.0" prefWidth="719.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
-              <SplitPane dividerPositions="0.5" layoutY="215.0" prefHeight="418.0" prefWidth="730.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="215.0">
+            <Label layoutX="35.0" layoutY="36.0" prefHeight="26.0" prefWidth="283.0" text="MAGGIORI INFORMAZIONI" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font></Label>
+            <TextArea fx:id="txtAreaInfo" editable="false" layoutX="35.0" layoutY="83.0" prefHeight="43.0" prefWidth="677.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="17.0">
+               <font>
+                  <Font size="19.0" />
+               </font></TextArea>
+            <Line fx:id="lineFigure" fill="WHITE" layoutX="-4.0" layoutY="-137.0" startX="17.292892456054688" startY="320.0" stroke="WHITE" strokeWidth="2.0" AnchorPane.leftAnchor="12.792892456054688" AnchorPane.rightAnchor="12.0" />
+              <SplitPane dividerPositions="0.7128712871287128" layoutY="215.0" prefHeight="418.0" prefWidth="730.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="215.0">
                   <items>
                   <AnchorPane prefHeight="573.0" prefWidth="501.0">
                      <children>
-                            <LineChart fx:id="lineChartPression" prefHeight="371.0" prefWidth="501.0">
+                            <LineChart fx:id="lineChartPression" prefHeight="371.0" prefWidth="501.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <xAxis>
                                     <CategoryAxis side="BOTTOM" />
                                 </xAxis>
@@ -47,32 +56,25 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                            <TabPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../tabpane.css" tabClosingPolicy="UNAVAILABLE">
+                            <TabPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../tabpane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                 <tabs>
                                     <Tab fx:id="tabPressure" onSelectionChanged="#handleChangeTab" text="Pressioni" />
                                     <Tab fx:id="tabDrug" onSelectionChanged="#handleChangeTab" text="Farmaci" />
                                 </tabs>
                             </TabPane>
-                                <AnchorPane layoutX="-10.0" layoutY="47.0" minHeight="0.0" minWidth="0.0" prefHeight="133.0" prefWidth="210.0">
+                                <AnchorPane layoutX="-10.0" layoutY="47.0" minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="210.0">
                            <children>
-                              <DatePicker fx:id="dateStart" layoutX="14.0" layoutY="21.0" prefHeight="24.0" prefWidth="119.0" promptText="Inizio" />
-                              <DatePicker fx:id="dateEnd" layoutX="14.0" layoutY="50.0" prefHeight="24.0" prefWidth="119.0" promptText="Fine" />
-                              <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" onAction="#buttonSend" text="Invia" />
+                              <DatePicker fx:id="dateStart" layoutX="15.0" layoutY="36.0" prefHeight="24.0" prefWidth="119.0" promptText="Inizio" />
+                              <DatePicker fx:id="dateEnd" layoutX="16.0" layoutY="90.0" prefHeight="24.0" prefWidth="119.0" promptText="Fine" />
+                              <Button layoutX="16.0" layoutY="128.0" mnemonicParsing="false" onAction="#buttonSend" text="Invia" />
+                              <Label layoutX="15.0" layoutY="13.0" text="Data inizio ricerca" textFill="WHITE" />
+                              <Label layoutX="16.0" layoutY="71.0" text="Data fine ricerca" textFill="WHITE" />
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
                   </items>
               </SplitPane>
-            <Label layoutX="43.0" layoutY="36.0" prefHeight="26.0" prefWidth="283.0" text="MAGGIORI INFORMAZIONI" textFill="WHITE">
-               <font>
-                  <Font size="21.0" />
-               </font></Label>
-            <TextArea fx:id="txtAreaInfo" editable="false" layoutX="35.0" layoutY="83.0" prefHeight="43.0" prefWidth="677.0">
-               <font>
-                  <Font size="19.0" />
-               </font></TextArea>
-            <Line endX="723.0" endY="320.0" layoutX="4.0" layoutY="-140.0" startX="17.292892456054688" startY="320.0" stroke="WHITE" />
          </children></AnchorPane>
     </children>
 </AnchorPane>

@@ -22,7 +22,7 @@
             <children>
                 <AnchorPane prefHeight="43.0" prefWidth="810.0" style="-fx-background-color: #3CA6A6;" styleClass="anchor-style" stylesheets="@anchor.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
-                        <Label layoutX="288.0" layoutY="9.0" prefHeight="26.0" prefWidth="233.0" style="-fx-font-family: Montserrat;" text="FARMACI GIORNALIERI" textFill="WHITE" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="289.0" AnchorPane.topAnchor="9.0">
+                        <Label layoutX="289.0" layoutY="9.0" prefHeight="26.0" prefWidth="233.0" style="-fx-font-family: Montserrat;" text="FARMACI GIORNALIERI" textFill="WHITE" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="288.0" AnchorPane.topAnchor="9.0">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -81,7 +81,7 @@
                                 <String fx:value="column-header-background" />
                             </styleClass>
                         </TableView>
-                        <Label layoutX="165.0" layoutY="7.0" style="-fx-font-family: Montserrat;" text="Raccolta " textFill="WHITE" AnchorPane.leftAnchor="40.0">
+                        <Label layoutX="15.0" layoutY="14.0" style="-fx-font-family: Montserrat;" text="RACCOLTA " textFill="WHITE" AnchorPane.leftAnchor="15.0">
                             <font>
                                 <Font size="18.0" />
                             </font>

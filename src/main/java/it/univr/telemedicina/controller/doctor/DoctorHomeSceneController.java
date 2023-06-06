@@ -93,7 +93,7 @@ public class DoctorHomeSceneController implements Initializable {
         }
     }
 
-    //Method to initialize the table and the table columns with the Patient therapies
+    // Method to initialize the table and the table columns with the Patient therapies
     public void setTablePatients(){
         ObservableList<Patient> collection = FXCollections.observableArrayList();   // Collection of data to insert in the table
 
@@ -168,7 +168,7 @@ public class DoctorHomeSceneController implements Initializable {
         LocalDate end = buttonEndRegistration.getValue();
 
         //Check date
-        if(start.isAfter(end) || end.equals(null) || start.equals(null)){
+        if(end == null || start == null || start.isAfter(end)){
             buttonEndRegistration.setStyle("-fx-text-fill: red;");
             buttonStartRegistration.setStyle("-fx-text-fill: red;");
             return;
@@ -226,7 +226,7 @@ public class DoctorHomeSceneController implements Initializable {
                 i++;
             }
 
-        }else{
+        } else {
             int somma = 0;
             int i = 0;
 
@@ -237,16 +237,13 @@ public class DoctorHomeSceneController implements Initializable {
                     xSeries.getData().add(new XYChart.Data<>(i/30+1   + " Mese", somma));
                     somma = 0;
                 }
-
                 if(i % 30 == 0 && i != 0){
                     xSeries.getData().add(new XYChart.Data<>(i/30 + " Mese", somma));
                     somma = 0;
                 }
                 i++;
             }
-
         }
-
 
         //Add number on
         xSeries.getData().forEach(data -> {
@@ -256,7 +253,6 @@ public class DoctorHomeSceneController implements Initializable {
             data.setNode(label);
             data.getNode().setNodeOrientation(NodeOrientation.INHERIT);
         });
-
 
         // Add data to graphic
         barChartNewPatients.getData().setAll(xSeries);

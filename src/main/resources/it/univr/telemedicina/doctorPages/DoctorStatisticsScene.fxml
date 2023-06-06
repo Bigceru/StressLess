@@ -20,12 +20,7 @@
     <children>
         <AnchorPane layoutX="15.0" layoutY="25.0" prefHeight="433.0" prefWidth="709.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label layoutX="47.0" layoutY="25.0" text="Grafico di interesse: " textFill="WHITE" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblActualGraphic" layoutX="173.0" layoutY="15.0" text="ATTUALE GRAFICO" textFill="WHITE">
+            <Label layoutX="31.0" layoutY="14.0" text="Grafico di interesse: " textFill="WHITE" AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="14.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -42,9 +37,11 @@
         </AnchorPane>
       <AnchorPane layoutX="489.0" layoutY="470.0" prefHeight="195.0" prefWidth="236.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <DatePicker fx:id="dateStart" layoutX="13.0" layoutY="41.0" promptText="inizio" />
-            <DatePicker fx:id="dateEnd" layoutX="21.0" layoutY="85.0" onAction="#showNewGraph" promptText="fine" />
-            <Button fx:id="buttonShowGraph" layoutX="107.0" layoutY="137.0" mnemonicParsing="false" onAction="#showNewGraph" text="cerca" />
+            <DatePicker fx:id="dateStart" layoutX="13.0" layoutY="41.0" promptText="Data inizio" />
+            <DatePicker fx:id="dateEnd" layoutX="13.0" layoutY="101.0" onAction="#showNewGraph" promptText="Data fine" />
+            <Button fx:id="buttonShowGraph" layoutX="87.0" layoutY="149.0" mnemonicParsing="false" onAction="#showNewGraph" text="cerca" />
+            <Label layoutX="12.0" layoutY="16.0" text="Data di inizio ricerca" textFill="WHITE" />
+            <Label layoutX="13.0" layoutY="79.0" text="Data di fine ricerca" textFill="WHITE" />
          </children></AnchorPane>
       <TabPane layoutX="14.0" layoutY="461.0" prefHeight="190.0" prefWidth="464.0" stylesheets="@../tabpane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="261.0">
         <tabs>
@@ -52,15 +49,15 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="464.0" styleClass="anchor-style" stylesheets="@../anchor.css">
                      <children>
-                        <RadioButton fx:id="radioPOptimal" layoutX="24.0" layoutY="29.0" mnemonicParsing="false" text="Ottimale" textFill="WHITE" />
-                        <RadioButton fx:id="radioPNormal" layoutX="24.0" layoutY="59.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="82.0" text="Normale " textFill="WHITE" />
-                        <RadioButton fx:id="radioP1Borderline" layoutX="144.0" layoutY="29.0" mnemonicParsing="false" text="Ip. Grado I [Borderline]" textFill="WHITE" />
-                        <RadioButton fx:id="radioPNormalHigh" layoutX="24.0" layoutY="89.0" mnemonicParsing="false" text="Normale - alta" textFill="WHITE" />
-                        <RadioButton fx:id="radioP1Low" layoutX="144.0" layoutY="59.0" mnemonicParsing="false" text="Ip. Grado I [Lieve]" textFill="WHITE" />
-                        <RadioButton fx:id="radioP2Moderate" layoutX="144.0" layoutY="89.0" mnemonicParsing="false" text="Ip. Grado II [Moderata]" textFill="WHITE" />
-                        <RadioButton fx:id="radioP3Critic" layoutX="314.0" layoutY="29.0" mnemonicParsing="false" text="Ip. Grado III [Grave]" textFill="WHITE" />
-                        <RadioButton fx:id="radioPISBorderline" layoutX="314.0" layoutY="59.0" mnemonicParsing="false" text="Ip. Isolata [Borderline]" textFill="WHITE" />
-                        <RadioButton fx:id="radioPIS" layoutX="314.0" layoutY="89.0" mnemonicParsing="false" text="Ip. Isolata" textFill="WHITE" />
+                        <RadioButton fx:id="radioPOptimal" layoutX="9.0" layoutY="29.0" mnemonicParsing="false" text="Ottimale" textFill="WHITE" />
+                        <RadioButton fx:id="radioPNormal" layoutX="9.0" layoutY="59.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" text="Normale " textFill="WHITE" />
+                        <RadioButton fx:id="radioP1Borderline" layoutX="130.0" layoutY="29.0" mnemonicParsing="false" text="Ip. Grado I [Borderline]" textFill="WHITE" />
+                        <RadioButton fx:id="radioPNormalHigh" layoutX="9.0" layoutY="89.0" mnemonicParsing="false" text="Normale - alta" textFill="WHITE" />
+                        <RadioButton fx:id="radioP1Low" layoutX="130.0" layoutY="59.0" mnemonicParsing="false" text="Ip. Grado I [Lieve]" textFill="WHITE" />
+                        <RadioButton fx:id="radioP2Moderate" layoutX="130.0" layoutY="89.0" mnemonicParsing="false" text="Ip. Grado II [Moderata]" textFill="WHITE" />
+                        <RadioButton fx:id="radioP3Critic" layoutX="307.0" layoutY="29.0" mnemonicParsing="false" text="Ip. Grado III [Grave]" textFill="WHITE" />
+                        <RadioButton fx:id="radioPISBorderline" layoutX="307.0" layoutY="82.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="170.0" text="Ip. Isolata [Borderline]" textFill="WHITE" wrapText="true" />
+                        <RadioButton fx:id="radioPIS" layoutX="307.0" layoutY="59.0" mnemonicParsing="false" text="Ip. Isolata" textFill="WHITE" />
                      </children>
                   </AnchorPane>
             </content>

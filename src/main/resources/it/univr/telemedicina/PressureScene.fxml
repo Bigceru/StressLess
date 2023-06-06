@@ -29,7 +29,7 @@
             <children>
                 <AnchorPane prefHeight="43.0" prefWidth="810.0" style="-fx-background-color: #3CA6A6;" styleClass="anchor-style" stylesheets="@anchor.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
-                        <Label layoutX="288.0" layoutY="9.0" prefHeight="26.0" prefWidth="233.0" style="-fx-font-family: Montserrat;" text="PRESSIONE GIORNALIERA" textFill="WHITE" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="289.0" AnchorPane.topAnchor="9.0">
+                        <Label layoutX="273.0" layoutY="9.0" prefHeight="26.0" prefWidth="183.0" style="-fx-font-family: Montserrat;" text="PRESSIONE GIORNALIERA" textFill="WHITE" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -54,7 +54,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label layoutX="300.0" layoutY="60.0" style="-fx-font-family: Montserrat;" text="Sintomi nel giorno di registrazione:" textFill="WHITE" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="253.0">
+                <Label layoutX="300.0" layoutY="60.0" prefHeight="16.0" prefWidth="246.0" style="-fx-font-family: Montserrat;" text="Sintomi nel giorno di registrazione:" textFill="WHITE" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="183.0">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -81,7 +81,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label layoutX="14.0" layoutY="260.0" prefHeight="20.0" prefWidth="437.0" text="Nota: una misurazione coerente è data dalla media di tre registrazioni" textFill="WHITE">
+                <Label layoutX="14.0" layoutY="240.0" prefHeight="55.0" prefWidth="440.0" text="Nota: una misurazione coerente è data dalla media di tre registrazioni" textFill="WHITE" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -104,7 +104,7 @@
                                 <String fx:value="column-header-background" />
                             </styleClass>
                         </TableView>
-                        <Label layoutX="10.0" layoutY="15.0" style="-fx-font-family: Montserrat;" text="RACCOLTA" textFill="WHITE">
+                        <Label layoutX="15.0" layoutY="14.0" style="-fx-font-family: Montserrat;" text="RACCOLTA" textFill="WHITE">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -113,7 +113,7 @@
                 </AnchorPane>
                 <AnchorPane prefHeight="347.0" prefWidth="357.0" styleClass="anchor-style" stylesheets="@anchor.css">
                     <children>
-                        <Label layoutX="10.0" layoutY="15.0" prefHeight="23.0" prefWidth="143.0" style="-fx-font-family: Montserrat;" text="ANDAMENTO" textFill="WHITE" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="245.0">
+                        <Label layoutX="34.0" layoutY="12.0" prefHeight="23.0" prefWidth="143.0" style="-fx-font-family: Montserrat;" text="ANDAMENTO" textFill="WHITE" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="223.0">
                             <font>
                                 <Font size="18.0" />
                             </font>

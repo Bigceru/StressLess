@@ -14,6 +14,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -25,6 +27,8 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class DoctorPlusInfoPatientController implements Initializable {
+    public Line lineFigure;
+    public AnchorPane infoPane;
     private int pos = 1;    // Position of week/month
     @FXML
     public LineChart<String, Long> lineChartPression;
@@ -49,6 +53,10 @@ public class DoctorPlusInfoPatientController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Set line size property
+        lineFigure.endXProperty().bind(infoPane.widthProperty().subtract(12));
+        lineFigure.setEndY(lineFigure.getStartY());
+
         try{
             Database database = new Database(2);
             ArrayList<String> resultInfoQuery = database.getQuery("SELECT Detail FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"Detail"});
@@ -84,7 +92,6 @@ public class DoctorPlusInfoPatientController implements Initializable {
             }
             else {  // Otherwise show the barchart
                 createGraphDrug(dateStart.getValue(), dateEnd.getValue());
-
             }
         }
         else {  // If some fields are incorrect

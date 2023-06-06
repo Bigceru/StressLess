@@ -6,7 +6,10 @@ import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -243,6 +246,6 @@ public class RegistrationController implements Initializable {
     }
 
     public void handleAnnulla(ActionEvent actionEvent) throws IOException {
-        newScene.changeScene("Login.fxml", "Login Page", actionEvent);
+        newScene.start((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
     }
 }
