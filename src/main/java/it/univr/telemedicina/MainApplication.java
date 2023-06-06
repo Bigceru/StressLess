@@ -18,6 +18,10 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Identificazione utente");
         stage.setScene(scene);
+
+        // TODO: non va un cazzo la dimensione del login quando faccio il LogOut
+        stage.minHeightProperty().set(600);
+        stage.minWidthProperty().set(700);
         stage.setResizable(false);
         stage.show();
     }
@@ -41,7 +45,6 @@ public class MainApplication extends Application {
         }
         stage.setTitle(title);
         stage.setScene(scene);
-        stage.setResizable(true);
         stage.show();
     }
 
