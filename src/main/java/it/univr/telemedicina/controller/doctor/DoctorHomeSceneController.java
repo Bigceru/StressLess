@@ -59,6 +59,8 @@ public class DoctorHomeSceneController implements Initializable {
     public Button buttonSearchRegistration;
     @FXML
     public CategoryAxis xAxis;
+    @FXML
+    public Label lblTableTitle;
 
     // Doctor instance
     private static Doctor doctor;
@@ -186,6 +188,7 @@ public class DoctorHomeSceneController implements Initializable {
             throw new RuntimeException(e);
         }
 
+        lblTableTitle.setVisible(false);    // Hide the temporary table title
         barChartNewPatients.setTitle("Istrogramma nuovi pazienti");
         barChartNewPatients.lookup(".chart-title").setStyle("-fx-text-fill: white;");
 

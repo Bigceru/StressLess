@@ -30,6 +30,15 @@ public class MainApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(source));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        // Registration scene has been selected
+        if(source.equals("Registration.fxml")) {
+            stage.setResizable(false);
+        }
+        else {
+            stage.minHeightProperty().set(720);
+            stage.minWidthProperty().set(1080);
+            stage.setResizable(true);
+        }
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setResizable(true);
