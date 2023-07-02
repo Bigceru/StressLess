@@ -189,7 +189,7 @@ public class PressureSceneController implements Initializable {
      * Method for remove PressuresButton and sendPressuresButton
      * @return
      */
-    public Map<String,Object> initPressures(){
+    public Pressure initPressures(){
         int systolic;
         int diastolic;
         LocalDate pressureDate;
@@ -232,7 +232,7 @@ public class PressureSceneController implements Initializable {
 
     /**
      * Update the graph
-     * @param dayToTake number of day to take from today, to create dable
+     * @param dayToTake number of day to take from today, to create table
      */
     private void updateGraph(int dayToTake) {
         ArrayList<String> list;
