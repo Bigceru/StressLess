@@ -87,6 +87,26 @@ public class PressureSceneController implements Initializable {
         ObservableList<TablePatientPressures> collection = FXCollections.observableArrayList();
         tablePatientPres.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+        PressureList pressureList = new PressureList();
+        TablePatientPressures dati;
+
+        // Check if the list is not null
+        if(!pressureList.getPressuresById(patient.getPatientID()).isEmpty()) {
+            int count = 0;
+            // Cycle all the pressure of the user and add it to the data collection
+            for (Pressure pressure : pressureList.getPressuresById(patient.getPatientID())) {
+                dati = new TablePatientPressures(pressure.getDate(), pressure.getHour().toString(), pressure.getSystolicPressure(), pressure.getDiastolicPressure(), pressure.getConditionPressure());
+                collection.add(dati);
+                count++;
+                System.out.println("\nCount: " + count);
+            }
+        }
+        else {  // if there arent pressure
+            tablePatientPres.setPlaceholder(new Label("Nessuna pressione rilevata in precedenza"));
+            return;
+        }
+
+        /*
         try{
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT * FROM BloodPressures WHERE IDPatient = " + patient.getPatientID(),new String[]{"Date","Hour","SystolicPressure", "DiastolicPressure", "ConditionPressure"});
@@ -102,19 +122,15 @@ public class PressureSceneController implements Initializable {
             for(int i = 0; i < info.size()-4; i = i + 5){
                 dati = new TablePatientPressures(LocalDate.parse(info.get(i)), info.get(i+1), Integer.parseInt(info.get(i+2)), Integer.parseInt(info.get(i+3)), info.get(i+4));
                 collection.add(dati);
-            }
-            //Setting columns
-            columnDataPresTable.setCellValueFactory(new PropertyValueFactory<>("date"));
-            columnHourPresTable.setCellValueFactory(new PropertyValueFactory<>("hour"));
-            columnPressurePresTable.setCellValueFactory(new PropertyValueFactory<>("pressSD"));
-            columnStatePresTable.setCellValueFactory(new PropertyValueFactory<>("state"));
-            //Set items in table
-            tablePatientPres.setItems(collection);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+            }*/
 
-        // set ITEM
+        //Setting columns
+        columnDataPresTable.setCellValueFactory(new PropertyValueFactory<>("date"));
+        columnHourPresTable.setCellValueFactory(new PropertyValueFactory<>("hour"));
+        columnPressurePresTable.setCellValueFactory(new PropertyValueFactory<>("pressSD"));
+        columnStatePresTable.setCellValueFactory(new PropertyValueFactory<>("state"));
+
+        //Set items in table
         tablePatientPres.setItems(collection);
     }
 
@@ -130,6 +146,8 @@ public class PressureSceneController implements Initializable {
 
         try {
             Database db = new Database(2);
+
+            /*
             Map<String, Object> dati = initPressures();
             dati.put("IDPatient", patient.getPatientID());
             systolic = (int) dati.get("SystolicPressure");
@@ -141,8 +159,8 @@ public class PressureSceneController implements Initializable {
             pressure.insertInDatabase();
 
             // Send email if ConditionPressure is elevate
-            if(!(dati.get("ConditionPressure").equals("Ottimale") || dati.get("ConditionPressure").equals("Normale") || dati.get("ConditionPressure").equals("Normale – alta"))){
-                db.insertQuery("Chat", new String[]{"Sender", "Receiver", "Text", "ReadFlag"}, new Object[]{-1, patient.getRefDoc(), "Il paziente " + patient.getName() + " " + patient.getSurname() + " ha registrato una pressione di tipo: " + dati.get("ConditionPressure"), 0});
+            if(!(pressure.getConditionPressure().equals("Ottimale") || pressure.getConditionPressure().equals("Normale") || pressure.getConditionPressure().equals("Normale – alta"))){
+                db.insertQuery("Chat", new String[]{"Sender", "Receiver", "Text", "ReadFlag"}, new Object[]{-1, patient.getRefDoc(), "Il paziente " + patient.getName() + " " + patient.getSurname() + " ha registrato una pressione di tipo: " + pressure.getConditionPressure(), 0});
             }
 
             // Add pressure success
@@ -221,13 +239,14 @@ public class PressureSceneController implements Initializable {
             if(!otherSymptoms.isEmpty())
                 symptomString.append(", ").append(otherSymptoms);
         }
+        /*
         dati.put("SystolicPressure",systolic);
         dati.put("DiastolicPressure",diastolic);
         dati.put("Date",pressureDate);
         dati.put("Symptoms",symptomString.toString().replace(", Altro", ""));
         dati.put("Hour", boxTimePres.getValue() + ":00:00");
-
-        return dati;
+*/
+        return new Pressure(patient.getPatientID(), pressureDate, LocalTime.parse(boxTimePres.getValue() + ":00:00"),systolic,diastolic,symptomString.toString().replace(", Altro", ""));
     }
 
     /**
