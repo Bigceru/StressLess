@@ -4,17 +4,12 @@ import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.users.Patient;
 import it.univr.telemedicina.users.User;
 import it.univr.telemedicina.utilities.Database;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.util.Callback;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +17,9 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Class to control the chat menu UI
+ */
 public class ChatMenuController implements Initializable {
     @FXML
     public ListView<String> listContactChat;
@@ -72,6 +70,9 @@ public class ChatMenuController implements Initializable {
         updateListContacts();
     }
 
+    /***
+     * Method to show the chat of the selected person
+     */
     private void changeConversation(){
         //Set a listener
         listContactChat.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -91,6 +92,10 @@ public class ChatMenuController implements Initializable {
         });
     }
 
+    /**
+     * I show the list of all the people I can write to
+     * the red dot means an incoming message
+     */
     private void updateListContacts() {
         try {
             Database database = new Database(2);
@@ -130,6 +135,10 @@ public class ChatMenuController implements Initializable {
         }
     }
 
+    /**
+     * Get all the history of the chat
+     * @param newValue name of the selected person
+     */
     private void setChatMessages(String newValue) {
         listChat.getItems().clear();
 
@@ -177,6 +186,10 @@ public class ChatMenuController implements Initializable {
         }
     }
 
+    /**
+     * Message delivery management
+     * @param actionEvent
+     */
     @FXML
     public void handleSendMessage(ActionEvent actionEvent){
         // If there is a message
@@ -197,6 +210,10 @@ public class ChatMenuController implements Initializable {
         }
     }
 
+    /**
+     * Setting user
+     * @param user user to set for the chat
+     */
     public void setUser(User user){
         ChatMenuController.user = user;
     }

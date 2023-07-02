@@ -83,6 +83,10 @@ public class DoctorHomeSceneController implements Initializable {
         setTablePatients();
     }
 
+    /**
+     * check the data validation
+     * @param actionEvent actionEvent
+     */
     public void showNewRegistration(ActionEvent actionEvent){
         if(buttonStartRegistration.getValue() != null && buttonEndRegistration.getValue() != null) {
             buttonEndRegistration.setStyle("-fx-text-fill: black;");
@@ -95,7 +99,9 @@ public class DoctorHomeSceneController implements Initializable {
         }
     }
 
-    // Method to initialize the table and the table columns with the Patient therapies
+    /**
+     *  initialize the table and the table columns with the Patient therapies
+     */
     public void setTablePatients(){
         ObservableList<Patient> collection = FXCollections.observableArrayList();   // Collection of data to insert in the table
 
@@ -164,6 +170,9 @@ public class DoctorHomeSceneController implements Initializable {
         tablePatient.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
+    /**
+     * Shows a bar graph to analyze the increase of patients related to the doctor
+     */
     private void setBarChartNewPatients() {
         ArrayList<String> list;
         LocalDate start = buttonStartRegistration.getValue();
@@ -182,7 +191,7 @@ public class DoctorHomeSceneController implements Initializable {
 
         try {
             Database db = new Database(2);
-            list = db.getQuery("SELECT registration FROM Patients WHERE refDoc = " + doctor.getID() + " AND Registration BETWEEN '" + start + "' AND '" + end.toString() + "'", new String[]{"registration"});
+            list = db.getQuery("SELECT registration FROM Patients WHERE refDoc = " + doctor.getID() + " AND Registration BETWEEN '" + start + "' AND '" + end + "'", new String[]{"registration"});
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -270,13 +279,21 @@ public class DoctorHomeSceneController implements Initializable {
 
     }
 
+    /**
+     * Create the Chat Page
+     * @param actionEvent actionEvent
+     * @throws IOException exception
+     */
     @FXML
     private void handleChatButton(ActionEvent actionEvent) throws IOException {
         iconNewMail.setVisible(false);
         newScene.addScene("/it/univr/telemedicina/chatPages/ChatMenu.fxml");
     }
 
-
+    /**
+     * allows to take the doctor Data
+     * @param doctor doctor
+     */
     public void setDoctor(Doctor doctor){
         DoctorHomeSceneController.doctor = doctor;
     }

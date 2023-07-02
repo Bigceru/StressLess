@@ -10,6 +10,12 @@ public class Database {
     private String path1 = "codiceCatastale.db";
     private String path2 = "hospital.db";
 
+    /***
+     * Create a database instance and establish a connection.
+     * @param nPath Path of database
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Database(int nPath) throws SQLException, ClassNotFoundException {
         // load the JDBC driver for SQLite
         Class.forName("org.sqlite.JDBC");
@@ -18,6 +24,13 @@ public class Database {
         connection = DriverManager.getConnection("jdbc:sqlite:" + ((nPath == 1)? path1 : path2));
     }
 
+    /***
+     * Executes a SELECT query and save the results.
+     * @param query SQL query to execute
+     * @param columns An array of column names to save from the result set
+     * @return  An ArrayList containing the values saved from the specified columns
+     * @throws SQLException
+     */
     public ArrayList<String> getQuery(String query, String[] columns) throws SQLException {
         Statement statement;
         ResultSet resultSet;
@@ -40,6 +53,13 @@ public class Database {
         return returnList;
     }
 
+    /***
+     * Executes a INSERT INTO query
+     * @param nameTable name of table
+     * @param fieldName array of all field name to use in the query
+     * @param Values    array of all values to use in the query (relative with field)
+     * @throws SQLException
+     */
     public void insertQuery(String nameTable, String[] fieldName, Object[] Values) throws SQLException{
 
         StringBuilder query = new StringBuilder("INSERT INTO ");
@@ -73,12 +93,13 @@ public class Database {
         statement.close();
     }
 
-        /*UPDATE Customers
-    SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
-    WHERE CustomerID = 1;
-    */
-
-
+    /***
+     * Executes a UPDATE query to modify records in a table.
+     * @param nameTable name of table
+     * @param setValues    a map containing the column names and new values to set
+     * @param whereValues  a map containing the column names and values for the WHERE clause
+     * @throws SQLException
+     */
     public void updateQuery(String nameTable, Map<String, Object> setValues, Map<String, Object> whereValues) throws SQLException{
         // add nametable + SET
         StringBuilder query = new StringBuilder("UPDATE ").append(nameTable).append(" SET " );
@@ -106,7 +127,6 @@ public class Database {
         query.delete(query.length()-5, query.length()-1);
         query.append(";");
 
-        System.out.println(query.toString());
 
         // create a statement object
         statement = connection.createStatement();
@@ -117,6 +137,12 @@ public class Database {
         statement.close();
     }
 
+    /**
+     *
+     * @param nameTable name of table
+     * @param conditionValue a map containing the column names and values to delete
+     * @throws SQLException
+     */
     public void deleteQuery (String nameTable, Map<String,Object> conditionValue) throws SQLException {
         StringBuilder query = new StringBuilder("DELETE FROM ").append(nameTable).append(" WHERE ");
         Statement statement;
@@ -130,7 +156,7 @@ public class Database {
                 flag++;
             query.append(s + " = '" + conditionValue.get(s) + "'");
         }
-        System.out.println(query.toString());
+
         // create a statement object
         statement = connection.createStatement();
 
@@ -140,6 +166,10 @@ public class Database {
         statement.close();
     }
 
+    /**
+     * Close connection
+     * @throws SQLException
+     */
     public void closeAll() throws SQLException{
         // close the result set, statement, and connection
         connection.close();

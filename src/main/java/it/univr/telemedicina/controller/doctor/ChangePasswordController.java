@@ -5,7 +5,7 @@ import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
-import it.univr.telemedicina.controller.EditProfileSceneController;
+import it.univr.telemedicina.controller.patient.EditProfileSceneController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,7 +17,9 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.TreeMap;
 
-
+/**
+ * Password Controller
+ */
 public class ChangePasswordController{
 
     MainApplication newScene = new MainApplication();
@@ -30,6 +32,10 @@ public class ChangePasswordController{
     public PasswordField txtConfirmPassword;
     EditProfileSceneController doctorNewData = new EditProfileSceneController();
 
+    /**
+     * Check the validation of the new password and update it in the DataBase
+     * @param action actionEvent
+     */
     public void saveNewPassword(ActionEvent action){
         Map<String, Object> dati = new TreeMap<>();
         boolean canUpdate = false;
@@ -61,6 +67,10 @@ public class ChangePasswordController{
             newScene.showAlert("Dati", "Errore aggiornamento dati", Alert.AlertType.ERROR);
     }
 
+    /**
+     * allows to take the doctor Data
+     * @param doctor doctor
+     */
     public void setDoctor(Doctor doctor) {
         ChangePasswordController.doctor = doctor;
     }

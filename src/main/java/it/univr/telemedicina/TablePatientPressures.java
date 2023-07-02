@@ -11,11 +11,11 @@ public class TablePatientPressures {
 
     /**
      * Constructor for table in Patient home scene
-     * @param date
-     * @param hour
-     * @param pressSystolic
-     * @param pressDiastolic
-     * @param state
+     * @param date date of pressure taken
+     * @param hour hour of pressure taken
+     * @param pressSystolic date of pressure taken
+     * @param pressDiastolic date of pressure taken
+     * @param state date of pressure taken
      */
     public TablePatientPressures(LocalDate date, String hour, int pressSystolic, int pressDiastolic, String state){
         this.date = date;
@@ -26,12 +26,12 @@ public class TablePatientPressures {
 
     /**
      * Constructor for table in Doctor Search Patient scene
-     * @param date
-     * @param hour
-     * @param symptoms
-     * @param pressSystolic
-     * @param pressDiastolic
-     * @param state
+     * @param date Date of registered pressure
+     * @param hour Hour of registered pressure
+     * @param symptoms Patient symptoms with taken pressure
+     * @param pressSystolic systolic of pressure taken
+     * @param pressDiastolic diastolic of pressure taken
+     * @param state state (low, high, ...) of pressure taken
      */
     public TablePatientPressures(LocalDate date, String hour, int pressSystolic, int pressDiastolic, String symptoms, String state){
         this.date = date;
@@ -41,6 +41,10 @@ public class TablePatientPressures {
         this.hour = hour;
     }
 
+    /**
+     *
+     * @return localDate
+     */
     public LocalDate getDate() {
         return date;
     }

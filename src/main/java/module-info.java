@@ -8,11 +8,11 @@ module com.example.telemedicina {
 
     opens it.univr.telemedicina to javafx.fxml;
     exports it.univr.telemedicina;
-    exports it.univr.telemedicina.controller;
-    opens it.univr.telemedicina.controller to javafx.fxml;
     exports it.univr.telemedicina.users;
     opens it.univr.telemedicina.users to javafx.fxml;
     exports it.univr.telemedicina.controller.doctor;
     opens it.univr.telemedicina.controller.doctor to javafx.fxml;
     exports it.univr.telemedicina.controller.chat;
+    exports it.univr.telemedicina.controller.patient;
+    opens it.univr.telemedicina.controller.patient to javafx.fxml;
 }

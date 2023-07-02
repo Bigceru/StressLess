@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//Da mettere anche su DoctorStatisticsSceneController (riga 212)
+
 public enum Therapies {
     ACE_INIBITORI,
     BETA_BLOCCANTI,
@@ -13,6 +13,10 @@ public enum Therapies {
     SARTANI,
     SIMPATICOLITICI;
 
+    /**
+     * Method that return the collection of Therapies
+     * @return list
+     */
     public static Collection<String> returnCollection(){
         List<String> list = new ArrayList<>();
         for(Therapies i : Therapies.values()){

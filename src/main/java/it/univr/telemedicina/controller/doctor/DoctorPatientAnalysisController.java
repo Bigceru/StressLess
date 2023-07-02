@@ -76,13 +76,12 @@ public class DoctorPatientAnalysisController implements Initializable {
 
     /**
      * Method to handle Search Button click
-     * @param actionEvent
+     * @param actionEvent actionEvent
      */
     public void handleSearchButton(ActionEvent actionEvent){
         int idPatient;
-        if(boxPatientList.getValue() != null) {
+        if(boxPatientList.getValue() != null  && boxPatientList.getValue().compareTo("Non hai nessun paziente") != 0) {
             idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
-
             try {
                 Database database = new Database(2);
                 // Get query for therapy info
@@ -102,6 +101,10 @@ public class DoctorPatientAnalysisController implements Initializable {
         }
     }
 
+    /**
+     * Show the therapy of the patient
+     * @param queryResultTherapy result of query from database
+     */
     private void fillTherapy(ArrayList<String> queryResultTherapy){
         // if the query is empty, patient is not in therapy
         if(queryResultTherapy.isEmpty()) {
@@ -131,6 +134,10 @@ public class DoctorPatientAnalysisController implements Initializable {
         }
     }
 
+    /**
+     * Fill the Table with all Patient
+     * @param idPatient id of the patient chosen
+     */
     private void setTable(int idPatient){
 
         columnDate.prefWidthProperty().bind(tableSearchPatient.widthProperty().divide(6)); // w * 1/4
@@ -177,13 +184,22 @@ public class DoctorPatientAnalysisController implements Initializable {
 
     }
 
+    /**
+     * Take the doctor Data
+     * @param doctor doctor
+     */
     public void setDoctor(Doctor doctor){
         DoctorPatientAnalysisController.doctor = doctor;
     }
 
+    /**
+     * Show other info about the patient chosen
+     * @param actionEvent actionEvent
+     * @throws IOException Exception
+     */
     public void handleInfoButton(ActionEvent actionEvent) throws IOException {
         int idPatient;
-        if(boxPatientList.getValue() != null) {
+        if(boxPatientList.getValue() != null && boxPatientList.getValue().compareTo("Non hai nessun paziente") != 0) {
             idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
             DoctorPlusInfoPatientController.setPatient(idPatient);
             newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorPlusInfoPatient.fxml");
@@ -193,8 +209,14 @@ public class DoctorPatientAnalysisController implements Initializable {
             newScene.showAlert("ComboBox vuota","Inserire un valore nella combo box", Alert.AlertType.ERROR);
         }
     }
+
+    /**
+     * Show the Therapy Page
+     * @param actionEvent action
+     * @throws IOException Exception
+     */
     public void handleTherapyButton(ActionEvent actionEvent) throws IOException{
-        if(boxPatientList.getValue() != null) {
+        if(boxPatientList.getValue() != null && boxPatientList.getValue().compareTo("Non hai nessun paziente") != 0) {
             int idPatient = Integer.parseInt(boxPatientList.getValue().split("-")[0].trim());
             DoctorManageTherapy.setPatient(idPatient);
             newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorManageTherapy.fxml");

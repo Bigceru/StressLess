@@ -11,14 +11,14 @@ public class Therapy implements TherapyInterface {
 
     /**
      * Method to check if a therapy has been followed right to the Patient (amount of drugs and hour to take them)
-     * @param idPatient
-     * @param therapyName
-     * @param drugName
-     * @param dailyDoses
-     * @param amountTaken
-     * @param instructions
-     * @param startDate
-     * @param endDate
+     * @param idPatient id of the patient
+     * @param therapyName name of the therapy
+     * @param drugName name of drug taken
+     * @param dailyDoses doses fo drugs taken by day
+     * @param amountTaken amount of drug taken
+     * @param instructions instructions of the therapy given by the doctor
+     * @param startDate start date of the therapy
+     * @param endDate end date of the therapy
      * @return  boolean, true if the therapy was done right, false otherwise
      */
     public boolean checkTherapy(int idPatient, String therapyName, String drugName, int dailyDoses, int amountTaken, String instructions, LocalDate startDate, LocalDate endDate){
@@ -27,9 +27,9 @@ public class Therapy implements TherapyInterface {
             ArrayList<String> drugsTakenQuery = database.getQuery("SELECT Date, Hour, Quantity FROM TakenDrugs WHERE IDPatient = " + idPatient + " AND DrugName = '" + drugName + "' AND Date BETWEEN '" + startDate.toString() + "' AND '" + endDate.toString() + "'", new String[]{"Date", "Hour", "Quantity"});
             database.closeAll();
 
-            // If there are drugs taken by the patient during therapy period
-            // "Mattina (06-13)","Pomeriggio(14-18)","Sera(19-00)","Notte(01-05)"
-            // "Vicino Pasti(7-9)(12-14)(19-21)", "Lontano pasti(10-11)(15-18)(22-6)"
+            /// If there are drugs taken by the patient during therapy period
+            // "morning (06-13)","afternoon(14-18)","evening(19-00)","night(01-05)"
+            // "near meals(7-9)(12-14)(19-21)", "away meals(10-11)(15-18)(22-6)"
             if(!drugsTakenQuery.isEmpty()) {
                 // Add all day to drugsTaken set
                 TreeMap<LocalDate, Integer> drugsTakenByDay = new TreeMap<>();

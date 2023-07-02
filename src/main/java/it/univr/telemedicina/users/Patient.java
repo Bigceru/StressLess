@@ -1,6 +1,6 @@
 package it.univr.telemedicina.users;
 
-import it.univr.telemedicina.controller.RegistrationController;
+import it.univr.telemedicina.controller.patient.RegistrationController;
 import it.univr.telemedicina.utilities.Database;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,13 +22,36 @@ public class Patient extends User {
     private boolean check;
     private String therapy;     // Field for table view
 
-    // Constructor for table view in Doctor home
+    /**
+     * Constructor for the table view in Doctor Home
+     * @param name Patient name
+     * @param surname Patient surname
+     * @param therapy Patient therapy
+     * @param reg Patient registration
+     */
     public Patient(String name, String surname, String therapy, RegistrationController reg){
         super(name, surname);
         this.reg = reg;
         this.therapy = therapy;
     }
 
+    /**
+     * Patient constructor with check for existing values
+     * @param reg Patient registration
+     * @param name Patient name
+     * @param surname Patient surname
+     * @param email Patient email
+     * @param phoneNumber Patient phone-number
+     * @param username Patient username
+     * @param password Patient password
+     * @param birthPlace Patient birth-palce
+     * @param province Patient province
+     * @param birthDate Patient birthdate
+     * @param domicile Patient domicile
+     * @param sex Patient sex
+     * @param taxIDCode Patient tax id code
+     * @param refDoc Patient doctor reference
+     */
     // Main Constructor
     public Patient(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
         super(name, surname, email, phoneNumber, username, password);
@@ -62,6 +85,11 @@ public class Patient extends User {
             check = true;
     }
 
+    /***
+     * Checks Tax ID's string with the calculated one with all the Italian province and cities
+     * @param taxIDCode String to verify
+     * @return verification success
+     */
     /*
     - le prime tre lettere del codice fiscale sono prese dal cognome (solitamente prima, seconda e terza consonante)
     - le seconde tre dal nome (solitamente prima, terza e quarta consonante)
@@ -230,6 +258,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for the phone number
+     * @param phoneNumber String to verify
+     * @return verification success
+     */
     public boolean checkPhoneNumber(String phoneNumber)
     {
         boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("Patients","phoneNumber", phoneNumber);
@@ -240,6 +273,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for the email
+     * @param email String to verify
+     * @return verification success
+     */
     public boolean checkEmail(String email) {
         boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("Patients","email", email);
 
@@ -249,6 +287,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for patient name
+     * @param name String to verify if is not empty
+     * @return verification success
+     */
     protected boolean checkName(String name) {
         boolean tempCheck = !name.isEmpty();
 
@@ -258,6 +301,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for patient surname
+     * @param surname String to verify if is not empty
+     * @return verification success
+     */
     protected boolean checkSurname(String surname){
         boolean tempCheck = !surname.isEmpty();
 
@@ -267,6 +315,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for username
+     * @param username String to verify if is not empty and not used
+     * @return verification success
+     */
     public boolean checkUsername(String username) {
         // looking for Username already exist or is empty
         boolean tempCheck = !username.isEmpty() && !alreadyExist("Patients","username",username);
@@ -277,6 +330,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Password verification (if matches all the requirements)
+     * @param password String to verify
+     * @return verification success
+     */
     public boolean checkPassword(String password) {
         boolean tempCheck = password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?.\\-_:,;])(?=\\S+$).{8,}$");
 
@@ -296,6 +354,11 @@ public class Patient extends User {
          */
     }
 
+    /***
+     * Validation check for province
+     * @param province String to verify if is not empty
+     * @return verification success
+     */
     // Check province
     private boolean checkProvince(String province){
         boolean tempCheck = province != null && !province.isEmpty();
@@ -307,6 +370,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for birth-place
+     * @param birthPlace String to verify if is not empty
+     * @return verification success
+     */
     private boolean checkBirthPlace(String birthPlace){
         boolean tempCheck = birthPlace != null && !birthPlace.isEmpty();
 
@@ -316,6 +384,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for birth-date
+     * @param birthDate String to verify if is not empty
+     * @return verification success
+     */
     private boolean checkBirthDate(LocalDate birthDate){
         boolean tempCheck = birthDate != null && !birthDate.isAfter(LocalDate.now());
 
@@ -325,6 +398,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for domicile
+     * @param domicile String to verify if is not empty
+     * @return verification success
+     */
     private boolean checkDomicile(String domicile){
         boolean tempCheck = domicile != null && !domicile.isEmpty();
 
@@ -334,6 +412,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for sex
+     * @param sex String to verify if is not empty
+     * @return verification success
+     */
     private boolean checkSex(char sex) {
         boolean tempCheck = sex != 'Z';     // If no sex has been selected
 
@@ -343,6 +426,11 @@ public class Patient extends User {
         return tempCheck;
     }
 
+    /***
+     * Validation check for the choosen doctor
+     * @param refDoc String to verify if is not empty
+     * @return verification success
+     */
     private boolean checkRefDoc(int refDoc){
         boolean tempCheck = refDoc != -1;   // If no doctor was selected
 
@@ -352,40 +440,74 @@ public class Patient extends User {
         return tempCheck;
     }
 
-    //Check all
+    /***
+     *
+     * @return true if all the checks are passed
+     */
     public boolean getCheck() {
         return check;
     }
 
-    // Get and set methods
+    /***
+     * Take Birth-Place
+     * @return birthPlace
+     */
     public String getBirthPlace() {
         return birthPlace;
     }
 
+    /***
+     * Take Province
+     * @return province
+     */
     public String getProvince() {
         return province;
     }
 
+    /***
+     * Take Birth date
+     * @return birthDate
+     */
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
+    /***
+     * Take Domicile
+     * @return domicile
+     */
     public String getDomicile() {
         return domicile;
     }
 
+    /***
+     * Take Sex
+     * @return sex
+     */
     public char getSex() {
         return sex;
     }
 
+    /***
+     * Take Tax ID Code
+     * @return taxIDCode
+     */
     public String getTaxIDCode() {
         return taxIDCode;
     }
 
+    /***
+     * Take doctor referred
+     * @return refDoc
+     */
     public int getRefDoc() {
         return refDoc;
     }
 
+    /***
+     * Take PatientID from the database
+     * @return id
+     */
     public int getPatientID() {
         try {
             Database db = new Database(2);
@@ -397,12 +519,25 @@ public class Patient extends User {
         }
     }
 
+    /***
+     * New patient toString method
+     * @return String with all data
+     */
     @Override
     public String toString() {
         return "Patient:" + super.toString() + "BirthDate --> " + birthDate + "\nProvince --> " + province + "\nBithPlace --> " + birthPlace + "\nDomicile --> " + domicile + "\nSex --> " + sex + "\nTaxIDCode --> " + taxIDCode + "\nMeidoc referente --> " + refDoc + "\n";
     }
+
+    /***
+     * Set Domicile
+     * @param domicile patient domicile
+     */
     public void setDomicile(String domicile){this.domicile = domicile;}
 
+    /***
+     * Get patient therapy
+     * @return therapy
+     */
     public String getTherapy() {
         return therapy;
     }

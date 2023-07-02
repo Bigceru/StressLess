@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//Da mettere anche su DoctorStatisticsSceneController (riga 212)
 public enum Instructions {
     Mattina,
     Pomeriggio,
@@ -13,6 +12,10 @@ public enum Instructions {
     Vicino_Pasti,
     Lontano_Pasti;
 
+    /**
+     *  Method that return the collection of Instruction
+     * @return list
+     */
     public static Collection<String> returnCollection(){
         List<String> list = new ArrayList<>();
         for(Instructions i : Instructions.values()){

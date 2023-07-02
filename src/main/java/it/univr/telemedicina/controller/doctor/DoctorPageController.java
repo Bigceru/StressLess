@@ -6,11 +6,9 @@ import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +42,6 @@ public class DoctorPageController implements Initializable {
     @FXML
     public Label lblTime;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DoctorHomeScene.setVisible(true);
@@ -63,6 +60,11 @@ public class DoctorPageController implements Initializable {
         timer.start();
     }
 
+    /**
+     * Handle Side button showing the right tab
+     * @param actionEvent action
+     * @throws IOException Exception
+     */
     public void handleChangeScene(ActionEvent actionEvent) throws IOException {
         if (actionEvent.getSource() == buttonHomeDoc) {  // Home button click
             DoctorHomeScene.setVisible(true);
@@ -88,7 +90,7 @@ public class DoctorPageController implements Initializable {
             buttonSearchPatient.setStyle("-fx-background-color: #0000");
         }
         else if(actionEvent.getSource() == buttonLogOut) {     // LogOut button click
-            newScene.start((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
+            newScene.changeScene("Login.fxml", "Paziente", actionEvent);
         }
         else if(actionEvent.getSource() == buttonEditProfile){
             DoctorHomeScene.setVisible(false);
@@ -115,6 +117,10 @@ public class DoctorPageController implements Initializable {
         }
     }
 
+    /**
+     * Take the doctor Data
+     * @param doctor doctor
+     */
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }

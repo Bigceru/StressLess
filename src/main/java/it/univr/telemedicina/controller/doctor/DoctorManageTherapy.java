@@ -55,7 +55,6 @@ public class DoctorManageTherapy implements Initializable {
     @FXML
     private Label lblInstruction;
 
-
     // Manage note
     @FXML
     private TextArea txtAreaInformation;
@@ -149,7 +148,7 @@ public class DoctorManageTherapy implements Initializable {
                     }
 
                     dateStart.setValue(LocalDate.parse(resultTherapiesQuery.get(5)));
-                    System.out.println(LocalDate.parse(resultTherapiesQuery.get(5)).toString());
+                    System.out.println(LocalDate.parse(resultTherapiesQuery.get(5)));
                     dateEnd.setValue(LocalDate.parse(resultTherapiesQuery.get(6)));
                 }
 

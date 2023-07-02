@@ -1,5 +1,6 @@
 package it.univr.telemedicina.controller.doctor;
 
+import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.users.Doctor;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
@@ -10,12 +11,16 @@ import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class DoctorStatisticsSceneController {
+    MainApplication newScene;
+    @FXML
+    public Button buttonShowGraph;
     @FXML
     private StackedBarChart<String, Integer> stackedBarChart;
     @FXML
@@ -55,10 +60,19 @@ public class DoctorStatisticsSceneController {
     @FXML
     private Tab tabPressure;
 
+    // All category selected
+    ArrayList<String> categorySelected = new ArrayList<>();
+
+
     // Doctor instance
     private static Doctor doctor;
     private int pos = 1;    // Position of week/month
 
+    /***
+     * Change the selected tab and update the bar graph.
+     * If the "Pressure" tab is selected, the graph will show the pressure trend.
+     * If the "Therapies" tab is selected, the graph will show the progress of the therapies.
+     */
     public void changeTab() {
         stackedBarChart.getData().clear();
         if (tabPressure.isSelected()) {
@@ -99,6 +113,10 @@ public class DoctorStatisticsSceneController {
         }
     }
 
+    /***
+     * shows the graph according to the tab (Pression or Therapie)
+     * @param actionEvent
+     */
     public void showNewGraph(ActionEvent actionEvent) {
         if(dateStart.getValue() == null || dateEnd.getValue() == null)
             return;
@@ -108,10 +126,17 @@ public class DoctorStatisticsSceneController {
             createGraphTherapie();
     }
 
+    /***
+     * Setting doctor for the DoctorStatisticsSceneController
+     * @param doctor the doctor to set
+     */
     public void setDoctor(Doctor doctor) {
         DoctorStatisticsSceneController.doctor = doctor;
     }
 
+    /***
+     * creation of the bar graph based on the selected categories of pressures
+     */
     public void createGraphPression() {
         // Reset data
         stackedBarChart.getData().clear();
@@ -131,7 +156,8 @@ public class DoctorStatisticsSceneController {
 
         try {
             Database db = new Database(2);
-            list = db.getQuery("SELECT Date, ConditionPressure FROM BloodPressures WHERE Date BETWEEN '" + start + "' AND '" + end + "'", new String[]{"Date", "ConditionPressure"});
+            // Query the database to get pressure data for the selected period
+            list = db.getQuery("SELECT Date, ConditionPressure FROM BloodPressures WHERE Date BETWEEN '" + start + "' AND '" + end + "' AND (" + getPatientsConditionsQuery() + ")", new String[]{"Date", "ConditionPressure"});
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -142,8 +168,7 @@ public class DoctorStatisticsSceneController {
         start.datesUntil(end).forEach(allDate::add);
         allDate.add(end);
 
-        // All category
-        ArrayList<String> categorySelected = new ArrayList<>();
+
 
         // Inizialite categorySelected
         if (radioPOptimal.isSelected())
@@ -169,6 +194,9 @@ public class DoctorStatisticsSceneController {
         setGraph(categorySelected, start, end, allDate, list);
     }
 
+    /***
+     * creation of the bar graph based on the selected categories of therapies
+     */
     public void createGraphTherapie(){
         // reset data
         stackedBarChart.getData().clear();
@@ -177,7 +205,7 @@ public class DoctorStatisticsSceneController {
         LocalDate end = dateEnd.getValue();
 
         //Check date
-        if (end.equals(null) || start.equals(null) || start.isAfter(end)) {
+        if (end == null || start == null || start.isAfter(end)) {
             dateStart.setStyle("-fx-text-fill: red;");
             dateEnd.setStyle("-fx-text-fill: red;");
             return;
@@ -188,7 +216,8 @@ public class DoctorStatisticsSceneController {
 
         try {
             Database db = new Database(2);
-            queryResult = db.getQuery("SELECT StartDate, TherapyName FROM Therapies WHERE StartDate >='" + start.toString() + "'", new String[]{"StartDate", "TherapyName"});
+            // Query the database to get therapy data for the selected period
+            queryResult = db.getQuery("SELECT StartDate, TherapyName FROM Therapies WHERE StartDate >='" + start.toString() + "' AND (" + getPatientsConditionsQuery() + ")", new String[]{"StartDate", "TherapyName"});
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -218,6 +247,14 @@ public class DoctorStatisticsSceneController {
         setGraph(therapiesSelected, start, end, allDate, queryResult);
     }
 
+    /***
+     * Set graph
+     * @param categorySelected
+     * @param start start date
+     * @param end end date
+     * @param allDate array of all date between start and end
+     * @param queryResult array that contains the result of the query
+     */
     private void setGraph(ArrayList<String> categorySelected, LocalDate start, LocalDate end, ArrayList<LocalDate> allDate, ArrayList<String> queryResult){
         int j = 0;  // Go trough days
         XYChart.Series<String, Integer>[] series = new XYChart.Series[categorySelected.size()];
@@ -279,9 +316,9 @@ public class DoctorStatisticsSceneController {
 
     /**
      * Method that calculates occurrences in the specified period and which satisfies a certain condition
-     * @param dateStart
-     * @param dateEnd
-     * @param queryResult
+     * @param dateStart start to calculate
+     * @param dateEnd final date to care about
+     * @param queryResult query from DB
      * @param condition pressure or therapy
      * @return XYChart.Data<String, Integer>    return XYChart.Data to add to the Series, String is value for day range and Integer is number of occurrences of the condition in the date range
      */
@@ -320,5 +357,40 @@ public class DoctorStatisticsSceneController {
                 fase = "Mese " + pos;
             return new XYChart.Data<>(fase, count);
         }
+    }
+
+    /**
+     * Method to return string to insert in the query to get only patient of the doctor
+     * @return string to insert in the query
+     */
+    private String getPatientsConditionsQuery() {
+        StringBuilder queryPatients = new StringBuilder();
+
+        try {
+            Database database = new Database(2);
+
+            ArrayList<String> patientsID = database.getQuery("SELECT ID FROM Patients WHERE refDoc = " + doctor.getID(), new String[]{"ID"});
+            patientsID.forEach(id -> queryPatients.append("IDPatient = ").append(id).append(" OR "));
+
+            // Remove last ||
+            if(!patientsID.isEmpty())
+                queryPatients.delete(queryPatients.length()-3, queryPatients.length());
+            else    // If the query is empty
+                queryPatients.append("1 = 0");
+
+            database.closeAll();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return queryPatients.toString();
+    }
+    @FXML
+    private void showNewTableAnalysis() throws IOException {
+        newScene.addScene("DoctorTable.fxml");
+    }
+
+    public ArrayList<String> getSelectedRadioButton() {
+        return null;
     }
 }
