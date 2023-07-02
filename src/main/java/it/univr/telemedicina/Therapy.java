@@ -9,6 +9,8 @@ import java.util.TreeMap;
 
 public class Therapy implements TherapyInterface {
 
+
+
     /**
      * Method to check if a therapy has been followed right to the Patient (amount of drugs and hour to take them)
      * @param idPatient id of the patient
@@ -27,17 +29,27 @@ public class Therapy implements TherapyInterface {
             ArrayList<String> drugsTakenQuery = database.getQuery("SELECT Date, Hour, Quantity FROM TakenDrugs WHERE IDPatient = " + idPatient + " AND DrugName = '" + drugName + "' AND Date BETWEEN '" + startDate.toString() + "' AND '" + endDate.toString() + "'", new String[]{"Date", "Hour", "Quantity"});
             database.closeAll();
 
+            System.out.println("Stampa query: " + drugsTakenQuery + " ID paziente: " + idPatient);
+
             /// If there are drugs taken by the patient during therapy period
             // "morning (06-13)","afternoon(14-18)","evening(19-00)","night(01-05)"
             // "near meals(7-9)(12-14)(19-21)", "away meals(10-11)(15-18)(22-6)"
             if(!drugsTakenQuery.isEmpty()) {
                 // Add all day to drugsTaken set
                 TreeMap<LocalDate, Integer> drugsTakenByDay = new TreeMap<>();
+
+                // Set endDate to tomorrow if the endDate is more far
+                if(LocalDate.now().plusDays(1).isBefore(endDate))
+                    endDate = LocalDate.now().plusDays(1);
+
                 startDate.datesUntil(endDate).forEach(localDate -> drugsTakenByDay.put(localDate, 0));
 
                 // Cycle the drug taken and check quantity and hour
                 for(int i = 0; i < drugsTakenQuery.size()-2; i += 3) {
                     LocalDate date = LocalDate.parse(drugsTakenQuery.get(i));
+
+                    System.out.println("Data: " + date);
+
                     drugsTakenByDay.put(date, drugsTakenByDay.get(date) + Integer.parseInt(drugsTakenQuery.get(i+2)));  // Get drugs taken by day and add it
 
                     // Check the instruction and see if the hour where I took drugs was right one
@@ -55,7 +67,7 @@ public class Therapy implements TherapyInterface {
                             return false;
                     }
                     else if(hour >= 14 && hour <= 18) {     // Afternoon
-                        if(!instructions.contains("Pomeriggio"))
+                        if (!instructions.contains("Pomeriggio"))
                             return false;
                     }
                     else if((hour >= 19 && hour <= 23) || hour == 0) {  // Evening
@@ -72,6 +84,7 @@ public class Therapy implements TherapyInterface {
                 for(LocalDate date : drugsTakenByDay.keySet()) {
                     // If I found a day where the patient didn't take the right amount of drugs
                     if(drugsTakenByDay.get(date) != dailyDoses * amountTaken) {
+                        System.out.println("Figa son qui");
                         return false;
                     }
                 }

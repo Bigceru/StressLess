@@ -274,8 +274,8 @@ public class DoctorManageTherapy implements Initializable {
             return false;
         }
 
-        // Check dates
-        if(dateEnd.getValue() == null || dateStart.getValue() == null || dateEnd.getValue().isBefore(dateStart.getValue()) || (boxTherapy.getValue().equals("Nuova") && dateStart.getValue().isBefore(LocalDate.now()))){
+        // Check dates (endDate must be at least one day after startDate)
+        if(dateEnd.getValue() == null || dateStart.getValue() == null || dateEnd.getValue().isBefore(dateStart.getValue().plusDays(1)) || (boxTherapy.getValue().equals("Nuova") && dateStart.getValue().isBefore(LocalDate.now()))){
             newScene.showAlert("Errore", "Date inserite non consistenti", Alert.AlertType.ERROR);
             return false;
         }

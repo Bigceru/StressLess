@@ -1,14 +1,12 @@
 package it.univr.telemedicina.controller.patient;
 
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.models.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;

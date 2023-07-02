@@ -1,7 +1,7 @@
 package it.univr.telemedicina.controller.patient;
 
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.models.users.Patient;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

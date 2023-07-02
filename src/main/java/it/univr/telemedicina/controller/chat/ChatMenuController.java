@@ -1,8 +1,8 @@
 package it.univr.telemedicina.controller.chat;
 
-import it.univr.telemedicina.users.Doctor;
-import it.univr.telemedicina.users.Patient;
-import it.univr.telemedicina.users.User;
+import it.univr.telemedicina.models.users.Doctor;
+import it.univr.telemedicina.models.users.Patient;
+import it.univr.telemedicina.models.users.User;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -2,8 +2,8 @@ package it.univr.telemedicina.controller.doctor;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.users.Doctor;
-import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.models.users.Doctor;
+import it.univr.telemedicina.models.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

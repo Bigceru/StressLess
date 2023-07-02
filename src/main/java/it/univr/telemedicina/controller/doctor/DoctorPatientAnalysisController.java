@@ -1,7 +1,7 @@
 package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.*;
-import it.univr.telemedicina.users.Doctor;
+import it.univr.telemedicina.models.users.Doctor;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

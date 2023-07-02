@@ -1,7 +1,7 @@
 package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.MainApplication;
-import it.univr.telemedicina.users.Doctor;
+import it.univr.telemedicina.models.users.Doctor;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

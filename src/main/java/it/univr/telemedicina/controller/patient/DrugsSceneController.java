@@ -4,7 +4,7 @@ import it.univr.telemedicina.DrugsTablePat;
 import it.univr.telemedicina.utilities.Database;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.exceptions.ParameterException;
-import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.models.users.Patient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -3,7 +3,7 @@ package it.univr.telemedicina.controller.patient;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePatientDrugs;
 import it.univr.telemedicina.Therapy;
-import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.models.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

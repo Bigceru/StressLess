@@ -3,7 +3,9 @@ package it.univr.telemedicina.controller.patient;
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePatientPressures;
 import it.univr.telemedicina.exceptions.ParameterException;
-import it.univr.telemedicina.users.Patient;
+import it.univr.telemedicina.models.Pressure;
+import it.univr.telemedicina.models.PressureList;
+import it.univr.telemedicina.models.users.Patient;
 import it.univr.telemedicina.utilities.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -132,16 +134,11 @@ public class PressureSceneController implements Initializable {
             dati.put("IDPatient", patient.getPatientID());
             systolic = (int) dati.get("SystolicPressure");
             diastolic = (int) dati.get("DiastolicPressure");
-            dati.put("ConditionPressure", checkPressure(systolic, diastolic));
+            // dati.put("ConditionPressure", checkPressure(systolic, diastolic));*/
 
-            // Convert keySet in keyArrayString
-            Set<String> key = dati.keySet();
-            String[] keyString = key.toArray(new String[0]);
-            Collection<Object> values = dati.values();
-            Object[] valuesString = values.toArray(new Object[0]);
-
-            // Query for insert data in BloodPressures
-            db.insertQuery("BloodPressures", keyString, valuesString);
+            // Create pressure instance
+            Pressure pressure = initPressures();
+            pressure.insertInDatabase();
 
             // Send email if ConditionPressure is elevate
             if(!(dati.get("ConditionPressure").equals("Ottimale") || dati.get("ConditionPressure").equals("Normale") || dati.get("ConditionPressure").equals("Normale – alta"))){
@@ -168,8 +165,12 @@ public class PressureSceneController implements Initializable {
     public void removePressuresButton(ActionEvent actionEvent) {
         try {
             Database db = new Database(2);
-            Map<String, Object> dati = initPressures();
-            db.deleteQuery("BloodPressures",dati);
+
+            // Create pressure instance
+            Pressure pressure = initPressures();
+            pressure.removeInDatabase();
+
+            //db.deleteQuery("BloodPressures",dati);
 
             // Remove pressure success
             newScene.showAlert("Invio","Valori eliminati correttamente", Alert.AlertType.INFORMATION);
@@ -194,8 +195,6 @@ public class PressureSceneController implements Initializable {
         LocalDate pressureDate;
         String otherSymptoms = "";
 
-        //Key --> fields, Values --> values
-        Map<String, Object> dati = new TreeMap<>();
         systolic = Integer.parseInt(txtPresSystolic.getText());
         diastolic = Integer.parseInt(txtPresDiastolic.getText());
 
@@ -205,18 +204,20 @@ public class PressureSceneController implements Initializable {
 
         } else if (txtOtherSymptoms.isVisible() && txtOtherSymptoms.getText().isEmpty())
             throw new ParameterException("Campo di testo altri sintomi error");
+
         pressureDate = datePres.getValue();
 
         // check correction of values
-        checkPressuresParameters(systolic, diastolic, pressureDate, (String) boxTimePres.getValue());
+        Pressure.checkPressuresParameters(systolic, diastolic, pressureDate, (String) boxTimePres.getValue());
         ObservableList<String> symptomsList = boxSymptoms.getCheckModel().getCheckedItems();  //take the symptoms
-        StringBuilder symptomString;
-        if (symptomsList.isEmpty())
+
+        StringBuilder symptomString = new StringBuilder();
+        if (!symptomsList.isEmpty()) {
             symptomString = new StringBuilder();
-        else {
-            symptomString = new StringBuilder();
-            symptomsList.forEach(s -> symptomString.append(s).append(", "));
+            StringBuilder finalSymptomString = symptomString;
+            symptomsList.forEach(s -> finalSymptomString.append(s).append(", "));
             symptomString.delete(symptomString.length() - 2, symptomString.length());
+
             if(!otherSymptoms.isEmpty())
                 symptomString.append(", ").append(otherSymptoms);
         }
@@ -227,75 +228,6 @@ public class PressureSceneController implements Initializable {
         dati.put("Hour", boxTimePres.getValue() + ":00:00");
 
         return dati;
-    }
-
-    /**
-     * Validation of the following parameters
-     * @param systolic
-     * @param diastolic
-     * @param datePress
-     * @param time
-     */
-    public void checkPressuresParameters(int systolic, int diastolic, LocalDate datePress, String time) {
-        // check diastolic
-        if (diastolic <= 0 || diastolic >= 150)
-            throw new ParameterException("Pressione diastolica error");
-
-        // check systolic
-        if (systolic <= 0 || systolic >= 250)
-            throw new ParameterException("Sistolica errore");
-
-        if (systolic <= diastolic)
-            throw new ParameterException("Confronto errore");
-
-        // check if the mensuration date is right
-        if (datePress.isAfter(LocalDate.now()))
-            throw new ParameterException("Data errore");
-        if(datePress.isEqual(LocalDate.now())){
-            if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < Integer.parseInt((String) boxTimePres.getValue())){
-                throw new ParameterException("Ora errore");
-            }
-        }
-        if(time.isEmpty())
-            throw new ParameterException("Orario errore");
-    }
-
-    /**
-     * Validation the Pressure, returning the category
-     * @param systolic
-     * @param diastolic
-     * @return
-     */
-    private String checkPressure(int systolic, int diastolic){
-        ArrayList<String> category = new ArrayList<>(Arrays.asList("Ottimale","Normale","Normale - alta","Ipertensione di Grado 1 borderline","Ipertensione di Grado 1 lieve","Ipertensione di Grado 2 moderata", "Ipertensione di Grado 3 grave", "Ipertensione sistolica isolata borderline", "Ipertensione sistolica isolata"));
-        ArrayList<Integer> valuesSystolic = new ArrayList<>(Arrays.asList(120, 130, 139, 149, 159, 179, 180, 250));    //140-149,>=150
-        ArrayList<Integer> valuesDiastolic = new ArrayList<>(Arrays.asList(0, 80, 85, 89, 94, 99, 109, 110));    //<90
-        int index = -1;
-
-        //Check systolic
-        for(Integer value : valuesSystolic){
-            if(value >= systolic) {
-                index = valuesSystolic.indexOf(value);
-                //Special case
-                if(index == 3 && diastolic < 90)
-                    return category.get(7);
-                if(index > 3 && diastolic < 90)
-                    return category.get(8);
-                break;
-            }
-        }
-
-        //Parto direttamente dall'index
-        //check diastolic
-        for(int i = index; i < valuesDiastolic.size(); i++)
-        {
-            if(valuesDiastolic.get(i) >= diastolic){
-                return category.get(i);
-            }
-        }
-
-        // Example systolic = 300
-        return "Valori fuori norma";
     }
 
     /**
