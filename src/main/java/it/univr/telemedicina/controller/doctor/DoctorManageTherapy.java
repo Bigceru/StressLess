@@ -68,47 +68,7 @@ public class DoctorManageTherapy implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // take if present the old note
-        try{
-            Database database = new Database(2);
-            ArrayList<String> resultNotePatientQuery = database.getQuery("SELECT Detail FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"Detail"});
-
-            //fill the txt area
-            if(!resultNotePatientQuery.isEmpty())
-                txtAreaInformation.setText(resultNotePatientQuery.toString().substring(1, resultNotePatientQuery.toString().length()-1));
-            else
-                txtAreaInformation.setText("");
-
-            // INITIALIZE ALL COMBOBOX
-            // Therapy (if i want modify one already present)
-            TherapyList therapyList = new TherapyList();
-            ArrayList<String> resultTherapyQuery = therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getTherapyById(idPatient)), new TherapyFields[]{TherapyFields.THERAPY_NAME, TherapyFields.DRUG_NAME});
-
-            ArrayList<String> resultDrugsQuery = database.getQuery("SELECT DrugName FROM Drugs", new String[]{"DrugName"});
-
-            // crete the therapy, merging Therapy and DrugName
-            ArrayList<String> result = new ArrayList<>();
-            for(int i = 0; i< resultTherapyQuery.size()-1; i+=2){
-                result.add(resultTherapyQuery.get(i) + " - " + resultTherapyQuery.get(i+1));
-            }
-
-            boxTherapy.getItems().addAll(result);
-            boxTherapy.getItems().add("Nuova");
-            boxDrugs.getItems().addAll(resultDrugsQuery);
-
-            // therapy name
-            boxTherapyName.getItems().addAll(Therapies.returnCollection());
-
-            //DailyDoses
-            boxDailyDoses.getItems().addAll("01","02","03","04","05","06");
-
-            //boxAmount
-            boxAmount.getItems().addAll("01","02","03","04","05","06","07","08","09","10");
-
-            //Istruction
-            checkBoxInstruction.getItems().addAll(Instructions.returnCollection());
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        refreshCombo();
     }
 
     /**
@@ -222,7 +182,6 @@ public class DoctorManageTherapy implements Initializable {
         if(!checkCombo()){
            return;
         }
-
         try{
             //database.deleteQuery("Therapies",Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue(),"DrugName",boxDrugs.getValue()));
             // Create the therapy instance and then remove it from the db
@@ -233,6 +192,8 @@ public class DoctorManageTherapy implements Initializable {
             newScene.showAlert("Errore Eliminazione", "Errore! Dati non eliminati, Riprovare", Alert.AlertType.ERROR);
             System.err.println(e);
         }
+
+        refreshCombo();  // Refresh comboBox values
     }
 
     /**
@@ -287,6 +248,9 @@ public class DoctorManageTherapy implements Initializable {
         if(boxTherapy.getValue().equals("Nuova") && (boxTherapy == null || boxTherapyName == null || boxDrugs == null || boxAmount == null || boxDailyDoses == null)){
             newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
             return false;
+        } else if (!boxTherapy.getValue().equals("Nuova") && (boxTherapy == null || boxDrugs == null || boxAmount == null || boxDailyDoses == null) ) {
+            newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
+            return false;
         }
 
         // Check dates (endDate must be at least one day after startDate)
@@ -295,5 +259,50 @@ public class DoctorManageTherapy implements Initializable {
             return false;
         }
         return true;
+    }
+
+    public void refreshCombo(){
+        try{
+            Database database = new Database(2);
+            ArrayList<String> resultNotePatientQuery = database.getQuery("SELECT Detail FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"Detail"});
+
+            //fill the txt area
+            if(!resultNotePatientQuery.isEmpty())
+                txtAreaInformation.setText(resultNotePatientQuery.toString().substring(1, resultNotePatientQuery.toString().length()-1));
+            else
+                txtAreaInformation.setText("");
+
+            // INITIALIZE ALL COMBOBOX
+            // Therapy (if i want modify one already present)
+            TherapyList therapyList = new TherapyList();
+            ArrayList<String> resultTherapyQuery = therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getTherapyById(idPatient)), new TherapyFields[]{TherapyFields.THERAPY_NAME, TherapyFields.DRUG_NAME});
+
+            ArrayList<String> resultDrugsQuery = database.getQuery("SELECT DrugName FROM Drugs", new String[]{"DrugName"});
+
+            // crete the therapy, merging Therapy and DrugName
+            ArrayList<String> result = new ArrayList<>();
+            for(int i = 0; i< resultTherapyQuery.size()-1; i+=2){
+                result.add(resultTherapyQuery.get(i) + " - " + resultTherapyQuery.get(i+1));
+            }
+
+            boxTherapy.getItems().setAll(result);
+            boxTherapy.getItems().add("Nuova");
+
+            boxDrugs.getItems().setAll(resultDrugsQuery);
+
+            // therapy name
+            boxTherapyName.getItems().setAll(Therapies.returnCollection());
+
+            // DailyDoses
+            boxDailyDoses.getItems().setAll("01","02","03","04","05","06");
+
+            //boxAmount
+            boxAmount.getItems().setAll("01","02","03","04","05","06","07","08","09","10");
+
+            //Istruction
+            checkBoxInstruction.getItems().setAll(Instructions.returnCollection());
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
