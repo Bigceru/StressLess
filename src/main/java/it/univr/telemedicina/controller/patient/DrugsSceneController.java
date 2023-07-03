@@ -177,8 +177,4 @@ public class DrugsSceneController implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        tableDrugs.setItems(collection);
-
-        tableDrugs.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-    }
-}
+    }}

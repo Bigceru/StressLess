@@ -109,11 +109,11 @@ public class DoctorManageTherapy implements Initializable {
 
                 // Cycle for search based TherapyName and DrugsName
                 for(Therapy therapy : therapyList) {
-                    if(therapy.getTherapyName().equals(therapyName) && therapy.getDrugName().equals(drugName))
+                    if(therapy.getTherapyName() != null && therapy.getTherapyName().equals(therapyName) && therapy.getDrugName().equals(drugName))
                         resultTherapiesQuery = therapy;
                 }
-
                 assert resultTherapiesQuery != null;
+
                 boxTherapyName.setValue(resultTherapiesQuery.getTherapyName());
                 boxDrugs.setValue(resultTherapiesQuery.getDrugName());
                 boxDailyDoses.setValue(String.valueOf(resultTherapiesQuery.getDailyDoses()));
@@ -194,7 +194,6 @@ public class DoctorManageTherapy implements Initializable {
             newScene.showAlert("Elimina", "Dati  elimanti correttamente", Alert.AlertType.INFORMATION);
         } catch (SQLException | ClassNotFoundException e) {
             newScene.showAlert("Errore Eliminazione", "Errore! Dati non eliminati, Riprovare", Alert.AlertType.ERROR);
-            System.err.println(e);
         }
 
         refreshCombo();  // Refresh comboBox values
@@ -242,17 +241,10 @@ public class DoctorManageTherapy implements Initializable {
     // Return false if there is a problem with controls
     public boolean checkCombo(){
         // if box are empty
-        System.out.println("BOXTHERAPY: " + boxTherapy.getValue());
-        System.out.println("BOXTHERAPYNAME: " + boxTherapyName.getValue());
-        System.out.println("BOXDRUGS " + boxDrugs.getValue());
-        System.out.println("BOXAMOUNT: " + boxAmount.getValue());
-        System.out.println("DATESTART: " + dateStart.getValue());
-        System.out.println("BOXDAILYDOSES: " + boxDailyDoses.getValue());
-
-        if(boxTherapy.getValue().equals("Nuova") && (boxTherapy == null || boxTherapyName == null || boxDrugs == null || boxAmount == null || boxDailyDoses == null)){
+        if(boxTherapy.getValue() == null || (boxTherapy.getValue().equals("Nuova") && (boxTherapy.getValue() == null || boxTherapyName.getValue() == null || boxDrugs.getValue() == null || boxAmount.getValue() == null || boxDailyDoses.getValue() == null))){
             newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
             return false;
-        } else if (!boxTherapy.getValue().equals("Nuova") && (boxTherapy == null || boxDrugs == null || boxAmount == null || boxDailyDoses == null) ) {
+        } else if (boxTherapy.getValue() == null || (boxTherapy.getValue() == null || boxDrugs.getValue() == null || boxAmount.getValue() == null || boxDailyDoses.getValue() == null) ) {
             newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
             return false;
         }
@@ -266,6 +258,7 @@ public class DoctorManageTherapy implements Initializable {
     }
 
     public void refreshCombo(){
+
         try{
             Database database = new Database(2);
             ArrayList<String> resultNotePatientQuery = database.getQuery("SELECT Detail FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"Detail"});

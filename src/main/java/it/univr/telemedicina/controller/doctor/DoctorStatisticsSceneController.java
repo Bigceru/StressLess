@@ -213,7 +213,7 @@ public class DoctorStatisticsSceneController {
     public void createGraphTherapie(){
         // reset data
         stackedBarChart.getData().clear();
-        ArrayList<String> queryResult;
+        ArrayList<String> queryResult = new ArrayList<>();
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
 
@@ -245,11 +245,11 @@ public class DoctorStatisticsSceneController {
         ArrayList<String> therapiesSelected = new ArrayList<>();
 
         if (radioTACE.isSelected())
-            therapiesSelected.add("ACE-inibitori");
+            therapiesSelected.add("ACE INIBITORI");
         if (radioTBeta.isSelected())
-            therapiesSelected.add("Beta bloccanti");
+            therapiesSelected.add("BETA BLOCCANTI");
         if (radioTCalcium.isSelected())
-            therapiesSelected.add("Calcio-antagonisti");
+            therapiesSelected.add("CALCIO ANTAGONISTI");
         if (radioTDuretic.isSelected())
             therapiesSelected.add("DIURETICHE");
         if (radioTSart.isSelected())
