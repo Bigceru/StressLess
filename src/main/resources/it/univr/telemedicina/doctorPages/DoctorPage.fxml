@@ -28,13 +28,13 @@
                <top>
                   <AnchorPane prefHeight="35.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label layoutX="37.0" layoutY="10.0" text="Scheda dottore" textFill="WHITE" />
-                        <Label fx:id="lblTime" layoutX="895.0" layoutY="10.0" prefHeight="19.0" prefWidth="180.0" text=" 19:30:30  25/07/2023" textFill="WHITE" AnchorPane.rightAnchor="36.0">
+                        <Label layoutX="40.0" layoutY="13.0" text="Scheda dottore" textFill="WHITE" />
+                        <Label fx:id="lblTime" layoutX="894.0" layoutY="14.0" prefHeight="19.0" prefWidth="180.0" text=" 19:30:30  25/07/2023" textFill="WHITE" AnchorPane.rightAnchor="6.0">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Circle fx:id="lblNewMail1" fill="#04ff00" layoutX="1049.0" layoutY="19.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="27.0" />
+                        <Circle fx:id="lblNewMail1" fill="#04ff00" layoutX="1049.0" layoutY="24.0" radius="4.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="27.0" />
                      </children>
                   </AnchorPane>
                </top>

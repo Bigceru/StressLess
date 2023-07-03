@@ -5,9 +5,7 @@ module com.example.telemedicina {
     requires org.xerial.sqlitejdbc;
     requires org.controlsfx.controls;
     requires fontawesomefx;
-    requires org.testng;
-    requires org.junit.jupiter.api;
-    requires junit;
+
 
     opens it.univr.telemedicina to javafx.fxml;
     exports it.univr.telemedicina;

@@ -100,7 +100,7 @@ public class Patient extends User {
     - Carattere di controllo, per verificare la correttezza del codice fiscale.
      */
     //Check TaxIdCode
-    private boolean checkTaxIdCode(String taxIDCode) {
+    public boolean checkTaxIdCode(String taxIDCode) {
         //Check empty fields
         if (getName().isEmpty() || getSurname().isEmpty() || getBirthDate() == null || getBirthPlace().isEmpty() || getSex() == 'Z') {
             reg.setInvalidField("taxIDCode");

@@ -225,17 +225,14 @@ public class DoctorStatisticsSceneController {
             dateEnd.setStyle("-fx-text-fill: black;");
         }
 
-        try {
-            Database db = new Database(2);
-            TherapyList therapyList = new TherapyList();
+        TherapyList therapyList = new TherapyList();
 
-            // TODO: con la nuova classe per le terapie modifica questa query
-            // Query the database to get therapy data for the selected period
-            queryResult = db.getQuery("SELECT StartDate, TherapyName FROM Therapies WHERE StartDate >='" + start.toString() + "' AND (" + getPatientsConditionsQuery() + ")", new String[]{"StartDate", "TherapyName"});
-            db.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        // Cycle for every Patient I find
+        for(String id : getPatientsConditionsQuery()){
+            queryResult.addAll(therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getTherapyByDate(Integer.parseInt(id), start, null)), new TherapyFields[]{TherapyFields.START_DATE,TherapyFields.THERAPY_NAME}));
         }
+
+        // Query the database to get therapy data for the selected period
         ArrayList<LocalDate> allDate = new ArrayList<>();
 
         // Insert all the date into dataTaken
@@ -252,11 +249,11 @@ public class DoctorStatisticsSceneController {
         if (radioTCalcium.isSelected())
             therapiesSelected.add("Calcio-antagonisti");
         if (radioTDuretic.isSelected())
-            therapiesSelected.add("Diuretiche");
+            therapiesSelected.add("DIURETICHE");
         if (radioTSart.isSelected())
-            therapiesSelected.add("Sartani");
+            therapiesSelected.add("SARTANI");
         if (radioTSympatholytic.isSelected())
-            therapiesSelected.add("Simpaticolitici");
+            therapiesSelected.add("SIMPATICOLITICI");
 
         setGraph(therapiesSelected, start, end, allDate, queryResult);
     }

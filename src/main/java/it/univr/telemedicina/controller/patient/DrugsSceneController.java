@@ -115,6 +115,8 @@ public class DrugsSceneController implements Initializable {
 
             db.deleteQuery("TakenDrugs", Map.of("IDPatient", patient.getPatientID(), "Date", date, "Hour", hours, "DrugName", drug, "Quantity", Integer.parseInt((String) boxDrugsAmount.getValue())));
 
+            setTableDrugs();
+
             // Add pressure success
             newScene.showAlert("Eliminati","Valori eliminati correttamente", Alert.AlertType.INFORMATION);
         } catch (ParameterException | NumberFormatException | NullPointerException e) {
@@ -152,26 +154,24 @@ public class DrugsSceneController implements Initializable {
             ArrayList<String> info = db.getQuery("SELECT * FROM TakenDrugs WHERE IDPatient = " + patient.getPatientID(),new String[]{"Date", "Hour", "DrugName", "Quantity"});
             DrugsTablePat dati;
 
-            //There is no therapy
-            if(info.isEmpty()) {
-                tableDrugs.setPlaceholder(new Label("Nessun farmaco assunto in precedenza"));
-                return;
+            // There is no therapy
+            if(!info.isEmpty()) {
+                // Initialize
+                for (int i = 0; i < info.size() - 3; i = i + 4) {
+                    dati = new DrugsTablePat(LocalDate.parse(info.get(i)), info.get(i + 1), info.get(i + 2), info.get(i + 3));
+                    collection.add(dati);
+                }
             }
 
-            //Initialize
-            for(int i = 0; i < info.size()-3; i = i + 4){
-                dati = new DrugsTablePat(LocalDate.parse(info.get(i)), info.get(i+1), info.get(i+2), info.get(i+3));
-                collection.add(dati);
-            }
-
-            //Setting columns
+            // Setting columns
             columnDataDrugsTable.setCellValueFactory(new PropertyValueFactory<>("date"));
             columnHourDrugsTable.setCellValueFactory(new PropertyValueFactory<>("hour"));
             columnNameDrugsTable.setCellValueFactory(new PropertyValueFactory<>("drugName"));
             columnAmountDrugsTable.setCellValueFactory(new PropertyValueFactory<>("amount"));
-            //Set items in table
-            tableDrugs.setItems(collection);
 
+            // Set items in table
+            tableDrugs.setItems(collection);
+            tableDrugs.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -79,9 +79,13 @@ public class DoctorManageTherapy implements Initializable {
     @FXML
     public void handleBoxTherapy(ActionEvent actionEvent) {
         // Check if there is a value in boxTherapy
-        if(boxTherapy.getValue().isEmpty()) {
+        if(boxTherapy.getValue() == null) {
+            return;
+        }
+        if (boxTherapy.getValue().isEmpty()) {
             newScene.showAlert("Errore", "Inserire il campo TERAPIA", Alert.AlertType.ERROR);
         }
+
         // Set all visible
         else {
             // If "Nuova" was selected
