@@ -7,6 +7,7 @@ module com.example.telemedicina {
     requires fontawesomefx;
     requires org.testng;
     requires org.junit.jupiter.api;
+    requires junit;
 
     opens it.univr.telemedicina to javafx.fxml;
     exports it.univr.telemedicina;
@@ -17,4 +18,6 @@ module com.example.telemedicina {
     exports it.univr.telemedicina.controller.chat;
     exports it.univr.telemedicina.controller.patient;
     opens it.univr.telemedicina.controller.patient to javafx.fxml;
+    exports it.univr.telemedicina.models;
+    opens it.univr.telemedicina.models to javafx.fxml;
 }

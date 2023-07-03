@@ -1,4 +1,4 @@
-package it.univr.telemedicina;
+package it.univr.telemedicina.models;
 
 import java.time.LocalDate;
 

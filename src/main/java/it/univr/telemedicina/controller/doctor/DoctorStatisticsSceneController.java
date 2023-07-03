@@ -1,6 +1,8 @@
 package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.models.PressureList;
+import it.univr.telemedicina.models.TherapyList;
 import it.univr.telemedicina.models.users.Doctor;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
@@ -144,6 +146,7 @@ public class DoctorStatisticsSceneController {
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
 
+
         // Check date
         if (end == null || start == null || start.isAfter(end)) {
             dateStart.setStyle("-fx-text-fill: red;");
@@ -156,21 +159,29 @@ public class DoctorStatisticsSceneController {
 
         try {
             Database db = new Database(2);
+
+            PressureList pressureList = new PressureList();
+
+            // Cycle for every Patient I find
+            for(String s : getPatientsConditionsQuery()){
+                list.addAll(pressureList.getWhatUWantString(pressureList.getPressureToString(pressureList.getPressuresByDate(Integer.parseInt(s), start, end)),new Integer[]{1,6}));
+            }
+
             // Query the database to get pressure data for the selected period
-            list = db.getQuery("SELECT Date, ConditionPressure FROM BloodPressures WHERE Date BETWEEN '" + start + "' AND '" + end + "' AND (" + getPatientsConditionsQuery() + ")", new String[]{"Date", "ConditionPressure"});
+            // list = db.getQuery("SELECT Date, ConditionPressure FROM BloodPressures WHERE Date BETWEEN '" + start + "' AND '" + end + "' AND (" + getPatientsConditionsQuery() + ")", new String[]{"Date", "ConditionPressure"});
             db.closeAll();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         ArrayList<LocalDate> allDate = new ArrayList<>();
 
         // Insert all the date into dataTaken
         start.datesUntil(end).forEach(allDate::add);
         allDate.add(end);
 
-
-
         // Inizialite categorySelected
+        categorySelected.clear();   // Clear category selected array to add the new one
         if (radioPOptimal.isSelected())
             categorySelected.add("Ottimale");
         if (radioPNormal.isSelected())
@@ -216,6 +227,9 @@ public class DoctorStatisticsSceneController {
 
         try {
             Database db = new Database(2);
+            TherapyList therapyList = new TherapyList();
+
+            // TODO: con la nuova classe per le terapie modifica questa query
             // Query the database to get therapy data for the selected period
             queryResult = db.getQuery("SELECT StartDate, TherapyName FROM Therapies WHERE StartDate >='" + start.toString() + "' AND (" + getPatientsConditionsQuery() + ")", new String[]{"StartDate", "TherapyName"});
             db.closeAll();
@@ -228,7 +242,7 @@ public class DoctorStatisticsSceneController {
         start.datesUntil(end).forEach(allDate::add);
         allDate.add(end);
 
-        //All category
+        // All category
         ArrayList<String> therapiesSelected = new ArrayList<>();
 
         if (radioTACE.isSelected())
@@ -363,7 +377,7 @@ public class DoctorStatisticsSceneController {
      * Method to return string to insert in the query to get only patient of the doctor
      * @return string to insert in the query
      */
-    private String getPatientsConditionsQuery() {
+    private ArrayList<String> getPatientsConditionsQuery() {
         StringBuilder queryPatients = new StringBuilder();
 
         try {
@@ -385,6 +399,7 @@ public class DoctorStatisticsSceneController {
 
         return queryPatients.toString();
     }
+
     @FXML
     private void showNewTableAnalysis() throws IOException {
         newScene.addScene("DoctorTable.fxml");

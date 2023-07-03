@@ -1,9 +1,12 @@
 package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.models.Therapy;
+import it.univr.telemedicina.models.TherapyList;
 import it.univr.telemedicina.utilities.Database;
 import it.univr.telemedicina.utilities.Instructions;
 import it.univr.telemedicina.utilities.Therapies;
+import it.univr.telemedicina.utilities.TherapyFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -77,7 +80,9 @@ public class DoctorManageTherapy implements Initializable {
 
             // INITIALIZE ALL COMBOBOX
             // Therapy (if i want modify one already present)
-            ArrayList<String> resultTherapyQuery = database.getQuery("SELECT TherapyName, DrugName FROM Therapies WHERE IDPatient = " + idPatient, new String[]{"TherapyName", "DrugName"});
+            TherapyList therapyList = new TherapyList();
+            ArrayList<String> resultTherapyQuery = therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getTherapyById(idPatient)), new TherapyFields[]{TherapyFields.THERAPY_NAME, TherapyFields.DRUG_NAME});
+
             ArrayList<String> resultDrugsQuery = database.getQuery("SELECT DrugName FROM Drugs", new String[]{"DrugName"});
 
             // crete the therapy, merging Therapy and DrugName
@@ -134,42 +139,49 @@ public class DoctorManageTherapy implements Initializable {
                     lblNameTherapy.setVisible(false);
                     buttonSend.setText("Modifica");
 
-                    // Do a query and add all the values in the fields/boxes
-                    ArrayList<String> resultTherapiesQuery = database.getQuery("SELECT * FROM Therapies WHERE IDPatient = " + idPatient + " AND TherapyName = '" + boxTherapy.getValue().split("-")[0].trim() + "' AND DrugName = '" + boxTherapy.getValue().split("-")[1].substring(1) + "'", new String[]{"TherapyName", "DrugName", "DailyDoses", "AmountTaken", "Instructions", "StartDate", "EndDate"});
-                    boxTherapyName.setValue(resultTherapiesQuery.get(0));
-                    boxDrugs.setValue(resultTherapiesQuery.get(1));
-                    boxDailyDoses.setValue(resultTherapiesQuery.get(2));
-                    boxAmount.setValue(resultTherapiesQuery.get(3));
+                TherapyList therapyList = new TherapyList();
+                // Do a query and add all the values in the fields/boxes
+                Therapy resultTherapiesQuery = null; //TherapyName, drugName and id make the therapy unique
 
-                    // Cicle all the instruction and set in which period of the day the patient have to take the pillow
-                    for(String instruction : resultTherapiesQuery.get(4).split(",")) {
-                        System.out.println(instruction.trim());
-                        checkBoxInstruction.getCheckModel().check(Instructions.valueOf(instruction.trim()).ordinal());
-                    }
+                String therapyName = boxTherapy.getValue().split("-")[0].trim();
+                String drugName = boxTherapy.getValue().split("-")[1].substring(1);
+
+                // Cycle for search based TherapyName and DrugsName
+                for(Therapy therapy : therapyList) {
+                    if(therapy.getTherapyName().equals(therapyName) && therapy.getDrugName().equals(drugName))
+                        resultTherapiesQuery = therapy;
+                }
+
+                assert resultTherapiesQuery != null;
+                boxTherapyName.setValue(resultTherapiesQuery.getTherapyName());
+                boxDrugs.setValue(resultTherapiesQuery.getDrugName());
+                boxDailyDoses.setValue(String.valueOf(resultTherapiesQuery.getAmountTaken()));
+                boxAmount.setValue(String.valueOf(resultTherapiesQuery.getAmountTaken()));
+
+                // Cicle all the instruction and set in which period of the day the patient have to take the pillow
+                for(String instruction : resultTherapiesQuery.getInstructions().split(","))
+                    checkBoxInstruction.getCheckModel().check(Instructions.valueOf(instruction.trim().replace(" ", "_")).ordinal());
 
                     dateStart.setValue(LocalDate.parse(resultTherapiesQuery.get(5)));
                     System.out.println(LocalDate.parse(resultTherapiesQuery.get(5)));
                     dateEnd.setValue(LocalDate.parse(resultTherapiesQuery.get(6)));
                 }
 
-                // Set label visibility properties
-                boxDrugs.setVisible(true);
-                lblAmount.setVisible(true);
-                lblDailyDoses.setVisible(true);
-                lblDrugs.setVisible(true);
-                lblDateEnd.setVisible(true);
-                lblDateStart.setVisible(true);
-                lblInstruction.setVisible(true);
-                boxDailyDoses.setVisible(true);
-                boxAmount.setVisible(true);
-                checkBoxInstruction.setVisible(true);
-                dateStart.setVisible(true);
-                dateEnd.setVisible(true);
-                buttonSend.setVisible(true);
-                buttonDelete.setVisible(true);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            // Set label visibility properties
+            boxDrugs.setVisible(true);
+            lblAmount.setVisible(true);
+            lblDailyDoses.setVisible(true);
+            lblDrugs.setVisible(true);
+            lblDateEnd.setVisible(true);
+            lblDateStart.setVisible(true);
+            lblInstruction.setVisible(true);
+            boxDailyDoses.setVisible(true);
+            boxAmount.setVisible(true);
+            checkBoxInstruction.setVisible(true);
+            dateStart.setVisible(true);
+            dateEnd.setVisible(true);
+            buttonSend.setVisible(true);
+            buttonDelete.setVisible(true);
         }
     }
 
@@ -184,20 +196,13 @@ public class DoctorManageTherapy implements Initializable {
         }
 
         try {
-            Database database = new Database(2);
-            String[] keys = {"IDPatient", "TherapyName", "DrugName", "DailyDoses", "AmountTaken", "Instructions", "StartDate", "EndDate"};
             String instruction = checkBoxInstruction.getCheckModel().getCheckedItems().toString();
-            Object[] values = {idPatient, boxTherapyName.getValue(), boxDrugs.getValue(), Integer.parseInt(boxDailyDoses.getValue()), Integer.parseInt(boxAmount.getValue()), instruction.substring(1, instruction.length()-1), dateStart.getValue(), dateEnd.getValue()};
-
-            // Map contain (Field : Values)
-            Map<String, Object> info = new TreeMap<>();
-            for(int i = 0; i < keys.length; i++){
-                info.put(keys[i],values[i]);
-            }
-
+            Therapy therapy = new Therapy(idPatient, boxTherapyName.getValue(), boxDrugs.getValue(), Integer.parseInt(boxDailyDoses.getValue()), Integer.parseInt(boxAmount.getValue()), instruction.substring(1, instruction.length()-1), dateStart.getValue(), dateEnd.getValue());
+            
             // Add a new therapy
             if(boxTherapy.getValue().equals("Nuova")){
-                database.insertQuery("Therapies", keys, values);
+                therapy.insertInDatabase();
+                // database.insertQuery("Therapies", keys, values);
                 newScene.showAlert("Invio", "Dati aggiunti correttamente", Alert.AlertType.INFORMATION);
             }
             else {
@@ -205,7 +210,7 @@ public class DoctorManageTherapy implements Initializable {
                 newScene.showAlert("Invio", "Dati modificati correttamente", Alert.AlertType.INFORMATION);
             }
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            newScene.showAlert("Errore inserimento/aggiornamento", "Errore! Dati non aggiornati/inseriti, Riprovare", Alert.AlertType.ERROR);
         }
     }
 

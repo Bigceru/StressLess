@@ -1,15 +1,109 @@
-package it.univr.telemedicina;
+package it.univr.telemedicina.models;
 
 import it.univr.telemedicina.utilities.Database;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Therapy implements TherapyInterface {
 
+    private int idPatient;
+    private String therapyName;
+    private String drugName;
+    private int dailyDoses;
+    private int amountTaken;
+    private String instructions;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
+    public Therapy(int idPatient, String therapyName, String drugName, int dailyDoses, int amountTaken, String instructions, LocalDate startDate, LocalDate endDate) {
+        this.idPatient = idPatient;
+        this.therapyName = therapyName;
+        this.drugName = drugName;
+        this.dailyDoses = dailyDoses;
+        this.amountTaken = amountTaken;
+        this.instructions = instructions;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public void insertInDatabase() throws SQLException, ClassNotFoundException {
+        // try-catch not included because it is caught by the calling class where an error message is sent
+        Database database = new Database(2);
+
+        Object[] valuesString = {this.idPatient, this.therapyName, this.drugName, this.dailyDoses, this.amountTaken, this.instructions, this.startDate, this.endDate};
+
+        // Query for insert data in BloodPressures
+        database.insertQuery("Therapies", new String[]{"IDPatient", "TherapyName", "DrugName", "DailyDoses", "AmountTaken", "Instructions", "StartDate", "EndDate"}, valuesString);
+        database.closeAll();
+    }
+
+    public void removeInDatabase() throws SQLException, ClassNotFoundException {
+        //try-catch not included because it is caught by the calling class where an error message is sent
+        Database db = new Database(2);
+        Map<String, Object> dati = new TreeMap<>();
+
+        dati.put("IDPatient", this.idPatient);
+        dati.put("TherapyName",this.therapyName);
+        dati.put("DrugName", this.drugName);
+
+        db.deleteQuery("Therapies", dati);
+        db.closeAll();
+    }
+
+    public void updateInDatabase(Map<String,Object> whereValues) throws SQLException, ClassNotFoundException {
+        //try-catch not included because it is caught by the calling class where an error message is sent
+        Database db = new Database(2);
+
+        // SetValues
+        Map<String, Object> setDati = new TreeMap<>();
+        setDati.put("IDPatient", this.idPatient);
+        setDati.put("TherapyName",this.therapyName);
+        setDati.put("DrugName", this.drugName);
+        setDati.put("DailyDoses", this.dailyDoses);
+        setDati.put("AmountTaken",this.amountTaken);
+        setDati.put("StartDate", this.startDate);
+        setDati.put("EndDate", this.endDate);
+
+        db.updateQuery("Therapies", setDati, whereValues);
+
+        db.closeAll();
+    }
+
+    public int getIdPatient() {
+        return idPatient;
+    }
+
+    public String getTherapyName() {
+        return therapyName;
+    }
+
+    public String getDrugName() {
+        return drugName;
+    }
+
+    public int getDailyDoses() {
+        return dailyDoses;
+    }
+
+    public int getAmountTaken() {
+        return amountTaken;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
     /**
      * Method to check if a therapy has been followed right to the Patient (amount of drugs and hour to take them)

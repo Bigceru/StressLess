@@ -47,9 +47,7 @@ public class Pressure {
         this.conditionPressure = checkPressure(systolicPressure, diastolicPressure);
     }
 
-    public void insertInDatabase() {
-        try {
-            System.out.println("Sto Aggiungendo la seguente pressione: \n " + this.toString());
+    public void insertInDatabase() throws SQLException, ClassNotFoundException {
             Database database = new Database(2);
 
             Object[] valuesString = {this.idPatient, this.date, this.hour + ":00", this.systolicPressure, this.diastolicPressure, this.symptoms, this.conditionPressure};
@@ -58,31 +56,24 @@ public class Pressure {
             database.insertQuery("BloodPressures", new String[]{"IDPatient", "Date", "Hour", "SystolicPressure", "DiastolicPressure", "Symptoms", "ConditionPressure"}, valuesString);
 
             database.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    public void removeInDatabase(){
-        try{
-            System.out.println("Sto rimuovendo la seguente pressione: \n " + this);
-            Database db = new Database(2);
-            //Key --> fields, Values --> values
-            Map<String, Object> dati = new TreeMap<>();
+    public void removeInDatabase() throws SQLException, ClassNotFoundException {
+        Database db = new Database(2);
+        //Key --> fields, Values --> values
+        Map<String, Object> dati = new TreeMap<>();
 
-            dati.put("IDPatient", this.idPatient);
-            dati.put("Date",this.date);
-            dati.put("Hour", this.hour + ":00");
-            dati.put("SystolicPressure",this.systolicPressure);
-            dati.put("DiastolicPressure",this.diastolicPressure);
-            dati.put("Symptoms", this.symptoms.replace(", Altro", ""));
+        dati.put("IDPatient", this.idPatient);
+        dati.put("Date",this.date);
+        dati.put("Hour", this.hour + ":00");
+        dati.put("SystolicPressure",this.systolicPressure);
+        dati.put("DiastolicPressure",this.diastolicPressure);
+        //dati.put("Symptoms", this.symptoms.replace(", Altro", ""));
 
-            db.deleteQuery("BloodPressures", dati);
-            db.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        db.deleteQuery("BloodPressures", dati);
+        db.closeAll();
     }
+
 
     /**
      * Validation the Pressure, returning the category
@@ -183,5 +174,9 @@ public class Pressure {
 
     public LocalTime getHour() {
         return hour;
+    }
+
+    public String getSymptoms() {
+        return symptoms;
     }
 }

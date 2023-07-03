@@ -2,9 +2,13 @@ package it.univr.telemedicina.controller.patient;
 
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.TablePatientDrugs;
-import it.univr.telemedicina.Therapy;
+import it.univr.telemedicina.models.Therapy;
+import it.univr.telemedicina.models.Pressure;
+import it.univr.telemedicina.models.PressureList;
+import it.univr.telemedicina.models.TherapyList;
 import it.univr.telemedicina.models.users.Patient;
 import it.univr.telemedicina.utilities.Database;
+import it.univr.telemedicina.utilities.TherapyFields;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,14 +63,16 @@ public class HomeSceneController implements Initializable {
             lblRefDoc.setText("Dr. " + info.get(0) + " " + info.get(1));
 
             // Add last pressure value to the label
-            info = db.getQuery("SELECT SystolicPressure, DiastolicPressure, Date FROM BloodPressures WHERE IDPatient = " + patient.getPatientID() + " ORDER BY ID DESC", new String[]{"SystolicPressure", "DiastolicPressure", "Date"});
-            if(info.isEmpty()) {
+            PressureList pressureList = new PressureList();
+            Pressure pressure = pressureList.getLastPressure(patient.getPatientID());
+
+            if(pressure == null) {
                 lblPressure.setText("--/--");
                 lblLastPressure.setText("--/--");
             }
             else {
-                lblPressure.setText(info.get(0) + "/" + info.get(1));
-                lblLastPressure.setText(info.get(2));
+                lblPressure.setText(pressure.getSystolicPressure() + "/" + pressure.getDiastolicPressure());
+                lblLastPressure.setText(pressure.getConditionPressure());
             }
 
             // Query to set iconNewMail
@@ -79,7 +85,6 @@ public class HomeSceneController implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         setTable();
     }
 
@@ -94,10 +99,11 @@ public class HomeSceneController implements Initializable {
         columnAmount.prefWidthProperty().bind(tableTherapies.widthProperty().divide(6)); // w * 1/6
         columnInstruction.prefWidthProperty().bind(tableTherapies.widthProperty().divide(3)); // w * 1/3
 
-        try{
-            Database db = new Database(2);
-            ArrayList<String> info = db.getQuery("SELECT * FROM Therapies WHERE IDPatient = " + patient.getPatientID(),new String[]{"DrugName","DailyDoses","AmountTaken","Instructions"});
-            TablePatientDrugs dati;
+        TherapyList therapyList = new TherapyList();
+
+        ArrayList<String> queryResult = therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getCurrentTherapy(patient.getPatientID())), new TherapyFields[]{TherapyFields.DRUG_NAME, TherapyFields.DAILY_DOSES, TherapyFields.AMOUNT_TAKEN, TherapyFields.INSTRUCTIONS});
+
+        TablePatientDrugs dati;
 
             //There is no therapy
             if(info.isEmpty()) {
@@ -114,17 +120,14 @@ public class HomeSceneController implements Initializable {
                 therapy.add(dati);
             }
 
-            //Setting columns
-            columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            columnDoses.setCellValueFactory(new PropertyValueFactory<>("dose"));
-            columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-            columnInstruction.setCellValueFactory(new PropertyValueFactory<>("instruction"));
+        //Setting columns
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnDoses.setCellValueFactory(new PropertyValueFactory<>("dose"));
+        columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        columnInstruction.setCellValueFactory(new PropertyValueFactory<>("instruction"));
 
-            //Set items in table
-            tableTherapies.setItems(therapy);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        //Set items in table
+        tableTherapies.setItems(therapy);
     }
 
     /**
@@ -146,16 +149,17 @@ public class HomeSceneController implements Initializable {
 
         try {
             Database database = new Database(2);
-            ArrayList<String> resultTherapyQuery =  database.getQuery("SELECT TherapyName, DrugName, DailyDoses, AmountTaken, Instructions FROM Therapies WHERE IDPatient = " + patient.getPatientID() + " AND EndDate >= '" + LocalDate.now() +  "' AND  StartDate <= '" + LocalDate.now().minusDays(3)+ "'", new String[]{"TherapyName", "DrugName", "DailyDoses", "AmountTaken", "Instructions"});
+
+            ArrayList<Therapy> resultTherapyQuery = therapyList.getTherapyByDate(patient.getPatientID(), LocalDate.now().minusDays(3), LocalDate.now());
 
             // Cycle all the therapies fo the Patient
-            for(int i = 0; i < resultTherapyQuery.size()-4; i += 5){
+            for(Therapy therapy : resultTherapyQuery){
                 // check for each therapy if patient do the right thing
                 boolean check =  therapy.checkTherapy(patient.getPatientID(), resultTherapyQuery.get(i),resultTherapyQuery.get(i+1),Integer.parseInt(resultTherapyQuery.get(i+2)) , Integer.parseInt(resultTherapyQuery.get(i+3)),resultTherapyQuery.get(i+4),LocalDate.now(),LocalDate.now().minusDays(3));
 
                 if(!check) {
                     // Query to insert the new alert message in database
-                    database.insertQuery("Chat", new String[]{"Sender", "Receiver", "Text", "ReadFlag"}, new Object[]{-1, patient.getPatientID(), "Non stai seguendo in modo corretto la terapia (" + resultTherapyQuery.get(i) + ")", 0});
+                    database.insertQuery("Chat", new String[]{"Sender", "Receiver", "Text", "ReadFlag"}, new Object[]{-1, patient.getPatientID(), "Non stai seguendo in modo corretto la terapia (" + therapy.getTherapyName() + ")", 0});
                 }
             }
 

@@ -1,5 +1,6 @@
 package it.univr.telemedicina.controller.doctor;
 
+import it.univr.telemedicina.models.PressureList;
 import it.univr.telemedicina.utilities.Database;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -132,14 +133,11 @@ public class DoctorPlusInfoPatientController implements Initializable {
     private void updateGraph(LocalDate startDate, LocalDate endDate) {
         ArrayList<String> queryResult;
 
-        // take pressure from database
-        try {
-            Database db = new Database(2);
-            queryResult = db.getQuery("SELECT SystolicPressure, DiastolicPressure, Date FROM BloodPressures WHERE IDPatient = " + idPatient + " AND Date BETWEEN '" + startDate.toString() + "' AND '" + endDate.toString() + " 00:00:00' ORDER BY ID DESC", new String[]{"SystolicPressure", "DiastolicPressure", "Date"});
-            db.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        PressureList pressureList = new PressureList();
+
+        // QueryResult take pressure from database
+        queryResult = pressureList.getPressureToString(pressureList.getPressuresByDate(idPatient,startDate,endDate));
+
 
         //lineChartPression.setTitle("Grafico Pressione");
 
@@ -155,14 +153,14 @@ public class DoctorPlusInfoPatientController implements Initializable {
         // TreeMap of (Date, [Systolic, Diastolic])
         TreeMap<LocalDate, ArrayList<Integer>> pressures = new TreeMap<>();
 
-        for(int i = 0; i < queryResult.size(); i += 3) {   // systolic, diastolic, date
+        for(int i = 0; i < queryResult.size() - 6; i += 7) {   // systolic, diastolic, date
             // If I already have used the pressure of this day
-            if (pressures.containsKey(LocalDate.parse(queryResult.get(i + 2)))) {
-                int newSystolic = (pressures.get(LocalDate.parse(queryResult.get(i + 2))).get(0)) + Integer.parseInt(queryResult.get(i));
-                int newDiastolic = (pressures.get(LocalDate.parse(queryResult.get(i + 2))).get(1)) + Integer.parseInt(queryResult.get(i + 1));
-                pressures.put(LocalDate.parse(queryResult.get(i + 2)), new ArrayList<>(List.of(newSystolic, newDiastolic)));        // Insert the sum of the both pressures
+            if (pressures.containsKey(LocalDate.parse(queryResult.get(i + 1)))) { //ID, DATE, HOUR, SYSTOLIC, DIASTOLIC, SYMP, CONDITION
+                int newSystolic = (pressures.get(LocalDate.parse(queryResult.get(i + 1))).get(0)) + Integer.parseInt(queryResult.get(i+3));
+                int newDiastolic = (pressures.get(LocalDate.parse(queryResult.get(i + 1))).get(1)) + Integer.parseInt(queryResult.get(i + 4));
+                pressures.put(LocalDate.parse(queryResult.get(i + 1)), new ArrayList<>(List.of(newSystolic, newDiastolic)));        // Insert the sum of the both pressures
             } else {
-                pressures.put(LocalDate.parse(queryResult.get(i + 2)), new ArrayList<>(List.of(Integer.parseInt(queryResult.get(i)), Integer.parseInt(queryResult.get(i + 1)))));
+                pressures.put(LocalDate.parse(queryResult.get(i + 1)), new ArrayList<>(List.of(Integer.parseInt(queryResult.get(i+3)), Integer.parseInt(queryResult.get(i + 4)))));
             }
         }
 

@@ -2,9 +2,11 @@ package it.univr.telemedicina.controller.doctor;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.models.TherapyList;
 import it.univr.telemedicina.models.users.Doctor;
 import it.univr.telemedicina.models.users.Patient;
 import it.univr.telemedicina.utilities.Database;
+import it.univr.telemedicina.utilities.TherapyFields;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -118,11 +120,11 @@ public class DoctorHomeSceneController implements Initializable {
                 return;
             }
             else {  // If there are therapies for the patients
-                StringBuilder queryString = new StringBuilder("SELECT IDPatient, TherapyName FROM Therapies WHERE IDPatient = ");
+                TherapyList therapyList = new TherapyList();
 
-                // Cycle all IDPatient
-                for(int i = 0; i < info.size()-2; i += 3) {
-                    queryString.append(info.get(i)).append(" OR IDPatient = ");
+                // Cycle all IDPatient and get therapies
+                for(int i = 0; i < info.size() - 2; i += 3) {
+                    resultQueryTherapies.addAll(therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getCurrentTherapy(Integer.parseInt(info.get(i)))), new TherapyFields[]{TherapyFields.ID_PATIENT, TherapyFields.THERAPY_NAME}));
                 }
 
                 // Remove the last unused OR
@@ -133,7 +135,7 @@ public class DoctorHomeSceneController implements Initializable {
             }
 
             // Initialize the data to insert in the table
-            for(int i = 0; i < info.size()-2; i += 3){
+            for(int i = 0; i < info.size() - 2; i += 3){
                 StringBuilder terapie = new StringBuilder();
 
                 // Cycle the list of therapies and save the therapies of the patient with id info.get(i)

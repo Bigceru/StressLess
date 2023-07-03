@@ -62,6 +62,8 @@ public class PressureSceneController implements Initializable {
     private final MainApplication newScene = new MainApplication();
     private static Patient patient;
 
+    ObservableList<TablePatientPressures> collection = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTablePat();
@@ -84,7 +86,6 @@ public class PressureSceneController implements Initializable {
      * Table View Home
      */
     private void setTablePat() {
-        ObservableList<TablePatientPressures> collection = FXCollections.observableArrayList();
         tablePatientPres.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         PressureList pressureList = new PressureList();
@@ -92,46 +93,26 @@ public class PressureSceneController implements Initializable {
 
         // Check if the list is not null
         if(!pressureList.getPressuresById(patient.getPatientID()).isEmpty()) {
-            int count = 0;
             // Cycle all the pressure of the user and add it to the data collection
             for (Pressure pressure : pressureList.getPressuresById(patient.getPatientID())) {
                 dati = new TablePatientPressures(pressure.getDate(), pressure.getHour().toString(), pressure.getSystolicPressure(), pressure.getDiastolicPressure(), pressure.getConditionPressure());
                 collection.add(dati);
-                count++;
-                System.out.println("\nCount: " + count);
             }
+
+            //Setting columns
+            columnDataPresTable.setCellValueFactory(new PropertyValueFactory<>("date"));
+            columnHourPresTable.setCellValueFactory(new PropertyValueFactory<>("hour"));
+            columnPressurePresTable.setCellValueFactory(new PropertyValueFactory<>("pressSD"));
+            columnStatePresTable.setCellValueFactory(new PropertyValueFactory<>("state"));
+
+            //Set items in table
+            tablePatientPres.setItems(collection);
         }
         else {  // if there arent pressure
             tablePatientPres.setPlaceholder(new Label("Nessuna pressione rilevata in precedenza"));
             return;
         }
 
-        /*
-        try{
-            Database db = new Database(2);
-            ArrayList<String> info = db.getQuery("SELECT * FROM BloodPressures WHERE IDPatient = " + patient.getPatientID(),new String[]{"Date","Hour","SystolicPressure", "DiastolicPressure", "ConditionPressure"});
-            TablePatientPressures dati;
-
-            //There is no therapy
-            if(info.isEmpty()) {
-                tablePatientPres.setPlaceholder(new Label("Nessuna pressione rilevata in precedenza"));
-                return;
-            }
-
-            //Initialize
-            for(int i = 0; i < info.size()-4; i = i + 5){
-                dati = new TablePatientPressures(LocalDate.parse(info.get(i)), info.get(i+1), Integer.parseInt(info.get(i+2)), Integer.parseInt(info.get(i+3)), info.get(i+4));
-                collection.add(dati);
-            }*/
-
-        //Setting columns
-        columnDataPresTable.setCellValueFactory(new PropertyValueFactory<>("date"));
-        columnHourPresTable.setCellValueFactory(new PropertyValueFactory<>("hour"));
-        columnPressurePresTable.setCellValueFactory(new PropertyValueFactory<>("pressSD"));
-        columnStatePresTable.setCellValueFactory(new PropertyValueFactory<>("state"));
-
-        //Set items in table
-        tablePatientPres.setItems(collection);
     }
 
     // ##### Methods for Pressure page #####
@@ -141,18 +122,8 @@ public class PressureSceneController implements Initializable {
      * @param actionEvent
      */
     public void sendPressuresButton(ActionEvent actionEvent) {
-        int systolic;
-        int diastolic;
-
         try {
             Database db = new Database(2);
-
-            /*
-            Map<String, Object> dati = initPressures();
-            dati.put("IDPatient", patient.getPatientID());
-            systolic = (int) dati.get("SystolicPressure");
-            diastolic = (int) dati.get("DiastolicPressure");
-            // dati.put("ConditionPressure", checkPressure(systolic, diastolic));*/
 
             // Create pressure instance
             Pressure pressure = initPressures();
@@ -166,7 +137,10 @@ public class PressureSceneController implements Initializable {
             // Add pressure success
             newScene.showAlert("Invio","Valori inviati correttamente", Alert.AlertType.INFORMATION);
 
-            setTablePat();  // Refresh table
+            //setTablePat();  // Refresh table
+            collection.add(new TablePatientPressures(pressure.getDate(), pressure.getHour().toString(), pressure.getSystolicPressure(), pressure.getDiastolicPressure(), pressure.getConditionPressure()));
+
+            handleTimePresChoose(new ActionEvent());     // Refresh graph
             handleTimePresChoose(new ActionEvent());     // Refresh graph
         } catch (ParameterException | NumberFormatException | NullPointerException e) {
             System.out.println("Error");
@@ -182,18 +156,17 @@ public class PressureSceneController implements Initializable {
      */
     public void removePressuresButton(ActionEvent actionEvent) {
         try {
-            Database db = new Database(2);
-
             // Create pressure instance
             Pressure pressure = initPressures();
             pressure.removeInDatabase();
 
-            //db.deleteQuery("BloodPressures",dati);
-
             // Remove pressure success
             newScene.showAlert("Invio","Valori eliminati correttamente", Alert.AlertType.INFORMATION);
 
-            setTablePat();  // Refresh table
+            // Refresh table
+            collection.removeIf(e -> (e.getDate().isEqual(pressure.getDate()) && (e.getHour() + ":00").equals(pressure.getHour().toString()) && e.getPressSD().equals(pressure.getSystolicPressure() + "/" + pressure.getDiastolicPressure())));
+
+            handleTimePresChoose(new ActionEvent());     // Refresh graph
             handleTimePresChoose(new ActionEvent());     // Refresh graph
         } catch (ParameterException | NumberFormatException | NullPointerException e) {
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
@@ -239,13 +212,7 @@ public class PressureSceneController implements Initializable {
             if(!otherSymptoms.isEmpty())
                 symptomString.append(", ").append(otherSymptoms);
         }
-        /*
-        dati.put("SystolicPressure",systolic);
-        dati.put("DiastolicPressure",diastolic);
-        dati.put("Date",pressureDate);
-        dati.put("Symptoms",symptomString.toString().replace(", Altro", ""));
-        dati.put("Hour", boxTimePres.getValue() + ":00:00");
-*/
+
         return new Pressure(patient.getPatientID(), pressureDate, LocalTime.parse(boxTimePres.getValue() + ":00:00"),systolic,diastolic,symptomString.toString().replace(", Altro", ""));
     }
 
@@ -257,15 +224,10 @@ public class PressureSceneController implements Initializable {
         ArrayList<String> list;
         LocalDate today = LocalDate.now();
         LocalDate lastPressureToTake = today.minusDays(dayToTake);
+        PressureList pressureList = new PressureList();
 
-        // take pressure from database
-        try {
-            Database db = new Database(2);
-            list = db.getQuery("SELECT SystolicPressure, DiastolicPressure, Date FROM BloodPressures WHERE IDPatient = " + patient.getPatientID() + " AND Date BETWEEN '" + lastPressureToTake.toString() + " 00:00:00' AND '" + today.toString() + " 00:00:00' ORDER BY ID DESC", new String[]{"SystolicPressure", "DiastolicPressure", "Date"});
-            db.closeAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        // List of pressure transformed in String (that contain all fields of the pressure class)
+        list = pressureList.getPressureToString(pressureList.getPressuresByDate(patient.getPatientID(),lastPressureToTake,today));
 
         chartPatientPres.setTitle("Grafico Pressione");
 
@@ -281,14 +243,15 @@ public class PressureSceneController implements Initializable {
 
         // TreeMap of (Date, [Systolic, Diastolic])
         TreeMap<LocalDate, ArrayList<Integer>> pressures = new TreeMap<>();
-        for(int i = 0; i < list.size(); i += 3) {   // systolic, diastolic, date
+        for(int i = 0; i < list.size(); i += 7) {   // date,systolic, diastolic,
             // If I already have used the pressure of this day
-            if (pressures.containsKey(LocalDate.parse(list.get(i + 2)))) {
-                int newSystolic = (pressures.get(LocalDate.parse(list.get(i + 2))).get(0)) + Integer.parseInt(list.get(i));
-                int newDiastolic = (pressures.get(LocalDate.parse(list.get(i + 2))).get(1)) + Integer.parseInt(list.get(i + 1));
-                pressures.put(LocalDate.parse(list.get(i + 2)), new ArrayList<>(List.of(newSystolic, newDiastolic)));        // Insert the sum of the both pressures
+            if (pressures.containsKey(LocalDate.parse(list.get(i+1)))) {  //ID, DATE, HOUR, SYSTOLIC, DIASTOLIC, SYMP, CONDITION
+                int newSystolic = (pressures.get(LocalDate.parse(list.get(i+1))).get(0)) + Integer.parseInt(list.get(i+3));
+                int newDiastolic = (pressures.get(LocalDate.parse(list.get(i+1))).get(1)) + Integer.parseInt(list.get(i + 4));
+                pressures.put(LocalDate.parse(list.get(i+1)), new ArrayList<>(List.of(newSystolic, newDiastolic)));        // Insert the sum of the both pressures
             } else {
-                pressures.put(LocalDate.parse(list.get(i + 2)), new ArrayList<>(List.of(Integer.parseInt(list.get(i)), Integer.parseInt(list.get(i + 1)))));
+
+                pressures.put(LocalDate.parse(list.get(i+1)), new ArrayList<>(List.of(Integer.parseInt(list.get(i+3)), Integer.parseInt(list.get(i + 4)))));
             }
         }
 
@@ -336,8 +299,10 @@ public class PressureSceneController implements Initializable {
      * @param actionEvent
      */
     public void handleTimePresChoose(ActionEvent actionEvent) {
-        if(weekPresToggle.isSelected())
+        if(weekPresToggle.isSelected()){
             updateGraph(7);
+        }
+
         else if(monthPresToggle.isSelected())
             updateGraph(30);
     }
