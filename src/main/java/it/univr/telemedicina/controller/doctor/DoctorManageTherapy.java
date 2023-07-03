@@ -118,7 +118,6 @@ public class DoctorManageTherapy implements Initializable {
      */
     @FXML
     public void handleBoxTherapy(ActionEvent actionEvent) {
-
         // Check if there is a value in boxTherapy
         if(boxTherapy.getValue().isEmpty()) {
             newScene.showAlert("Errore", "Inserire il campo TERAPIA", Alert.AlertType.ERROR);
@@ -153,7 +152,7 @@ public class DoctorManageTherapy implements Initializable {
                 assert resultTherapiesQuery != null;
                 boxTherapyName.setValue(resultTherapiesQuery.getTherapyName());
                 boxDrugs.setValue(resultTherapiesQuery.getDrugName());
-                boxDailyDoses.setValue(String.valueOf(resultTherapiesQuery.getAmountTaken()));
+                boxDailyDoses.setValue(String.valueOf(resultTherapiesQuery.getDailyDoses()));
                 boxAmount.setValue(String.valueOf(resultTherapiesQuery.getAmountTaken()));
 
                 // Cicle all the instruction and set in which period of the day the patient have to take the pillow
@@ -195,7 +194,7 @@ public class DoctorManageTherapy implements Initializable {
         try {
             String instruction = checkBoxInstruction.getCheckModel().getCheckedItems().toString();
             Therapy therapy = new Therapy(idPatient, boxTherapyName.getValue(), boxDrugs.getValue(), Integer.parseInt(boxDailyDoses.getValue()), Integer.parseInt(boxAmount.getValue()), instruction.substring(1, instruction.length()-1), dateStart.getValue(), dateEnd.getValue());
-            
+
             // Add a new therapy
             if(boxTherapy.getValue().equals("Nuova")){
                 therapy.insertInDatabase();
@@ -210,6 +209,8 @@ public class DoctorManageTherapy implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             newScene.showAlert("Errore inserimento/aggiornamento", "Errore! Dati non aggiornati/inseriti, Riprovare", Alert.AlertType.ERROR);
         }
+
+        refreshCombo();  // Refresh comboBox values
     }
 
     /**
@@ -230,6 +231,7 @@ public class DoctorManageTherapy implements Initializable {
             newScene.showAlert("Elimina", "Dati  elimanti correttamente", Alert.AlertType.INFORMATION);
         } catch (SQLException | ClassNotFoundException e) {
             newScene.showAlert("Errore Eliminazione", "Errore! Dati non eliminati, Riprovare", Alert.AlertType.ERROR);
+            System.err.println(e);
         }
     }
 
@@ -259,6 +261,7 @@ public class DoctorManageTherapy implements Initializable {
 
        } catch (SQLException | ClassNotFoundException e) {  // Send a show aller if the update has failed
            newScene.showAlert("Errore Invio", "Errore! Dati non aggiornati, Riprovare", Alert.AlertType.ERROR);
+            System.err.println(e);
        }
     }
 
@@ -273,8 +276,15 @@ public class DoctorManageTherapy implements Initializable {
     // Check all box if are empty
     // Return false if there is a problem with controls
     public boolean checkCombo(){
-        // if box are not empty or box therapy is not NUOVO
-        if(boxTherapy.getValue().isEmpty() && boxTherapyName.getValue().isEmpty() && boxDrugs.getValue().isEmpty() && boxAmount.getValue().isEmpty() && boxDailyDoses.getValue().isEmpty() && !boxTherapy.getValue().equals("Nuova")){
+        // if box are empty
+        System.out.println("BOXTHERAPY: " + boxTherapy.getValue());
+        System.out.println("BOXTHERAPYNAME: " + boxTherapyName.getValue());
+        System.out.println("BOXDRUGS " + boxDrugs.getValue());
+        System.out.println("BOXAMOUNT: " + boxAmount.getValue());
+        System.out.println("DATESTART: " + dateStart.getValue());
+        System.out.println("BOXDAILYDOSES: " + boxDailyDoses.getValue());
+
+        if(boxTherapy.getValue().equals("Nuova") && (boxTherapy == null || boxTherapyName == null || boxDrugs == null || boxAmount == null || boxDailyDoses == null)){
             newScene.showAlert("Errore", "Inserire tutti i campi", Alert.AlertType.ERROR);
             return false;
         }
