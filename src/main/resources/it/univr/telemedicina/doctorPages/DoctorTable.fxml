@@ -19,7 +19,7 @@
         </AnchorPane>
       <TableView fx:id="doctorTable" layoutX="17.0" layoutY="93.0" prefHeight="399.0" prefWidth="554.0">
         <columns>
-          <TableColumn fx:id="columnPatient" prefWidth="96.0" text="Paziente" />
+          <TableColumn fx:id="columnPatient" prefWidth="96.0" text="ID Paziente" />
           <TableColumn fx:id="columnDate" prefWidth="92.0" text="Data" />
             <TableColumn fx:id="columnCondition" prefWidth="172.0" text="Condizione pressione" />
             <TableColumn fx:id="columnButton" prefWidth="193.00003051757812" text="Analizza" />

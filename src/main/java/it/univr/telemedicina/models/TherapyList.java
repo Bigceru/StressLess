@@ -77,7 +77,6 @@ public class TherapyList extends ArrayList<Therapy> {
     public ArrayList<Therapy> getCurrentTherapy(int idPatient) {
         ArrayList<Therapy> list = getTherapyById(idPatient);
         ArrayList<Therapy> correctTherapy = new ArrayList<>();
-        System.out.println(LocalDate.now());
 
         // Cycle all the therapies found by id and get only the ones witch are currently in use
         for(Therapy therapy : list) {

@@ -122,6 +122,6 @@ public class DoctorPageController implements Initializable {
      * @param doctor doctor
      */
     public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+        DoctorPageController.doctor = doctor;
     }
 }

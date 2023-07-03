@@ -1,11 +1,13 @@
 package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.models.Pressure;
 import it.univr.telemedicina.models.PressureList;
 import it.univr.telemedicina.models.Therapy;
 import it.univr.telemedicina.models.TherapyList;
 import it.univr.telemedicina.models.users.Doctor;
 import it.univr.telemedicina.utilities.Database;
+import it.univr.telemedicina.utilities.PressureField;
 import it.univr.telemedicina.utilities.TherapyFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +24,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class DoctorStatisticsSceneController {
-    MainApplication newScene;
+    MainApplication newScene = new MainApplication();
     @FXML
     public Button buttonShowGraph;
     @FXML
@@ -67,6 +69,9 @@ public class DoctorStatisticsSceneController {
     // All category selected
     ArrayList<String> categorySelected = new ArrayList<>();
 
+    // ArrayList to store the pressure to use for Analyze table
+    public static ArrayList<Pressure> nicePressureForTable = new ArrayList<>();
+    public static ArrayList<Therapy> niceTherapyForTable = new ArrayList<>();
 
     // Doctor instance
     private static Doctor doctor;
@@ -78,7 +83,11 @@ public class DoctorStatisticsSceneController {
      * If the "Therapies" tab is selected, the graph will show the progress of the therapies.
      */
     public void changeTab() {
+        // Clear variable and graph
         stackedBarChart.getData().clear();
+        nicePressureForTable.clear();
+        niceTherapyForTable.clear();
+
         if (tabPressure.isSelected()) {
             stackedBarChart.setTitle("ANDAMENTO PRESSIONI");
             // remove all selected radio button in the other tab
@@ -148,7 +157,6 @@ public class DoctorStatisticsSceneController {
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
 
-
         // Check date
         if (end == null || start == null || start.isAfter(end)) {
             dateStart.setStyle("-fx-text-fill: red;");
@@ -159,14 +167,17 @@ public class DoctorStatisticsSceneController {
             dateEnd.setStyle("-fx-text-fill: black;");
         }
 
+        ArrayList<Pressure> pressureListForAnalyzeTable;
         try {
             Database db = new Database(2);
 
             PressureList pressureList = new PressureList();
+            pressureListForAnalyzeTable = new ArrayList<>();
 
             // Cycle for every Patient I find
-            for(String s : getPatientsConditionsQuery()){
-                list.addAll(pressureList.getWhatUWantString(pressureList.getPressureToString(pressureList.getPressuresByDate(Integer.parseInt(s), start, end)),new Integer[]{1,6}));
+            for (String s : getPatientsConditionsQuery()) {
+                list.addAll(pressureList.getWhatUWantString(pressureList.getPressureToString(pressureList.getPressuresByDate(Integer.parseInt(s), start, end)), new PressureField[]{PressureField.DATE, PressureField.CONDITION_PRESSURE}));
+                pressureListForAnalyzeTable.addAll(pressureList.getPressuresByDate(Integer.parseInt(s), start, end));
             }
 
             // Query the database to get pressure data for the selected period
@@ -203,8 +214,23 @@ public class DoctorStatisticsSceneController {
         if (radioPIS.isSelected())
             categorySelected.add("Ipertensione sistolica isolata");
 
+        // Method to get only the pressure selected
+        setPressureFromCategory(categorySelected, pressureListForAnalyzeTable);
         // Call method to set Graph
         setGraph(categorySelected, start, end, allDate, list);
+    }
+
+    /**
+     * Method to fill the nicePressureForTable ArrayList (contains pressures to use in the Analyze table)
+     * @param categorySelected condition which the pressure must have
+     * @param listOfPressure list of all pressure to filter by condition
+     */
+    private void setPressureFromCategory(ArrayList<String> categorySelected, ArrayList<Pressure> listOfPressure) {
+        // Cycle all the pressure and take only the ones with the specified condition
+        for(Pressure pressure : listOfPressure) {
+            if(categorySelected.contains(pressure.getConditionPressure()))
+                nicePressureForTable.add(pressure);
+        }
     }
 
     /***
@@ -213,9 +239,9 @@ public class DoctorStatisticsSceneController {
     public void createGraphTherapie(){
         // reset data
         stackedBarChart.getData().clear();
-        ArrayList<String> queryResult = new ArrayList<>();
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
+        ArrayList<String> queryResult = new ArrayList<>();
 
         //Check date
         if (end == null || start == null || start.isAfter(end)) {
@@ -228,6 +254,7 @@ public class DoctorStatisticsSceneController {
         }
 
         TherapyList therapyList = new TherapyList();
+        ArrayList<Therapy> therapyListForAnalyzeTable = new ArrayList<>();
 
         // Cycle for every Patient I find
         for(String id : getPatientsConditionsQuery()){
@@ -257,7 +284,23 @@ public class DoctorStatisticsSceneController {
         if (radioTSympatholytic.isSelected())
             therapiesSelected.add("SIMPATICOLITICI");
 
+        // Method to get only the therapy selected
+        setTherapyFromCategory(therapiesSelected, therapyListForAnalyzeTable);
+        // Call method to set Graph
         setGraph(therapiesSelected, start, end, allDate, queryResult);
+    }
+
+    /**
+     * Method to fill the nicePressureForTable ArrayList (contains pressures to use in the Analyze table)
+     * @param therapiesSelected condition which the pressure must have
+     * @param listOfTherapies list of all pressure to filter by condition
+     */
+    private void setTherapyFromCategory(ArrayList<String> therapiesSelected, ArrayList<Therapy> listOfTherapies) {
+        // Cycle all the pressure and take only the ones with the specified condition
+        for(Therapy therapy : listOfTherapies) {
+            if(therapiesSelected.contains(therapy.getTherapyName()))
+                niceTherapyForTable.add(therapy);
+        }
     }
 
     /***
@@ -377,20 +420,10 @@ public class DoctorStatisticsSceneController {
      * @return string to insert in the query
      */
     private ArrayList<String> getPatientsConditionsQuery() {
-        StringBuilder queryPatients = new StringBuilder();
-
         try {
             Database database = new Database(2);
 
             ArrayList<String> patientsID = database.getQuery("SELECT ID FROM Patients WHERE refDoc = " + doctor.getID(), new String[]{"ID"});
-
-            /*patientsID.forEach(id -> queryPatients.append("IDPatient = ").append(id).append(" OR "));
-
-            // Remove last ||
-            if(!patientsID.isEmpty())
-                queryPatients.delete(queryPatients.length()-3, queryPatients.length());
-            else    // If the query is empty
-                queryPatients.append("1 = 0");*/
 
             database.closeAll();
 
@@ -398,13 +431,17 @@ public class DoctorStatisticsSceneController {
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        //return queryPatients.toString();
     }
 
     @FXML
     private void showNewTableAnalysis() throws IOException {
-        newScene.addScene("DoctorTable.fxml");
+        if(!(nicePressureForTable == null || nicePressureForTable.isEmpty()))
+            newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorTable.fxml");
+        else if(!(niceTherapyForTable == null || niceTherapyForTable.isEmpty())){
+            newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorTable.fxml");
+        }
+        else
+            newScene.showAlert("Errore dati", "Non sono stati definiti dei dati da analizzare!", Alert.AlertType.ERROR);
     }
 
     public ArrayList<String> getSelectedRadioButton() {

@@ -1,8 +1,13 @@
 package it.univr.telemedicina.models;
 
+import it.univr.telemedicina.MainApplication;
+import it.univr.telemedicina.controller.doctor.DoctorPageController;
+import it.univr.telemedicina.controller.doctor.DoctorPatientAnalysisController;
+import it.univr.telemedicina.controller.doctor.DoctorStatisticsSceneController;
 import it.univr.telemedicina.exceptions.ParameterException;
 import it.univr.telemedicina.utilities.Database;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;

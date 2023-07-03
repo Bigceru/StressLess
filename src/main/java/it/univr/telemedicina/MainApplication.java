@@ -72,7 +72,6 @@ public class MainApplication extends Application {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
-
     }
 
     /***

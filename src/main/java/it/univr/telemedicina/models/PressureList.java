@@ -1,6 +1,7 @@
 package it.univr.telemedicina.models;
 
 import it.univr.telemedicina.utilities.Database;
+import it.univr.telemedicina.utilities.PressureField;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -128,15 +129,15 @@ public class PressureList extends ArrayList<Pressure> {
      * @param choice which data i want
      * @return list that contain the elements based choice
      */
-    public ArrayList<String> getWhatUWantString(ArrayList<String> pressures, Integer[] choice){
+    public ArrayList<String> getWhatUWantString(ArrayList<String> pressures, PressureField[] choice){
         ArrayList<String> list = new ArrayList<>();
         int size = pressures.size();
 
         // Cycle all pressures and select based choice
         for(int i = 0; i < size - 6; i += 7){
             // Slide choice
-            for(int j: choice)
-                list.add(pressures.get(i+j)); // Add element that i want
+            for(PressureField j: choice)
+                list.add(pressures.get(i + j.ordinal())); // Add element that i want
         }
         return list;
     }
