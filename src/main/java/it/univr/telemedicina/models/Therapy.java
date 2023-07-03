@@ -107,17 +107,17 @@ public class Therapy implements TherapyInterface {
 
     /**
      * Method to check if a therapy has been followed right to the Patient (amount of drugs and hour to take them)
-     * @param idPatient id of the patient
-     * @param therapyName name of the therapy
-     * @param drugName name of drug taken
-     * @param dailyDoses doses fo drugs taken by day
-     * @param amountTaken amount of drug taken
-     * @param instructions instructions of the therapy given by the doctor
-     * @param startDate start date of the therapy
-     * @param endDate end date of the therapy
+     * @para idPatient id of the patient
+     * @para therapyName name of the therapy
+     * @para drugName name of drug taken
+     * @para dailyDoses doses fo drugs taken by day
+     * @para amountTaken amount of drug taken
+     * @para instructions instructions of the therapy given by the doctor
+     * @para startDate start date of the therapy
+     * @para endDate end date of the therapy
      * @return  boolean, true if the therapy was done right, false otherwise
      */
-    public boolean checkTherapy(int idPatient, String therapyName, String drugName, int dailyDoses, int amountTaken, String instructions, LocalDate startDate, LocalDate endDate){
+    public boolean checkTherapy(){ //int idPatient, String therapyName, String drugName, int dailyDoses, int amountTaken, String instructions, LocalDate startDate, LocalDate endDate
         try {
             Database database = new Database(2);
             ArrayList<String> drugsTakenQuery = database.getQuery("SELECT Date, Hour, Quantity FROM TakenDrugs WHERE IDPatient = " + idPatient + " AND DrugName = '" + drugName + "' AND Date BETWEEN '" + startDate.toString() + "' AND '" + endDate.toString() + "'", new String[]{"Date", "Hour", "Quantity"});
@@ -193,4 +193,5 @@ public class Therapy implements TherapyInterface {
             throw new RuntimeException(e);
         }
     }
+
 }

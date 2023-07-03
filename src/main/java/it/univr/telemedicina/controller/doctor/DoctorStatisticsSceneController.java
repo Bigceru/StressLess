@@ -142,7 +142,7 @@ public class DoctorStatisticsSceneController {
     public void createGraphPression() {
         // Reset data
         stackedBarChart.getData().clear();
-        ArrayList<String> list;
+        ArrayList<String> list = new ArrayList<>();
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
 
@@ -384,20 +384,23 @@ public class DoctorStatisticsSceneController {
             Database database = new Database(2);
 
             ArrayList<String> patientsID = database.getQuery("SELECT ID FROM Patients WHERE refDoc = " + doctor.getID(), new String[]{"ID"});
-            patientsID.forEach(id -> queryPatients.append("IDPatient = ").append(id).append(" OR "));
+
+            /*patientsID.forEach(id -> queryPatients.append("IDPatient = ").append(id).append(" OR "));
 
             // Remove last ||
             if(!patientsID.isEmpty())
                 queryPatients.delete(queryPatients.length()-3, queryPatients.length());
             else    // If the query is empty
-                queryPatients.append("1 = 0");
+                queryPatients.append("1 = 0");*/
 
             database.closeAll();
+
+            return patientsID;
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        return queryPatients.toString();
+        //return queryPatients.toString();
     }
 
     @FXML

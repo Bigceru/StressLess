@@ -111,7 +111,7 @@ public class DoctorHomeSceneController implements Initializable {
             // Open database hospital and get list of patients with the doctor id
             Database db = new Database(2);
             ArrayList<String> info = db.getQuery("SELECT ID, name, surname FROM Patients WHERE refDoc = " + doctor.getID(), new String[]{"ID", "name", "surname"});
-            ArrayList<String> infoTherapies;
+            ArrayList<String> resultQueryTherapies = new ArrayList<>();
             lblCountPatients.setText(info.size()/3 + " "); //Number of patients
 
             // If there is no therapy
@@ -126,12 +126,6 @@ public class DoctorHomeSceneController implements Initializable {
                 for(int i = 0; i < info.size() - 2; i += 3) {
                     resultQueryTherapies.addAll(therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getCurrentTherapy(Integer.parseInt(info.get(i)))), new TherapyFields[]{TherapyFields.ID_PATIENT, TherapyFields.THERAPY_NAME}));
                 }
-
-                // Remove the last unused OR
-                queryString.delete(queryString.length()-15, queryString.length()-1);
-
-                // Query for Therapies
-                infoTherapies = db.getQuery(queryString.toString(), new String[]{"IDPatient", "TherapyName"});
             }
 
             // Initialize the data to insert in the table
@@ -139,9 +133,9 @@ public class DoctorHomeSceneController implements Initializable {
                 StringBuilder terapie = new StringBuilder();
 
                 // Cycle the list of therapies and save the therapies of the patient with id info.get(i)
-                for(int j = 0; j < infoTherapies.size()-1; j += 2) {
-                    if(infoTherapies.get(j).equals(info.get(i))) {
-                        terapie.append(infoTherapies.get(j + 1)).append(", ");
+                for(int j = 0; j < resultQueryTherapies.size()-1; j += 2) {
+                    if(resultQueryTherapies.get(j).equals(info.get(i))) {
+                        terapie.append(resultQueryTherapies.get(j + 1)).append(", ");
                     }
                 }
 

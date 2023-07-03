@@ -105,20 +105,20 @@ public class HomeSceneController implements Initializable {
 
         TablePatientDrugs dati;
 
-            //There is no therapy
-            if(info.isEmpty()) {
-                lblTherapyState.setText("FUORI TERAPIA");
-                tableTherapies.setPlaceholder(new Label("Non devi assumere farmaci"));
-                return;
-            }
-            else
-                lblTherapyState.setText("IN TERAPIA");
+        //There is no therapy
+        if(queryResult.isEmpty()) {
+            lblTherapyState.setText("FUORI TERAPIA");
+            tableTherapies.setPlaceholder(new Label("Non devi assumere farmaci"));
+            return;
+        }
+        else
+            lblTherapyState.setText("IN TERAPIA");
 
-            //Initialize
-            for(int i = 0; i < info.size()-3; i = i + 4){
-                dati = new TablePatientDrugs(info.get(i), Integer.parseInt(info.get(i+1)), Integer.parseInt(info.get(i+2)),info.get(i+3));
-                therapy.add(dati);
-            }
+        // Initialize
+        for(int i = 0; i < queryResult.size()-3; i = i + 4){
+            dati = new TablePatientDrugs(queryResult.get(i), Integer.parseInt(queryResult.get(i+1)), Integer.parseInt(queryResult.get(i+2)),queryResult.get(i+3));
+            therapy.add(dati);
+        }
 
         //Setting columns
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -145,7 +145,8 @@ public class HomeSceneController implements Initializable {
      * Message form the system
      */
     private void systemMessage(){
-        Therapy therapy = new Therapy();
+        //Therapy therapy = new Therapy();
+        TherapyList therapyList = new TherapyList();
 
         try {
             Database database = new Database(2);
@@ -155,7 +156,7 @@ public class HomeSceneController implements Initializable {
             // Cycle all the therapies fo the Patient
             for(Therapy therapy : resultTherapyQuery){
                 // check for each therapy if patient do the right thing
-                boolean check =  therapy.checkTherapy(patient.getPatientID(), resultTherapyQuery.get(i),resultTherapyQuery.get(i+1),Integer.parseInt(resultTherapyQuery.get(i+2)) , Integer.parseInt(resultTherapyQuery.get(i+3)),resultTherapyQuery.get(i+4),LocalDate.now(),LocalDate.now().minusDays(3));
+                boolean check = therapy.checkTherapy();
 
                 if(!check) {
                     // Query to insert the new alert message in database

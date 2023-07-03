@@ -118,26 +118,24 @@ public class DoctorManageTherapy implements Initializable {
      */
     @FXML
     public void handleBoxTherapy(ActionEvent actionEvent) {
-        try{
-            Database database = new Database(2);
 
-            // Check if there is a value in boxTherapy
-            if(boxTherapy.getValue().isEmpty()) {
-                newScene.showAlert("Errore", "Inserire il campo TERAPIA", Alert.AlertType.ERROR);
+        // Check if there is a value in boxTherapy
+        if(boxTherapy.getValue().isEmpty()) {
+            newScene.showAlert("Errore", "Inserire il campo TERAPIA", Alert.AlertType.ERROR);
+        }
+        // Set all visible
+        else {
+            // If "Nuova" was selected
+            if(boxTherapy.getValue().equals("Nuova")) {
+                boxTherapyName.setVisible(true);
+                lblNameTherapy.setVisible(true);
+                buttonSend.setText("Aggiungi");
             }
-            // Set all visible
-            else {
-                // If "Nuova" was selected
-                if(boxTherapy.getValue().equals("Nuova")) {
-                    boxTherapyName.setVisible(true);
-                    lblNameTherapy.setVisible(true);
-                    buttonSend.setText("Aggiungi");
-                }
-                else {  // If "Nuova" was NOT selected, modify the selected therapy. Set all box with relative dates
-                    // Edit button specs
-                    boxTherapyName.setVisible(false);
-                    lblNameTherapy.setVisible(false);
-                    buttonSend.setText("Modifica");
+            else {  // If "Nuova" was NOT selected, modify the selected therapy. Set all box with relative dates
+                // Edit button specs
+                boxTherapyName.setVisible(false);
+                lblNameTherapy.setVisible(false);
+                buttonSend.setText("Modifica");
 
                 TherapyList therapyList = new TherapyList();
                 // Do a query and add all the values in the fields/boxes
@@ -162,10 +160,9 @@ public class DoctorManageTherapy implements Initializable {
                 for(String instruction : resultTherapiesQuery.getInstructions().split(","))
                     checkBoxInstruction.getCheckModel().check(Instructions.valueOf(instruction.trim().replace(" ", "_")).ordinal());
 
-                    dateStart.setValue(LocalDate.parse(resultTherapiesQuery.get(5)));
-                    System.out.println(LocalDate.parse(resultTherapiesQuery.get(5)));
-                    dateEnd.setValue(LocalDate.parse(resultTherapiesQuery.get(6)));
-                }
+                dateStart.setValue(LocalDate.parse(resultTherapiesQuery.getStartDate().toString()));
+                dateEnd.setValue(LocalDate.parse(resultTherapiesQuery.getEndDate().toString()));
+            }
 
             // Set label visibility properties
             boxDrugs.setVisible(true);
@@ -206,7 +203,8 @@ public class DoctorManageTherapy implements Initializable {
                 newScene.showAlert("Invio", "Dati aggiunti correttamente", Alert.AlertType.INFORMATION);
             }
             else {
-                database.updateQuery("Therapies", info, Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue()));
+                //database.updateQuery("Therapies", info, Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue()));
+                therapy.updateInDatabase(Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue()));
                 newScene.showAlert("Invio", "Dati modificati correttamente", Alert.AlertType.INFORMATION);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -225,8 +223,10 @@ public class DoctorManageTherapy implements Initializable {
         }
 
         try{
-            Database database = new Database(2);
-            database.deleteQuery("Therapies",Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue(),"DrugName",boxDrugs.getValue()));
+            //database.deleteQuery("Therapies",Map.of("IDPatient", idPatient,"TherapyName",boxTherapyName.getValue(),"DrugName",boxDrugs.getValue()));
+            // Create the therapy instance and then remove it from the db
+            Therapy therapy = new Therapy(idPatient, boxTherapyName.getValue(), boxDrugs.getValue(), Integer.parseInt(boxDailyDoses.getValue()), Integer.parseInt(boxAmount.getValue()), null, dateStart.getValue(), dateEnd.getValue());
+            therapy.removeInDatabase();
             newScene.showAlert("Elimina", "Dati  elimanti correttamente", Alert.AlertType.INFORMATION);
         } catch (SQLException | ClassNotFoundException e) {
             newScene.showAlert("Errore Eliminazione", "Errore! Dati non eliminati, Riprovare", Alert.AlertType.ERROR);
