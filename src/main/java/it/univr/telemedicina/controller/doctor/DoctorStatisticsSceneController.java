@@ -259,6 +259,7 @@ public class DoctorStatisticsSceneController {
         // Cycle for every Patient I find
         for(String id : getPatientsConditionsQuery()){
             queryResult.addAll(therapyList.getWhatUWantString(therapyList.getTherapyToString(therapyList.getTherapyByDate(Integer.parseInt(id), start, null)), new TherapyFields[]{TherapyFields.START_DATE,TherapyFields.THERAPY_NAME}));
+            therapyListForAnalyzeTable.addAll(therapyList.getTherapyByDate(Integer.parseInt(id), start, null));
         }
 
         // Query the database to get therapy data for the selected period

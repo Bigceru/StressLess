@@ -6,6 +6,9 @@ import it.univr.telemedicina.controller.doctor.DoctorPatientAnalysisController;
 import it.univr.telemedicina.controller.doctor.DoctorStatisticsSceneController;
 import it.univr.telemedicina.exceptions.ParameterException;
 import it.univr.telemedicina.utilities.Database;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,6 +24,7 @@ public class Pressure {
     private int diastolicPressure;
     private String symptoms;
     private String conditionPressure;
+    private Button button;  // Button for the analyze table
 
     /**
      * Contructor
@@ -40,6 +44,27 @@ public class Pressure {
         this.diastolicPressure = diastolicPressure;
         this.symptoms = symptoms;
         this.conditionPressure = conditionPressure;
+        this.button = new Button("Mostra di più");
+        this.button.setOnAction(new EventHandler<>() {
+            /**
+             * Method called when in the tableview press the button relative to this pressure (I want ot show the Patient therapy status)
+             * @param event the event which occurred
+             */
+            @Override
+            public void handle(ActionEvent event) {
+                // take new Scene to open the new page
+                MainApplication newScene = new MainApplication();
+                try {
+                    // Pass to Doctor page the Patient who I want to see
+                    DoctorPatientAnalysisController controller = new DoctorPatientAnalysisController();
+                    controller.setPatientSelected(idPatient);
+
+                    newScene.addScene("/it/univr/telemedicina/doctorPages/DoctorPatientAnalysisScene.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public Pressure(int idPatient, LocalDate date, LocalTime hour, int systolicPressure, int diastolicPressure, String symptoms) {
@@ -52,6 +77,11 @@ public class Pressure {
         this.conditionPressure = checkPressure(systolicPressure, diastolicPressure);
     }
 
+    /**
+     * Add a new Pressure in database
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void insertInDatabase() throws SQLException, ClassNotFoundException {
             Database database = new Database(2);
 
@@ -63,6 +93,11 @@ public class Pressure {
             database.closeAll();
     }
 
+    /**
+     * Remove from the database the pressure
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void removeInDatabase() throws SQLException, ClassNotFoundException {
         Database db = new Database(2);
         //Key --> fields, Values --> values
@@ -183,5 +218,9 @@ public class Pressure {
 
     public String getSymptoms() {
         return symptoms;
+    }
+
+    public Button getButton() {
+        return button;
     }
 }
