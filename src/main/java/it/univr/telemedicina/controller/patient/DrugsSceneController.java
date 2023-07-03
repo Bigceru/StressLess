@@ -88,14 +88,16 @@ public class DrugsSceneController implements Initializable {
 
             db.insertQuery("TakenDrugs", new String[]{"IDPatient", "Date", "Hour", "DrugName", "Quantity"}, new Object[]{patient.getPatientID(), date, hours, drug, Integer.parseInt((String) boxDrugsAmount.getValue())});
 
+            setTableDrugs();
+            
             // Add pressure success
             newScene.showAlert("Invio","Valori inviati correttamente\n ATTENZIONE: nel caso di errore dei valori inseriti puoi rimuoverli indicando gli stessi parametri e cliccando rimuovi", Alert.AlertType.INFORMATION);
-
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            newScene.showAlert("Valori non validi", "I valori inseriti sono già presenti", Alert.AlertType.ERROR);
+            System.err.println(e);
         } catch (ParameterException | NumberFormatException | NullPointerException e){
             System.out.println("Error");
-            System.out.println(e);
+            System.err.println(e);
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
         }
         setTableDrugs();
@@ -123,7 +125,7 @@ public class DrugsSceneController implements Initializable {
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
         } catch (SQLException | ClassNotFoundException e) {
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
-            throw new RuntimeException(e);
+            System.err.println(e);
         }
         setTableDrugs();
     }

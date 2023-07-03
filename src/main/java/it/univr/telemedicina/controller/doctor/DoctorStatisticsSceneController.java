@@ -2,9 +2,11 @@ package it.univr.telemedicina.controller.doctor;
 
 import it.univr.telemedicina.MainApplication;
 import it.univr.telemedicina.models.PressureList;
+import it.univr.telemedicina.models.Therapy;
 import it.univr.telemedicina.models.TherapyList;
 import it.univr.telemedicina.models.users.Doctor;
 import it.univr.telemedicina.utilities.Database;
+import it.univr.telemedicina.utilities.TherapyFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;

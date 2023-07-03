@@ -60,9 +60,11 @@ public class TherapyList extends ArrayList<Therapy> {
         // Cycle all the therapies found by id and get only the ones with the date in the range
         for(Therapy therapy : list) {
             if(therapy.getStartDate().isAfter(start) || therapy.getStartDate().isEqual(start))
-                if (therapy.getEndDate().isBefore(end) || therapy.getEndDate().isEqual(end))
+                if (end == null || therapy.getEndDate().isBefore(end) || therapy.getEndDate().isEqual(end))
                     correctTherapy.add(therapy);
         }
+        System.out.println("SIZE " + correctTherapy.size());
+        correctTherapy.forEach(therapy -> System.out.println(therapy.getTherapyName()));
 
         return correctTherapy;
     }

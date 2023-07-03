@@ -98,21 +98,19 @@ public class PressureSceneController implements Initializable {
                 dati = new TablePatientPressures(pressure.getDate(), pressure.getHour().toString(), pressure.getSystolicPressure(), pressure.getDiastolicPressure(), pressure.getConditionPressure());
                 collection.add(dati);
             }
-
-            //Setting columns
-            columnDataPresTable.setCellValueFactory(new PropertyValueFactory<>("date"));
-            columnHourPresTable.setCellValueFactory(new PropertyValueFactory<>("hour"));
-            columnPressurePresTable.setCellValueFactory(new PropertyValueFactory<>("pressSD"));
-            columnStatePresTable.setCellValueFactory(new PropertyValueFactory<>("state"));
-
-            //Set items in table
-            tablePatientPres.setItems(collection);
         }
         else {  // if there arent pressure
             tablePatientPres.setPlaceholder(new Label("Nessuna pressione rilevata in precedenza"));
-            return;
         }
+        //Setting columns
+        columnDataPresTable.setCellValueFactory(new PropertyValueFactory<>("date"));
+        columnHourPresTable.setCellValueFactory(new PropertyValueFactory<>("hour"));
+        columnPressurePresTable.setCellValueFactory(new PropertyValueFactory<>("pressSD"));
+        columnStatePresTable.setCellValueFactory(new PropertyValueFactory<>("state"));
 
+        //Set items in table
+        tablePatientPres.setItems(collection);
+        tablePatientPres.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     // ##### Methods for Pressure page #####
