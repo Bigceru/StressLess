@@ -64,15 +64,16 @@ public class HomeSceneController implements Initializable {
 
             // Add last pressure value to the label
             PressureList pressureList = new PressureList();
-            Pressure pressure = pressureList.getLastPressure(patient.getPatientID());
+            Pressure pressure;
 
-            if(pressure == null) {
+            if(pressureList.getPressuresById(patient.getPatientID()).isEmpty() /*== null*/) {
                 lblPressure.setText("--/--");
                 lblLastPressure.setText("--/--");
             }
             else {
+                pressure = pressureList.getLastPressure(patient.getPatientID());
                 lblPressure.setText(pressure.getSystolicPressure() + "/" + pressure.getDiastolicPressure());
-                lblLastPressure.setText(pressure.getConditionPressure());
+                lblLastPressure.setText(pressure.getDate().toString());
             }
 
             // Query to set iconNewMail

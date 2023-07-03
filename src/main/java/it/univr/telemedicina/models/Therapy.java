@@ -65,6 +65,7 @@ public class Therapy implements TherapyInterface {
         setDati.put("DrugName", this.drugName);
         setDati.put("DailyDoses", this.dailyDoses);
         setDati.put("AmountTaken",this.amountTaken);
+        setDati.put("Instructions", this.instructions);
         setDati.put("StartDate", this.startDate);
         setDati.put("EndDate", this.endDate);
 

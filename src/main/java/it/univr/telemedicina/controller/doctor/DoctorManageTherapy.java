@@ -78,6 +78,7 @@ public class DoctorManageTherapy implements Initializable {
      */
     @FXML
     public void handleBoxTherapy(ActionEvent actionEvent) {
+        System.out.println(actionEvent.getEventType().toString());
         // Check if there is a value in boxTherapy
         if(boxTherapy.getValue() == null) {
             return;
@@ -205,9 +206,6 @@ public class DoctorManageTherapy implements Initializable {
     @FXML
     private void handleSendInformationButton(ActionEvent actionEvent){
         //checkCombo return false, send error
-        if(!checkCombo()){
-            return;
-        }
 
         try {
            Database database = new Database(2);

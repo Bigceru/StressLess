@@ -43,11 +43,11 @@ public class DrugsSceneController implements Initializable {
     @FXML
     public TableColumn <DrugsTablePat, String > columnHourDrugsTable;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         displayDrugs();
         setTableDrugs();
+        tableDrugs.refresh();
     }
 
     /***
@@ -100,7 +100,6 @@ public class DrugsSceneController implements Initializable {
             System.err.println(e);
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
         }
-        setTableDrugs();
     }
 
     /***
@@ -127,7 +126,6 @@ public class DrugsSceneController implements Initializable {
             newScene.showAlert("Valori non validi", "Valori inseriti non validi, riprova", Alert.AlertType.ERROR);
             System.err.println(e);
         }
-        setTableDrugs();
     }
 
     /***

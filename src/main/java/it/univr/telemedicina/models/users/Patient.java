@@ -24,12 +24,13 @@ public class Patient extends User {
 
     /**
      * Constructor for the table view in Doctor Home
-     * @param name Patient name
+     *
+     * @param name    Patient name
      * @param surname Patient surname
      * @param therapy Patient therapy
-     * @param reg Patient registration
+     * @param reg     Patient registration
      */
-    public Patient(String name, String surname, String therapy, RegistrationController reg){
+    public Patient(String name, String surname, String therapy, RegistrationController reg) {
         super(name, surname);
         this.reg = reg;
         this.therapy = therapy;
@@ -37,23 +38,24 @@ public class Patient extends User {
 
     /**
      * Patient constructor with check for existing values
-     * @param reg Patient registration
-     * @param name Patient name
-     * @param surname Patient surname
-     * @param email Patient email
+     *
+     * @param reg         Patient registration
+     * @param name        Patient name
+     * @param surname     Patient surname
+     * @param email       Patient email
      * @param phoneNumber Patient phone-number
-     * @param username Patient username
-     * @param password Patient password
-     * @param birthPlace Patient birth-palce
-     * @param province Patient province
-     * @param birthDate Patient birthdate
-     * @param domicile Patient domicile
-     * @param sex Patient sex
-     * @param taxIDCode Patient tax id code
-     * @param refDoc Patient doctor reference
+     * @param username    Patient username
+     * @param password    Patient password
+     * @param birthPlace  Patient birth-palce
+     * @param province    Patient province
+     * @param birthDate   Patient birthdate
+     * @param domicile    Patient domicile
+     * @param sex         Patient sex
+     * @param taxIDCode   Patient tax id code
+     * @param refDoc      Patient doctor reference
      */
     // Main Constructor
-    public Patient(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc){
+    public Patient(RegistrationController reg, String name, String surname, String email, String phoneNumber, String username, String password, String birthPlace, String province, LocalDate birthDate, String domicile, char sex, String taxIDCode, int refDoc) {
         super(name, surname, email, phoneNumber, username, password);
 
         this.reg = reg;
@@ -65,7 +67,7 @@ public class Patient extends User {
         this.taxIDCode = taxIDCode;
         this.refDoc = refDoc;
 
-        if(reg != null) {
+        if (reg != null) {
             check = checkName(name) & checkSurname(surname) & checkEmail(email) & checkPassword(password) & checkPhoneNumber(phoneNumber) & checkUsername(username) & checkProvince(province) & checkDomicile(domicile) & checkSex(sex) & checkBirthDate(birthDate) & checkBirthPlace(birthPlace) & checkRefDoc(refDoc) & checkTaxIdCode(taxIDCode);
 
             if (this.getCheck()) {
@@ -80,8 +82,7 @@ public class Patient extends User {
                     throw new RuntimeException(e);
                 }
             }
-        }
-        else
+        } else
             check = true;
     }
 
@@ -108,7 +109,7 @@ public class Patient extends User {
         }
 
         // Check if the tax code exists
-        if (alreadyExist("Patients","taxIDCode", taxIDCode)){
+        if (alreadyExist("Patients", "taxIDCode", taxIDCode)) {
             reg.setInvalidField("taxIDCode");
             return false;
         }
@@ -145,7 +146,7 @@ public class Patient extends User {
                 }
             }
         }
-        System.out.println("Codice cognome: " + codiceFiscale);
+        //System.out.println("Codice cognome: " + codiceFiscale);
 
         count = 0;
         //Check name
@@ -188,7 +189,7 @@ public class Patient extends User {
         if (sex == 'F')
             codiceFiscale.append(birthDate.getDayOfMonth() + 40);
         else {
-            if(birthDate.getDayOfMonth() < 10)
+            if (birthDate.getDayOfMonth() < 10)
                 codiceFiscale.append("0");
             codiceFiscale.append(birthDate.getDayOfMonth());
         }
@@ -198,7 +199,7 @@ public class Patient extends User {
             Database codiceCatastale = new Database(1);
             ArrayList<String> codPlace = codiceCatastale.getQuery("SELECT Codice FROM CC WHERE Comune = \"" + birthPlace.toUpperCase() + "\"", new String[]{"Codice"});
             //System.out.println(codiceCatastale.getQuery("SELECT * FROM CC", new String[]{"Codice", "Comune"}));
-            if(codPlace.size() > 0)
+            if (codPlace.size() > 0)
                 codiceFiscale.append(codPlace.get(0));
             else {
                 reg.setInvalidField("taxIDCode");
@@ -215,7 +216,7 @@ public class Patient extends User {
         codiceFiscale = new StringBuilder(codiceFiscale.toString().toUpperCase());
         Map<Character, Integer> evenTable = Map.ofEntries(
                 Map.entry('0', 0), Map.entry('1', 1), Map.entry('2', 2), Map.entry('3', 3),
-                Map.entry('4', 4),Map.entry('5', 5), Map.entry('6', 6), Map.entry('7', 7),
+                Map.entry('4', 4), Map.entry('5', 5), Map.entry('6', 6), Map.entry('7', 7),
                 Map.entry('8', 8), Map.entry('9', 9), Map.entry('A', 0), Map.entry('B', 1),
                 Map.entry('C', 2), Map.entry('D', 3), Map.entry('E', 4), Map.entry('F', 5),
                 Map.entry('G', 6), Map.entry('H', 7), Map.entry('I', 8), Map.entry('J', 9),
@@ -226,7 +227,7 @@ public class Patient extends User {
         );
         Map<Character, Integer> oddTable = new HashMap<>(Map.ofEntries(
                 Map.entry('0', 1), Map.entry('1', 0), Map.entry('2', 5), Map.entry('3', 7),
-                Map.entry('4', 9),Map.entry('5', 13), Map.entry('6', 15), Map.entry('7', 17),
+                Map.entry('4', 9), Map.entry('5', 13), Map.entry('6', 15), Map.entry('7', 17),
                 Map.entry('8', 19), Map.entry('9', 21), Map.entry('A', 1), Map.entry('B', 0),
                 Map.entry('C', 5), Map.entry('D', 7), Map.entry('E', 9), Map.entry('F', 13),
                 Map.entry('G', 15), Map.entry('H', 17), Map.entry('I', 19), Map.entry('J', 21),
@@ -236,7 +237,7 @@ public class Patient extends User {
                 Map.entry('W', 22), Map.entry('X', 25), Map.entry('Y', 24), Map.entry('Z', 23)
         ));
 
-        for(int i = 0; i < codiceFiscale.toString().length(); i++) {
+        for (int i = 0; i < codiceFiscale.toString().length(); i++) {
             if (i % 2 == 0)   // If it's odd
                 sum += oddTable.get(codiceFiscale.charAt(i));
             else    // If it's even
@@ -245,13 +246,13 @@ public class Patient extends User {
 
         // 2. Divide the obtained value by 26 and convert result in character, using a specified table
         String table = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        codiceFiscale.append(table.charAt(sum%26));
+        codiceFiscale.append(table.charAt(sum % 26));
 
         System.out.println("Codice fiscale: " + codiceFiscale.toString().toUpperCase());
 
         boolean tempCheck = codiceFiscale.toString().equals(taxIDCode);
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("taxIDCode");
 
 
@@ -263,9 +264,8 @@ public class Patient extends User {
      * @param phoneNumber String to verify
      * @return verification success
      */
-    public boolean checkPhoneNumber(String phoneNumber)
-    {
-        boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("Patients","phoneNumber", phoneNumber);
+    public boolean checkPhoneNumber(String phoneNumber) {
+        boolean tempCheck = phoneNumber.matches("^[0-9]{10,15}$") && !alreadyExist("Patients", "phoneNumber", phoneNumber);
 
         if (!tempCheck && reg != null)
             reg.setInvalidField("phoneNumber");
@@ -279,7 +279,7 @@ public class Patient extends User {
      * @return verification success
      */
     public boolean checkEmail(String email) {
-        boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("Patients","email", email);
+        boolean tempCheck = email.contains("@") && email.contains(".") && !alreadyExist("Patients", "email", email);
 
         if (!tempCheck && reg != null)
             reg.setInvalidField("email");
@@ -306,10 +306,10 @@ public class Patient extends User {
      * @param surname String to verify if is not empty
      * @return verification success
      */
-    protected boolean checkSurname(String surname){
+    protected boolean checkSurname(String surname) {
         boolean tempCheck = !surname.isEmpty();
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("surname");
 
         return tempCheck;
@@ -322,9 +322,9 @@ public class Patient extends User {
      */
     public boolean checkUsername(String username) {
         // looking for Username already exist or is empty
-        boolean tempCheck = !username.isEmpty() && !alreadyExist("Patients","username",username);
+        boolean tempCheck = !username.isEmpty() && !alreadyExist("Patients", "username", username);
 
-        if(!tempCheck && reg != null){
+        if (!tempCheck && reg != null) {
             reg.setInvalidField("username");
         }
         return tempCheck;
@@ -360,10 +360,10 @@ public class Patient extends User {
      * @return verification success
      */
     // Check province
-    private boolean checkProvince(String province){
+    private boolean checkProvince(String province) {
         boolean tempCheck = province != null && !province.isEmpty();
 
-        if(!tempCheck) {
+        if (!tempCheck) {
             reg.setInvalidField("province");
         }
 
@@ -375,10 +375,10 @@ public class Patient extends User {
      * @param birthPlace String to verify if is not empty
      * @return verification success
      */
-    private boolean checkBirthPlace(String birthPlace){
+    private boolean checkBirthPlace(String birthPlace) {
         boolean tempCheck = birthPlace != null && !birthPlace.isEmpty();
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("birthPlace");
 
         return tempCheck;
@@ -389,10 +389,10 @@ public class Patient extends User {
      * @param birthDate String to verify if is not empty
      * @return verification success
      */
-    private boolean checkBirthDate(LocalDate birthDate){
+    private boolean checkBirthDate(LocalDate birthDate) {
         boolean tempCheck = birthDate != null && !birthDate.isAfter(LocalDate.now());
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("birthDate");
 
         return tempCheck;
@@ -403,10 +403,10 @@ public class Patient extends User {
      * @param domicile String to verify if is not empty
      * @return verification success
      */
-    private boolean checkDomicile(String domicile){
+    private boolean checkDomicile(String domicile) {
         boolean tempCheck = domicile != null && !domicile.isEmpty();
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("domicile");
 
         return tempCheck;
@@ -420,7 +420,7 @@ public class Patient extends User {
     private boolean checkSex(char sex) {
         boolean tempCheck = sex != 'Z';     // If no sex has been selected
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("sex");
 
         return tempCheck;
@@ -431,10 +431,10 @@ public class Patient extends User {
      * @param refDoc String to verify if is not empty
      * @return verification success
      */
-    private boolean checkRefDoc(int refDoc){
+    private boolean checkRefDoc(int refDoc) {
         boolean tempCheck = refDoc != -1;   // If no doctor was selected
 
-        if(!tempCheck)
+        if (!tempCheck)
             reg.setInvalidField("refDoc");
 
         return tempCheck;
@@ -532,7 +532,9 @@ public class Patient extends User {
      * Set Domicile
      * @param domicile patient domicile
      */
-    public void setDomicile(String domicile){this.domicile = domicile;}
+    public void setDomicile(String domicile) {
+        this.domicile = domicile;
+    }
 
     /***
      * Get patient therapy

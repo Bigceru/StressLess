@@ -62,8 +62,6 @@ public class PressureSceneController implements Initializable {
     private final MainApplication newScene = new MainApplication();
     private static Patient patient;
 
-    ObservableList<TablePatientPressures> collection = FXCollections.observableArrayList();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTablePat();
@@ -86,7 +84,7 @@ public class PressureSceneController implements Initializable {
      * Table View Home
      */
     private void setTablePat() {
-        tablePatientPres.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        ObservableList<TablePatientPressures> collection = FXCollections.observableArrayList();
 
         PressureList pressureList = new PressureList();
         TablePatientPressures dati;
@@ -135,9 +133,8 @@ public class PressureSceneController implements Initializable {
             // Add pressure success
             newScene.showAlert("Invio","Valori inviati correttamente", Alert.AlertType.INFORMATION);
 
-            //setTablePat();  // Refresh table
-            collection.add(new TablePatientPressures(pressure.getDate(), pressure.getHour().toString(), pressure.getSystolicPressure(), pressure.getDiastolicPressure(), pressure.getConditionPressure()));
 
+            setTablePat();
             handleTimePresChoose(new ActionEvent());     // Refresh graph
             handleTimePresChoose(new ActionEvent());     // Refresh graph
         } catch (ParameterException | NumberFormatException | NullPointerException e) {
@@ -162,8 +159,9 @@ public class PressureSceneController implements Initializable {
             newScene.showAlert("Invio","Valori eliminati correttamente", Alert.AlertType.INFORMATION);
 
             // Refresh table
-            collection.removeIf(e -> (e.getDate().isEqual(pressure.getDate()) && (e.getHour() + ":00").equals(pressure.getHour().toString()) && e.getPressSD().equals(pressure.getSystolicPressure() + "/" + pressure.getDiastolicPressure())));
+            //collection.removeIf(e -> (e.getDate().isEqual(pressure.getDate()) && (e.getHour() + ":00").equals(pressure.getHour().toString()) && e.getPressSD().equals(pressure.getSystolicPressure() + "/" + pressure.getDiastolicPressure())));
 
+            setTablePat();
             handleTimePresChoose(new ActionEvent());     // Refresh graph
             handleTimePresChoose(new ActionEvent());     // Refresh graph
         } catch (ParameterException | NumberFormatException | NullPointerException e) {
