@@ -54,10 +54,6 @@ public class DoctorPlusInfoPatientController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Set line size property
-        lineFigure.endXProperty().bind(infoPane.widthProperty().subtract(12));
-        lineFigure.setEndY(lineFigure.getStartY());
-
         try{
             Database database = new Database(2);
             ArrayList<String> resultInfoQuery = database.getQuery("SELECT Detail FROM PatientsDetails WHERE IDPatient = " + idPatient, new String[]{"Detail"});

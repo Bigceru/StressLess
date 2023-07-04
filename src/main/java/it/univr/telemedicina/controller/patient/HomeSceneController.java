@@ -152,7 +152,8 @@ public class HomeSceneController implements Initializable {
         try {
             Database database = new Database(2);
 
-            ArrayList<Therapy> resultTherapyQuery = therapyList.getTherapyByDate(patient.getPatientID(), LocalDate.now().minusDays(3), LocalDate.now());
+            ArrayList<Therapy> resultTherapyQuery = therapyList.getCurrentTherapy(patient.getPatientID());
+            // therapyList.getTherapyByDate(patient.getPatientID(), LocalDate.now().minusDays(3), LocalDate.now());
 
             // Cycle all the therapies fo the Patient
             for(Therapy therapy : resultTherapyQuery){

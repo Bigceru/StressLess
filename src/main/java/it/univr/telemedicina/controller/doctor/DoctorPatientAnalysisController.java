@@ -58,10 +58,6 @@ public class DoctorPatientAnalysisController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Set line size property
-        //lineAnalysisScene.endXProperty().bind(patientAnalysisPane.widthProperty().subtract(12));
-        //lineAnalysisScene.setEndY(lineAnalysisScene.getStartY());
-
         // Initialize value for boxPatientList
         try {
             Database database = new Database(2);

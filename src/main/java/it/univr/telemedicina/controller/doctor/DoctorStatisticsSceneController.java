@@ -153,6 +153,8 @@ public class DoctorStatisticsSceneController {
     public void createGraphPression() {
         // Reset data
         stackedBarChart.getData().clear();
+        nicePressureForTable.clear();
+
         ArrayList<String> list = new ArrayList<>();
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
@@ -239,6 +241,8 @@ public class DoctorStatisticsSceneController {
     public void createGraphTherapie(){
         // reset data
         stackedBarChart.getData().clear();
+        niceTherapyForTable.clear();
+
         LocalDate start = dateStart.getValue();
         LocalDate end = dateEnd.getValue();
         ArrayList<String> queryResult = new ArrayList<>();
