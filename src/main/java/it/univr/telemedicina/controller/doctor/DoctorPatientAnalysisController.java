@@ -155,7 +155,6 @@ public class DoctorPatientAnalysisController implements Initializable {
      * @param idPatient id of the patient chosen
      */
     private void setTable(int idPatient){
-
         columnDate.prefWidthProperty().bind(tableSearchPatient.widthProperty().divide(6)); // w * 1/4
         columnHour.prefWidthProperty().bind(tableSearchPatient.widthProperty().divide(12)); // w * 1/8
         columnPressure.prefWidthProperty().bind(tableSearchPatient.widthProperty().divide(10)); // w * 1/8

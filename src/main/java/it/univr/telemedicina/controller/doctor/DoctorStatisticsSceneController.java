@@ -290,7 +290,7 @@ public class DoctorStatisticsSceneController {
             therapiesSelected.add("SIMPATICOLITICI");
 
         // Method to get only the therapy selected
-        setTherapyFromCategory(therapiesSelected, therapyListForAnalyzeTable);
+        setTherapyFromCategory(therapiesSelected, therapyListForAnalyzeTable, end);
         // Call method to set Graph
         setGraph(therapiesSelected, start, end, allDate, queryResult);
     }
@@ -300,10 +300,10 @@ public class DoctorStatisticsSceneController {
      * @param therapiesSelected condition which the pressure must have
      * @param listOfTherapies list of all pressure to filter by condition
      */
-    private void setTherapyFromCategory(ArrayList<String> therapiesSelected, ArrayList<Therapy> listOfTherapies) {
+    private void setTherapyFromCategory(ArrayList<String> therapiesSelected, ArrayList<Therapy> listOfTherapies, LocalDate end) {
         // Cycle all the pressure and take only the ones with the specified condition
         for(Therapy therapy : listOfTherapies) {
-            if(therapiesSelected.contains(therapy.getTherapyName()))
+            if(therapiesSelected.contains(therapy.getTherapyName()) && therapy.getStartDate().compareTo(end) <= 0)
                 niceTherapyForTable.add(therapy);
         }
     }
@@ -366,7 +366,6 @@ public class DoctorStatisticsSceneController {
                 label.setStyle("-fx-font-size: 16px; -fx-text-fill: white");
                 data.setNode(label);
                 data.getNode().setNodeOrientation(NodeOrientation.INHERIT);
-
             });
         }
 

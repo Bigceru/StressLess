@@ -98,6 +98,7 @@ public class MainApplication extends Application {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
