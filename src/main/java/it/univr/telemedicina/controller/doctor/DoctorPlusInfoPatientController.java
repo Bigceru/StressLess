@@ -109,6 +109,7 @@ public class DoctorPlusInfoPatientController implements Initializable {
 
             // change title and clear the graph
             lineChartPression.setTitle("Grafico Pressioni");
+            lineChartPression.lookup(".chart-title").setStyle("-fx-text-fill: white;");
             lineChartPression.getData().clear();
         }
         else if(event.getSource() == tabDrug){
@@ -116,7 +117,8 @@ public class DoctorPlusInfoPatientController implements Initializable {
             barChartDrug.setVisible(true);
 
             // change title and clear the graph
-            barChartDrug.setTitle("Grafico Farmaci Assunte");
+            barChartDrug.setTitle("Grafico Farmaci Assunti");
+            barChartDrug.lookup(".chart-title").setStyle("-fx-text-fill: white;");
             barChartDrug.getData().clear();
         }
     }

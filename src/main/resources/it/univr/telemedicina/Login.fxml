@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -12,20 +14,15 @@
     <children>
         <AnchorPane prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #272932;">
          <children>
-            <Label layoutX="27.0" layoutY="180.0" prefHeight="124.0" prefWidth="305.0" text="LA TUA SALUTE AL CENTRO" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Label>
-            <Label layoutX="22.0" layoutY="296.0" prefHeight="139.0" prefWidth="334.0" text="L'APP CHE FA LA DIFFERENZA" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Label>
+            <ImageView fitHeight="152.0" fitWidth="354.0" layoutX="8.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@StressLessLogo.png" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
         <AnchorPane layoutX="379.0" prefHeight="600.0" prefWidth="321.0" style="-fx-background-color: #3CA6A6; -fx-border-radius: 10; -fx-background-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <Label layoutX="34.0" layoutY="91.0" prefHeight="44.0" prefWidth="266.0" style="-fx-font-family: Monserrat;" text="BENTORNATO" textFill="WHITE" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="21.0">
+                <Label layoutX="45.0" layoutY="101.0" prefHeight="44.0" prefWidth="231.0" style="-fx-font-family: Monserrat;" text="BENTORNATO" textFill="WHITE" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0">
                     <font>
                         <Font size="36.0" />
                     </font>

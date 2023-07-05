@@ -94,6 +94,7 @@ public class DoctorPatientAnalysisController implements Initializable {
 
             patientSelected = 0;    // Reset the oreset value
         }
+        tableSearchPatient.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     /**

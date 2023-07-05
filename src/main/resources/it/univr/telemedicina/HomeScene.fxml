@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="homeScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="739.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.patient.HomeSceneController">
+<AnchorPane fx:id="homeScene" layoutX="5.0" layoutY="2.0" prefHeight="677.0" prefWidth="835.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.5), 2,0,0,0); -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.univr.telemedicina.controller.patient.HomeSceneController">
     <padding>
         <Insets bottom="5.0" top="5.0" />
     </padding>
@@ -35,7 +35,7 @@
                                 <Font name="Baloo 2 Regular" size="20.0" />
                             </font>
                         </Label>
-                        <Label layoutX="260.0" layoutY="25.0" prefHeight="25.0" prefWidth="371.0" style="-fx-font-family: Montserrat;" text="I farmaci che devi ancora assumere:" textFill="WHITE">
+                        <Label layoutX="260.0" layoutY="25.0" prefHeight="25.0" prefWidth="371.0" style="-fx-font-family: Montserrat;" text="Farmaci da assumere per le terapie assegnate:" textFill="WHITE">
                             <font>
                                 <Font size="19.0" />
                             </font>
@@ -70,7 +70,7 @@
             <children>
                 <AnchorPane prefHeight="224.0" prefWidth="820.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0,0);">
                     <children>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="155.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="540.0" AnchorPane.topAnchor="14.0">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="155.0" prefWidth="258.0" style="-fx-background-color: #272932; -fx-background-radius: 10; -fx-border-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
                             <children>
                                 <FontAwesomeIcon fill="WHITE" glyphName="HEARTBEAT" layoutX="193.0" layoutY="129.0" size="4em" text="" />
                                 <Label fx:id="lblPressure" layoutX="14.0" layoutY="14.0" prefHeight="85.0" prefWidth="207.0" style="-fx-font-family: Montserrat;" text="100/100" textFill="WHITE">

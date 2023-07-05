@@ -93,13 +93,13 @@ public class DoctorManageTherapy implements Initializable {
             if(boxTherapy.getValue().equals("Nuova")) {
                 boxTherapyName.setVisible(true);
                 lblNameTherapy.setVisible(true);
-                buttonSend.setText("Aggiungi");
+                buttonSend.setText("SALVA NUOVA TERAPIA");
             }
             else {  // If "Nuova" was NOT selected, modify the selected therapy. Set all box with relative dates
                 // Edit button specs
                 boxTherapyName.setVisible(false);
                 lblNameTherapy.setVisible(false);
-                buttonSend.setText("Modifica");
+                buttonSend.setText("MODIFICA TERAPIA");
 
                 TherapyList therapyList = new TherapyList();
                 // Do a query and add all the values in the fields/boxes

@@ -44,7 +44,7 @@
         <items>
             <AnchorPane prefHeight="515.0" prefWidth="405.0" styleClass="anchor-style" stylesheets="@../anchor.css">
                <children>
-                  <TableView fx:id="tablePatient" layoutX="107.0" layoutY="79.0" prefHeight="475.0" prefWidth="164.0" stylesheets="@../table.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="20.0">
+                  <TableView fx:id="tablePatient" layoutX="107.0" layoutY="79.0" prefHeight="475.0" prefWidth="164.0" stylesheets="@../docTable.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="20.0">
                     <columns>
                       <TableColumn fx:id="columnNamePatientTable" prefWidth="144.0" text="Nome paziente" />
                       <TableColumn fx:id="columnStatePatientTable" prefWidth="166.0" text="Stato terapia" />
@@ -54,9 +54,9 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="anchor-style" stylesheets="@../anchor.css">
                <children>
-                  <DatePicker fx:id="buttonStartRegistration" layoutX="24.0" layoutY="452.0" prefHeight="26.0" prefWidth="97.0" promptText="inizio" AnchorPane.bottomAnchor="30.0" />
-                  <DatePicker fx:id="buttonEndRegistration" layoutX="154.0" layoutY="452.0" prefHeight="26.0" prefWidth="97.0" promptText="fine" AnchorPane.bottomAnchor="30.0" />
-                  <Button fx:id="buttonSearchRegistration" layoutX="268.0" layoutY="453.0" mnemonicParsing="false" onAction="#showNewRegistration" text="mostra" AnchorPane.bottomAnchor="30.0" />
+                  <DatePicker fx:id="buttonStartRegistration" layoutX="23.0" layoutY="454.0" prefHeight="26.0" prefWidth="97.0" promptText="inizio" AnchorPane.bottomAnchor="30.0" />
+                  <DatePicker fx:id="buttonEndRegistration" layoutX="145.0" layoutY="454.0" prefHeight="26.0" prefWidth="97.0" promptText="fine" AnchorPane.bottomAnchor="30.0" />
+                  <Button fx:id="buttonSearchRegistration" layoutX="268.0" layoutY="453.0" mnemonicParsing="false" onAction="#showNewRegistration" prefHeight="26.0" prefWidth="134.0" style="-fx-background-radius: 10; -fx-text-fill: white; -fx-background-color: #54bc56;" text="MOSTRA " AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="21.0" />
                   <BarChart fx:id="barChartNewPatients" layoutX="8.0" layoutY="24.0" prefHeight="410.0" prefWidth="338.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" fx:id="xAxis" />
@@ -65,7 +65,7 @@
                       <NumberAxis fx:id="yAxis" side="LEFT" tickLabelFill="WHITE" />
                     </yAxis>
                   </BarChart>
-                  <Label fx:id="lblTableTitle" layoutX="78.0" layoutY="8.0" text="Istogramma nuovi pazienti" textFill="WHITE" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="78.0">
+                  <Label fx:id="lblTableTitle" layoutX="102.0" layoutY="5.0" prefHeight="26.0" prefWidth="220.0" text="Istogramma nuovi pazienti" textFill="WHITE" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="101.0">
                      <font>
                         <Font size="20.0" />
                      </font>

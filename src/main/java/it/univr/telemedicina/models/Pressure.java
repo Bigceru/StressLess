@@ -45,6 +45,7 @@ public class Pressure {
         this.symptoms = symptoms;
         this.conditionPressure = conditionPressure;
         this.button = new Button("Mostra di più");
+        this.button.setStyle("-fx-background-color:  #54bc56; -fx-background-radius: 10; -fx-text-fill: white; -fx-cursor: hand");
         this.button.setOnAction(new EventHandler<>() {
             /**
              * Method called when in the tableview press the button relative to this pressure (I want ot show the Patient therapy status)

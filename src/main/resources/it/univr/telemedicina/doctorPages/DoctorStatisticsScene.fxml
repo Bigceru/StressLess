@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.StackedBarChart?>
@@ -33,14 +34,20 @@
                 <NumberAxis side="LEFT" tickLabelFill="WHITE" />
               </yAxis>
             </StackedBarChart>
-            <Button fx:id="buttonTableAnalysis" layoutX="545.0" layoutY="13.0" mnemonicParsing="false" onAction="#showNewTableAnalysis" prefHeight="26.0" prefWidth="130.0" text="Analisi in tabella" />
+            <Button fx:id="buttonTableAnalysis" layoutX="546.0" layoutY="13.0" mnemonicParsing="false" onAction="#showNewTableAnalysis" prefHeight="26.0" prefWidth="130.0" style="-fx-background-color: #54bc56; -fx-text-fill: white; -fx-background-radius: 10;" text="Analisi in tabella" AnchorPane.rightAnchor="30.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
         </AnchorPane>
       <AnchorPane layoutX="489.0" layoutY="470.0" prefHeight="195.0" prefWidth="236.0" styleClass="anchor-style" stylesheets="@../anchor.css" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="15.0">
          <children>
             <DatePicker fx:id="dateStart" layoutX="13.0" layoutY="41.0" promptText="Data inizio" />
             <DatePicker fx:id="dateEnd" layoutX="13.0" layoutY="101.0" onAction="#showNewGraph" promptText="Data fine" />
-            <Button fx:id="buttonShowGraph" layoutX="87.0" layoutY="149.0" mnemonicParsing="false" onAction="#showNewGraph" text="cerca" />
+            <Button fx:id="buttonShowGraph" layoutX="71.0" layoutY="149.0" mnemonicParsing="false" onAction="#showNewGraph" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #54bc56; -fx-text-fill: white; -fx-background-radius: 10;" text="CERCA">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Label layoutX="12.0" layoutY="16.0" text="Data di inizio ricerca" textFill="WHITE" />
             <Label layoutX="13.0" layoutY="79.0" text="Data di fine ricerca" textFill="WHITE" />
          </children></AnchorPane>

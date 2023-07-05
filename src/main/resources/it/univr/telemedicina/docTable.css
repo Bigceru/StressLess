@@ -1,0 +1,27 @@
+.table-view{
+    -fx-background-color:white;
+    -fx-border-color:  #6ea483;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 0px;
+}
+
+.table-view .table-column{
+    -fx-alignment: CENTER;
+}
+
+.table-view .column-header-background{
+    -fx-background-color:  #6ea483;
+    -fx-background-insets: 0 0 0 0;
+    -f-background-radius: 8px 8px 8px 8px;
+}
+
+.table-view .column-header, .filter{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: white;
+    -fx-font-size: 12;
+    -fx-font-family: "Montserrat";
+}

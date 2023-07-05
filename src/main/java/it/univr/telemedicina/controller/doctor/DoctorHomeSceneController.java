@@ -194,7 +194,7 @@ public class DoctorHomeSceneController implements Initializable {
         }
 
         lblTableTitle.setVisible(false);    // Hide the temporary table title
-        barChartNewPatients.setTitle("Istrogramma nuovi pazienti");
+        barChartNewPatients.setTitle("Istogramma nuovi pazienti");
         barChartNewPatients.lookup(".chart-title").setStyle("-fx-text-fill: white;");
 
         XYChart.Series<String, Integer> xSeries = new XYChart.Series<>();

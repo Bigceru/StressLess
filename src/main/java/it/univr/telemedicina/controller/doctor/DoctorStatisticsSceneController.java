@@ -90,6 +90,7 @@ public class DoctorStatisticsSceneController {
 
         if (tabPressure.isSelected()) {
             stackedBarChart.setTitle("ANDAMENTO PRESSIONI");
+            stackedBarChart.lookup(".chart-title").setStyle("-fx-text-fill: white;");
             // remove all selected radio button in the other tab
             if (radioTACE != null)
                 radioTACE.setSelected(false);
@@ -105,6 +106,7 @@ public class DoctorStatisticsSceneController {
                 radioTSympatholytic.setSelected(false);
         } else {
             stackedBarChart.setTitle("ANDAMENTO TERAPIE");
+            stackedBarChart.lookup(".chart-title").setStyle("-fx-text-fill: white;");
             if (radioP1Borderline != null)
                 radioP1Borderline.setSelected(false);
             if (radioPIS != null)
