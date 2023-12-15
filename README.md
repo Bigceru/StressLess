@@ -23,3 +23,6 @@ The specialist doctor can specify the antihypertensive therapies that patients s
   <img src="SL6.png" width="40%" />
   <img src="SL1.png" width="30%" />
 </p>
+
+## Documentation
+You can find all the specific documentation of this project in Elaborato_Ingegneria.pdf
